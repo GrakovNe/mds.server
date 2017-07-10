@@ -11,7 +11,8 @@ public class ApplicationTests {
 
     @Test
     public void contextLoads() {
-        MdsPlayer.main(null);
+        String[] args = {};
+        MdsPlayer.main(args);
     }
 
 }
