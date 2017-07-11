@@ -9,6 +9,8 @@ spring:
   jpa:
     database_platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+    hibernate:
+      ddl-auto: create
   http:
     multipart:
       max-file-size: -1

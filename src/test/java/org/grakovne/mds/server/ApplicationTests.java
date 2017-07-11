@@ -12,7 +12,7 @@ public class ApplicationTests {
     @Test
     public void contextLoads() {
         String[] args = {};
-        MdsPlayer.main(args);
+        MdsApplication.main(args);
     }
 
 }
