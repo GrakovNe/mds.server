@@ -1,5 +1,9 @@
 package org.grakovne.mds.server.entity;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,24 +19,31 @@ public class Story {
     private String annotation;
 
     @OneToOne(mappedBy = "story")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private ReaderAge readerAge;
 
     @OneToOne(mappedBy = "story")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Cover cover;
 
     @OneToMany(mappedBy = "story")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Author> authors;
 
     @OneToMany(mappedBy = "story")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Tag> tags;
 
     @OneToMany(mappedBy = "story")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Genre> genres;
 
     @OneToMany(mappedBy = "story")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ActionPlaceType> actionPlaceTypes;
 
     @OneToMany(mappedBy = "story")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ActionTimeType> actionTimeTypes;
 
     public Story() {
@@ -141,6 +152,41 @@ public class Story {
                 ", actionPlaceTypes=" + actionPlaceTypes +
                 ", actionTimeTypes=" + actionTimeTypes +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Story story = (Story) o;
+
+        if (title != null ? !title.equals(story.title) : story.title != null) return false;
+        if (year != null ? !year.equals(story.year) : story.year != null) return false;
+        if (annotation != null ? !annotation.equals(story.annotation) : story.annotation != null) return false;
+        if (readerAge != null ? !readerAge.equals(story.readerAge) : story.readerAge != null) return false;
+        if (cover != null ? !cover.equals(story.cover) : story.cover != null) return false;
+        if (authors != null ? !authors.equals(story.authors) : story.authors != null) return false;
+        if (tags != null ? !tags.equals(story.tags) : story.tags != null) return false;
+        if (genres != null ? !genres.equals(story.genres) : story.genres != null) return false;
+        if (actionPlaceTypes != null ? !actionPlaceTypes.equals(story.actionPlaceTypes) : story.actionPlaceTypes != null)
+            return false;
+        return actionTimeTypes != null ? actionTimeTypes.equals(story.actionTimeTypes) : story.actionTimeTypes == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (year != null ? year.hashCode() : 0);
+        result = 31 * result + (annotation != null ? annotation.hashCode() : 0);
+        result = 31 * result + (readerAge != null ? readerAge.hashCode() : 0);
+        result = 31 * result + (cover != null ? cover.hashCode() : 0);
+        result = 31 * result + (authors != null ? authors.hashCode() : 0);
+        result = 31 * result + (tags != null ? tags.hashCode() : 0);
+        result = 31 * result + (genres != null ? genres.hashCode() : 0);
+        result = 31 * result + (actionPlaceTypes != null ? actionPlaceTypes.hashCode() : 0);
+        result = 31 * result + (actionTimeTypes != null ? actionTimeTypes.hashCode() : 0);
+        return result;
     }
 }
 

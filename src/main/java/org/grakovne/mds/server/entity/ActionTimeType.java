@@ -50,4 +50,19 @@ public class ActionTimeType {
                 ", story=" + story +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ActionTimeType that = (ActionTimeType) o;
+
+        return type.equals(that.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return type.hashCode();
+    }
 }

@@ -10,7 +10,7 @@ spring:
     database_platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   http:
     multipart:
       max-file-size: -1

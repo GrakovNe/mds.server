@@ -50,4 +50,19 @@ public class ReaderAge {
                 ", ageType='" + ageType + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ReaderAge readerAge = (ReaderAge) o;
+
+        return ageType != null ? ageType.equals(readerAge.ageType) : readerAge.ageType == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return ageType != null ? ageType.hashCode() : 0;
+    }
 }

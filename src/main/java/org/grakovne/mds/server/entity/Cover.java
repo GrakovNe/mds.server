@@ -50,4 +50,19 @@ public class Cover {
                 ", base64EncodedImage='" + base64EncodedImage + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cover cover = (Cover) o;
+
+        return base64EncodedImage != null ? base64EncodedImage.equals(cover.base64EncodedImage) : cover.base64EncodedImage == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return base64EncodedImage != null ? base64EncodedImage.hashCode() : 0;
+    }
 }
