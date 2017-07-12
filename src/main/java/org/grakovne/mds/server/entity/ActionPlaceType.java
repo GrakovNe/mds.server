@@ -2,6 +2,10 @@ package org.grakovne.mds.server.entity;
 
 import javax.persistence.*;
 
+/**
+ * JPA Entity.
+ */
+
 @Entity
 public class ActionPlaceType {
     @Id
@@ -9,11 +13,7 @@ public class ActionPlaceType {
     @Access(AccessType.PROPERTY)
     private Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "storyId")
-    private Story story;
-
-    private String type;
+    private String value;
 
     public ActionPlaceType() {
     }
@@ -26,29 +26,12 @@ public class ActionPlaceType {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getValue() {
+        return value;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Story getStory() {
-        return story;
-    }
-
-    public void setStory(Story story) {
-        this.story = story;
-    }
-
-    @Override
-    public String toString() {
-        return "ActionTimeType{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", story=" + story +
-                '}';
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Override
@@ -58,11 +41,19 @@ public class ActionPlaceType {
 
         ActionPlaceType that = (ActionPlaceType) o;
 
-        return type.equals(that.type);
+        return value != null ? value.equals(that.value) : that.value == null;
     }
 
     @Override
     public int hashCode() {
-        return type.hashCode();
+        return value != null ? value.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "ActionPlaceType{" +
+                "id=" + id +
+                ", value='" + value + '\'' +
+                '}';
     }
 }

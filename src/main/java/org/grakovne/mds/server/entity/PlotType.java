@@ -7,7 +7,8 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Genre {
+public class PlotType {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Access(AccessType.PROPERTY)
@@ -15,7 +16,7 @@ public class Genre {
 
     private String value;
 
-    public Genre() {
+    public PlotType() {
     }
 
     public Integer getId() {
@@ -39,9 +40,9 @@ public class Genre {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Genre genre = (Genre) o;
+        PlotType plotType = (PlotType) o;
 
-        return value != null ? value.equals(genre.value) : genre.value == null;
+        return value != null ? value.equals(plotType.value) : plotType.value == null;
     }
 
     @Override
@@ -51,7 +52,7 @@ public class Genre {
 
     @Override
     public String toString() {
-        return "Genre{" +
+        return "PlotType{" +
                 "id=" + id +
                 ", value='" + value + '\'' +
                 '}';

@@ -1,11 +1,13 @@
 package org.grakovne.mds.server.entity;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
+import java.net.URL;
 import java.util.List;
+import java.util.Set;
+
+/**
+ * JPA Entity.
+ */
 
 @Entity
 public class Story {
@@ -15,36 +17,103 @@ public class Story {
     private Integer id;
 
     private String title;
+
     private Integer year;
-    private String annotation;
 
-    @OneToOne(mappedBy = "story")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private ReaderAge readerAge;
-
-    @OneToOne(mappedBy = "story")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Cover cover;
-
-    @OneToMany(mappedBy = "story")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "story_authors",
+            joinColumns = @JoinColumn(
+                    name = "story_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "author_id",
+                    referencedColumnName = "id"
+            ))
     private List<Author> authors;
 
-    @OneToMany(mappedBy = "story")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Tag> tags;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "story_genres",
+            joinColumns = @JoinColumn(
+                    name = "story_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "author_id",
+                    referencedColumnName = "id"
+            ))
+    private Set<Genre> genres;
 
-    @OneToMany(mappedBy = "story")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Genre> genres;
+    @OneToOne
+    private Rating rating;
 
-    @OneToMany(mappedBy = "story")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<ActionPlaceType> actionPlaceTypes;
+    @OneToOne
+    private Cover cover;
 
-    @OneToMany(mappedBy = "story")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<ActionTimeType> actionTimeTypes;
+    private String annotation;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "story_tags",
+            joinColumns = @JoinColumn(
+                    name = "story_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "author_id",
+                    referencedColumnName = "id"
+            ))
+    private Set<Tag> tags;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "story_action_place_types",
+            joinColumns = @JoinColumn(
+                    name = "story_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "author_id",
+                    referencedColumnName = "id"
+            ))
+
+    private Set<ActionPlaceType> actionPlaceTypes;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "story_action_time_type",
+            joinColumns = @JoinColumn(
+                    name = "story_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "author_id",
+                    referencedColumnName = "id"
+            ))
+    private Set<ActionTimeType> actionTimeTypes;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "story_plot_type",
+            joinColumns = @JoinColumn(
+                    name = "story_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "author_id",
+                    referencedColumnName = "id"
+            ))
+    private PlotType plotType;
+
+    private URL url;
+
+    private Integer fileSize;
+
+    private Integer fileQuality;
+
+    private Integer length;
 
     public Story() {
     }
@@ -73,20 +142,28 @@ public class Story {
         this.year = year;
     }
 
-    public String getAnnotation() {
-        return annotation;
+    public List<Author> getAuthors() {
+        return authors;
     }
 
-    public void setAnnotation(String annotation) {
-        this.annotation = annotation;
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
-    public ReaderAge getReaderAge() {
-        return readerAge;
+    public Set<Genre> getGenres() {
+        return genres;
     }
 
-    public void setReaderAge(ReaderAge readerAge) {
-        this.readerAge = readerAge;
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
     public Cover getCover() {
@@ -97,61 +174,76 @@ public class Story {
         this.cover = cover;
     }
 
-    public List<Author> getAuthors() {
-        return authors;
+    public String getAnnotation() {
+        return annotation;
     }
 
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
+    public void setAnnotation(String annotation) {
+        this.annotation = annotation;
     }
 
-    public List<Tag> getTags() {
+    public Set<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
+    public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
 
-    public List<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
-    }
-
-    public List<ActionPlaceType> getActionPlaceTypes() {
+    public Set<ActionPlaceType> getActionPlaceTypes() {
         return actionPlaceTypes;
     }
 
-    public void setActionPlaceTypes(List<ActionPlaceType> actionPlaceTypes) {
+    public void setActionPlaceTypes(Set<ActionPlaceType> actionPlaceTypes) {
         this.actionPlaceTypes = actionPlaceTypes;
     }
 
-    public List<ActionTimeType> getActionTimeTypes() {
+    public Set<ActionTimeType> getActionTimeTypes() {
         return actionTimeTypes;
     }
 
-    public void setActionTimeTypes(List<ActionTimeType> actionTimeTypes) {
+    public void setActionTimeTypes(Set<ActionTimeType> actionTimeTypes) {
         this.actionTimeTypes = actionTimeTypes;
     }
 
-    @Override
-    public String toString() {
-        return "Story{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", year=" + year +
-                ", annotation='" + annotation + '\'' +
-                ", readerAge=" + readerAge +
-                ", cover=" + cover +
-                ", authors=" + authors +
-                ", tags=" + tags +
-                ", genres=" + genres +
-                ", actionPlaceTypes=" + actionPlaceTypes +
-                ", actionTimeTypes=" + actionTimeTypes +
-                '}';
+    public PlotType getPlotType() {
+        return plotType;
+    }
+
+    public void setPlotType(PlotType plotType) {
+        this.plotType = plotType;
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
+    public void setUrl(URL url) {
+        this.url = url;
+    }
+
+    public Integer getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(Integer fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public Integer getFileQuality() {
+        return fileQuality;
+    }
+
+    public void setFileQuality(Integer fileQuality) {
+        this.fileQuality = fileQuality;
+    }
+
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
     }
 
     @Override
@@ -163,31 +255,63 @@ public class Story {
 
         if (title != null ? !title.equals(story.title) : story.title != null) return false;
         if (year != null ? !year.equals(story.year) : story.year != null) return false;
-        if (annotation != null ? !annotation.equals(story.annotation) : story.annotation != null) return false;
-        if (readerAge != null ? !readerAge.equals(story.readerAge) : story.readerAge != null) return false;
-        if (cover != null ? !cover.equals(story.cover) : story.cover != null) return false;
         if (authors != null ? !authors.equals(story.authors) : story.authors != null) return false;
-        if (tags != null ? !tags.equals(story.tags) : story.tags != null) return false;
         if (genres != null ? !genres.equals(story.genres) : story.genres != null) return false;
-        if (actionPlaceTypes != null ? !actionPlaceTypes.equals(story.actionPlaceTypes) : story.actionPlaceTypes != null)
+        if (rating != null ? !rating.equals(story.rating) : story.rating != null) return false;
+        if (cover != null ? !cover.equals(story.cover) : story.cover != null) return false;
+        if (annotation != null ? !annotation.equals(story.annotation) : story.annotation != null) return false;
+        if (tags != null ? !tags.equals(story.tags) : story.tags != null) return false;
+        if (actionPlaceTypes != null
+                ? !actionPlaceTypes.equals(story.actionPlaceTypes) : story.actionPlaceTypes != null)
             return false;
-        return actionTimeTypes != null ? actionTimeTypes.equals(story.actionTimeTypes) : story.actionTimeTypes == null;
+        if (actionTimeTypes != null ? !actionTimeTypes.equals(story.actionTimeTypes) : story.actionTimeTypes != null)
+            return false;
+        if (plotType != null ? !plotType.equals(story.plotType) : story.plotType != null) return false;
+        if (url != null ? !url.equals(story.url) : story.url != null) return false;
+        if (fileSize != null ? !fileSize.equals(story.fileSize) : story.fileSize != null) return false;
+        if (fileQuality != null ? !fileQuality.equals(story.fileQuality) : story.fileQuality != null) return false;
+        return length != null ? length.equals(story.length) : story.length == null;
     }
 
     @Override
     public int hashCode() {
         int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (year != null ? year.hashCode() : 0);
-        result = 31 * result + (annotation != null ? annotation.hashCode() : 0);
-        result = 31 * result + (readerAge != null ? readerAge.hashCode() : 0);
-        result = 31 * result + (cover != null ? cover.hashCode() : 0);
         result = 31 * result + (authors != null ? authors.hashCode() : 0);
-        result = 31 * result + (tags != null ? tags.hashCode() : 0);
         result = 31 * result + (genres != null ? genres.hashCode() : 0);
+        result = 31 * result + (rating != null ? rating.hashCode() : 0);
+        result = 31 * result + (cover != null ? cover.hashCode() : 0);
+        result = 31 * result + (annotation != null ? annotation.hashCode() : 0);
+        result = 31 * result + (tags != null ? tags.hashCode() : 0);
         result = 31 * result + (actionPlaceTypes != null ? actionPlaceTypes.hashCode() : 0);
         result = 31 * result + (actionTimeTypes != null ? actionTimeTypes.hashCode() : 0);
+        result = 31 * result + (plotType != null ? plotType.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (fileSize != null ? fileSize.hashCode() : 0);
+        result = 31 * result + (fileQuality != null ? fileQuality.hashCode() : 0);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Story{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", year=" + year +
+                ", authors=" + authors +
+                ", genres=" + genres +
+                ", rating=" + rating +
+                ", cover=" + cover +
+                ", annotation='" + annotation + '\'' +
+                ", tags=" + tags +
+                ", actionPlaceTypes=" + actionPlaceTypes +
+                ", actionTimeTypes=" + actionTimeTypes +
+                ", plotType=" + plotType +
+                ", url=" + url +
+                ", fileSize=" + fileSize +
+                ", fileQuality=" + fileQuality +
+                ", length=" + length +
+                '}';
+    }
 }
-
-

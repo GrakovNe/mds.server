@@ -7,15 +7,15 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Genre {
+public class ReaderAgeType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Access(AccessType.PROPERTY)
     private Integer id;
 
-    private String value;
+    private String type;
 
-    public Genre() {
+    public ReaderAgeType() {
     }
 
     public Integer getId() {
@@ -26,12 +26,12 @@ public class Genre {
         this.id = id;
     }
 
-    public String getValue() {
-        return value;
+    public String getType() {
+        return type;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
@@ -39,21 +39,24 @@ public class Genre {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Genre genre = (Genre) o;
+        ReaderAgeType that = (ReaderAgeType) o;
 
-        return value != null ? value.equals(genre.value) : genre.value == null;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return type != null ? type.equals(that.type) : that.type == null;
     }
 
     @Override
     public int hashCode() {
-        return value != null ? value.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
-        return "Genre{" +
+        return "ReaderAgeType{" +
                 "id=" + id +
-                ", value='" + value + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

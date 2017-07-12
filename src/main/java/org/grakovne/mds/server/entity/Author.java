@@ -2,6 +2,10 @@ package org.grakovne.mds.server.entity;
 
 import javax.persistence.*;
 
+/**
+ * JPA Entity.
+ */
+
 @Entity
 public class Author {
     @Id
@@ -9,11 +13,8 @@ public class Author {
     @Access(AccessType.PROPERTY)
     private Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "storyId")
-    private Story story;
-
     private String firstName;
+
     private String lastName;
 
     public Author() {
@@ -43,24 +44,6 @@ public class Author {
         this.lastName = lastName;
     }
 
-    public Story getStory() {
-        return story;
-    }
-
-    public void setStory(Story story) {
-        this.story = story;
-    }
-
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", story=" + story +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,4 +61,14 @@ public class Author {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
+
 }

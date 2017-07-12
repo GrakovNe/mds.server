@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Cover {
+public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Access(AccessType.PROPERTY)
@@ -17,9 +17,11 @@ public class Cover {
     @JoinColumn(name = "story_id")
     private Story story;
 
-    private String base64EncodedCover;
+    private Integer value;
 
-    public Cover() {
+    private Integer voters;
+
+    public Rating() {
     }
 
     public Integer getId() {
@@ -38,12 +40,20 @@ public class Cover {
         this.story = story;
     }
 
-    public String getBase64EncodedCover() {
-        return base64EncodedCover;
+    public Integer getValue() {
+        return value;
     }
 
-    public void setBase64EncodedCover(String base64EncodedCover) {
-        this.base64EncodedCover = base64EncodedCover;
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
+    public Integer getVoters() {
+        return voters;
+    }
+
+    public void setVoters(Integer voters) {
+        this.voters = voters;
     }
 
     @Override
@@ -51,26 +61,28 @@ public class Cover {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Cover cover = (Cover) o;
+        Rating rating = (Rating) o;
 
-        if (story != null ? !story.equals(cover.story) : cover.story != null) return false;
-        return base64EncodedCover != null
-                ? base64EncodedCover.equals(cover.base64EncodedCover) : cover.base64EncodedCover == null;
+        if (story != null ? !story.equals(rating.story) : rating.story != null) return false;
+        if (value != null ? !value.equals(rating.value) : rating.value != null) return false;
+        return voters != null ? voters.equals(rating.voters) : rating.voters == null;
     }
 
     @Override
     public int hashCode() {
         int result = story != null ? story.hashCode() : 0;
-        result = 31 * result + (base64EncodedCover != null ? base64EncodedCover.hashCode() : 0);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (voters != null ? voters.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Cover{" +
+        return "Rating{" +
                 "id=" + id +
                 ", story=" + story +
-                ", base64EncodedCover='" + base64EncodedCover + '\'' +
+                ", value=" + value +
+                ", voters=" + voters +
                 '}';
     }
 }

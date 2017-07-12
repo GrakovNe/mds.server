@@ -2,18 +2,20 @@ package org.grakovne.mds.server.entity;
 
 import javax.persistence.*;
 
+/**
+ * JPA Entity.
+ */
+
+
 @Entity
 public class ActionTimeType {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Access(AccessType.PROPERTY)
     private Integer id;
 
-    private String type;
-
-    @OneToOne
-    @JoinColumn(name = "storyId")
-    private Story story;
+    private String value;
 
     public ActionTimeType() {
     }
@@ -26,29 +28,12 @@ public class ActionTimeType {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getValue() {
+        return value;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Story getStory() {
-        return story;
-    }
-
-    public void setStory(Story story) {
-        this.story = story;
-    }
-
-    @Override
-    public String toString() {
-        return "ActionTimeType{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", story=" + story +
-                '}';
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Override
@@ -58,11 +43,19 @@ public class ActionTimeType {
 
         ActionTimeType that = (ActionTimeType) o;
 
-        return type.equals(that.type);
+        return value != null ? value.equals(that.value) : that.value == null;
     }
 
     @Override
     public int hashCode() {
-        return type.hashCode();
+        return value != null ? value.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "ActionTimeType{" +
+                "id=" + id +
+                ", value='" + value + '\'' +
+                '}';
     }
 }

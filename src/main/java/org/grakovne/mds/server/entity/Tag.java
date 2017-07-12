@@ -2,6 +2,10 @@ package org.grakovne.mds.server.entity;
 
 import javax.persistence.*;
 
+/**
+ * JPA Entity.
+ */
+
 @Entity
 public class Tag {
     @Id
@@ -9,11 +13,7 @@ public class Tag {
     @Access(AccessType.PROPERTY)
     private Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "storyId")
-    private Story story;
-
-    private String tag;
+    private String value;
 
     public Tag() {
     }
@@ -26,29 +26,12 @@ public class Tag {
         this.id = id;
     }
 
-    public String getTag() {
-        return tag;
+    public String getValue() {
+        return value;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public Story getStory() {
-        return story;
-    }
-
-    public void setStory(Story story) {
-        this.story = story;
-    }
-
-    @Override
-    public String toString() {
-        return "Tag{" +
-                "id=" + id +
-                ", story=" + story +
-                ", tag='" + tag + '\'' +
-                '}';
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Override
@@ -56,13 +39,21 @@ public class Tag {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Tag tag1 = (Tag) o;
+        Tag tag = (Tag) o;
 
-        return tag != null ? tag.equals(tag1.tag) : tag1.tag == null;
+        return value != null ? value.equals(tag.value) : tag.value == null;
     }
 
     @Override
     public int hashCode() {
-        return tag != null ? tag.hashCode() : 0;
+        return value != null ? value.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id=" + id +
+                ", value='" + value + '\'' +
+                '}';
     }
 }
