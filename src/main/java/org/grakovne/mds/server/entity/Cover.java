@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Cover {
+public class Cover implements MdsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Access(AccessType.PROPERTY)

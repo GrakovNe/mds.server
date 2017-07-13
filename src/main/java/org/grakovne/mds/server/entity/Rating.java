@@ -1,5 +1,7 @@
 package org.grakovne.mds.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -7,7 +9,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Rating {
+public class Rating implements MdsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Access(AccessType.PROPERTY)
@@ -15,6 +17,7 @@ public class Rating {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "story_id")
+    @JsonIgnore
     private Story story;
 
     private Integer value;

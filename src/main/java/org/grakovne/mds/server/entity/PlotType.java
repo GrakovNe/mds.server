@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class PlotType {
+public class PlotType implements MdsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

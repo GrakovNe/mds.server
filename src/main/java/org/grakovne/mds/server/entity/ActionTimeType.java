@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 
 @Entity
-public class ActionTimeType {
+public class ActionTimeType implements MdsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

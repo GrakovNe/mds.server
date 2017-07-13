@@ -10,7 +10,7 @@ import java.util.Set;
  */
 
 @Entity
-public class Story {
+public class Story implements MdsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Access(AccessType.PROPERTY)
@@ -46,10 +46,10 @@ public class Story {
             ))
     private Set<Genre> genres;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Rating rating;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Cover cover;
 
     private String annotation;

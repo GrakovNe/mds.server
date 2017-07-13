@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Tag {
+public class Tag implements MdsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Access(AccessType.PROPERTY)

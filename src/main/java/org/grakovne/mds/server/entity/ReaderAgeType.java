@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class ReaderAgeType {
+public class ReaderAgeType implements MdsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Access(AccessType.PROPERTY)

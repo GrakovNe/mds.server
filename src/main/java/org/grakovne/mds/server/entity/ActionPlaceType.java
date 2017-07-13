@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class ActionPlaceType {
+public class ActionPlaceType implements MdsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Access(AccessType.PROPERTY)

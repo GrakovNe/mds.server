@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: "jdbc:postgresql://grakovne.org:5432/mds"
+    url: "jdbc:postgresql://localhost:5432/mds"
     username: mds
     password: vkVRzABjS5dHt5vEPavRYSxGDB2dk36E
     driver-class-name: org.postgresql.Driver
@@ -8,7 +8,6 @@ spring:
     validationQuery: SELECT 1
   jpa:
     database_platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
     hibernate:
       ddl-auto: validate
   http:
