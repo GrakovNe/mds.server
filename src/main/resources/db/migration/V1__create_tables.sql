@@ -52,8 +52,8 @@ CREATE TABLE reader_age_type (
 CREATE TABLE story (
     id integer NOT NULL,
     annotation character varying(255),
-    file_quality integer,
-    file_size integer,
+    file_quality bigint,
+    file_size bigint,
     length integer,
     title character varying(255),
     url character varying(255),

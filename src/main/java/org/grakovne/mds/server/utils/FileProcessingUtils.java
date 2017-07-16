@@ -1,7 +1,5 @@
 package org.grakovne.mds.server.utils;
 
-import org.grakovne.mds.server.configuration.CustomConfigurationProvider;
-import org.grakovne.mds.server.exceptons.MdsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +13,11 @@ import java.nio.file.Files;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 @Component
-public class FileUploadUtils {
-    private final static Logger logger = LoggerFactory.getLogger(FileUploadUtils.class);
+public class FileProcessingUtils {
+    private final static Logger logger = LoggerFactory.getLogger(FileProcessingUtils.class);
 
     @Autowired
-    private CustomConfigurationProvider configurationProvider;
+    private ConfigurationUtils configurationProvider;
 
     public File getUploadFolder(){
         return new File(configurationProvider.getFileUploadDirectory());

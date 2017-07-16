@@ -109,9 +109,9 @@ public class Story implements MdsEntity {
 
     private String url;
 
-    private Integer fileSize;
+    private Long fileSize;
 
-    private Integer fileQuality;
+    private Long fileQuality;
 
     private Integer length;
 
@@ -222,19 +222,19 @@ public class Story implements MdsEntity {
         this.url = url;
     }
 
-    public Integer getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(Integer fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 
-    public Integer getFileQuality() {
+    public Long getFileQuality() {
         return fileQuality;
     }
 
-    public void setFileQuality(Integer fileQuality) {
+    public void setFileQuality(Long fileQuality) {
         this.fileQuality = fileQuality;
     }
 

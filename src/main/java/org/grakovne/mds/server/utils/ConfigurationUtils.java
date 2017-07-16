@@ -1,4 +1,4 @@
-package org.grakovne.mds.server.configuration;
+package org.grakovne.mds.server.utils;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "spring.config")
-public class CustomConfigurationProvider {
+public class ConfigurationUtils {
 
     private String fileUploadDirectory;
 

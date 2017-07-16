@@ -4,8 +4,9 @@ import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.exceptons.MdsException;
 import org.grakovne.mds.server.repositories.StoryRepository;
+import org.grakovne.mds.server.utils.AudioUtils;
 import org.grakovne.mds.server.utils.CheckerUtils;
-import org.grakovne.mds.server.utils.FileUploadUtils;
+import org.grakovne.mds.server.utils.FileProcessingUtils;
 import org.grakovne.mds.server.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,10 @@ public class StoryService {
     private StoryRepository storyRepository;
 
     @Autowired
-    private FileUploadUtils fileUploadUtils;
+    private FileProcessingUtils fileProcessingUtils;
+
+    @Autowired
+    private AudioUtils audioUtils;
 
     private final String STORY_AUDIO_URL_PREFIX = "/audio/";
     private final String FILE_PREFIX = "story_";
@@ -45,20 +49,25 @@ public class StoryService {
 
         List<Story> stories = storyRepository.findByUrl(story.getUrl());
 
-        if (stories.isEmpty()){
+        if (!stories.isEmpty()){
             throw new EntityAlreadyExistException(Story.class);
 
         }
 
         Story savedStory = storyRepository.save(story);
 
+        File savedAudioFile = null;
+
         try {
             String fileName = FILE_PREFIX + savedStory.getId() + FILE_POSTFIX;
-            fileUploadUtils.uploadFile(storyAudio, fileName);
+            savedAudioFile = fileProcessingUtils.uploadFile(storyAudio, fileName);
             savedStory.setUrl(STORY_AUDIO_URL_PREFIX + savedStory.getId());
         } catch (IOException e) {
             throw new MdsException("Can't upload a story");
         }
+
+        fillAudioFileMeta(savedStory, savedAudioFile);
+        savedStory = storyRepository.save(story);
 
         return savedStory;
     }
@@ -67,10 +76,17 @@ public class StoryService {
         String fileName = FILE_PREFIX + storyId + FILE_POSTFIX;
 
         try{
-            return fileUploadUtils.getFile(fileName);
+            return fileProcessingUtils.getFile(fileName);
         } catch (FileNotFoundException ex){
             throw new MdsException("Audio file is not found");
         }
 
+    }
+
+    private Story fillAudioFileMeta(Story story, File file){
+        story.setFileSize(audioUtils.getAudioFileSize(file));
+        story.setFileQuality(audioUtils.getAudioFileBitrate(file));
+        story.setLength(audioUtils.getAudioFileLength(file));
+        return story;
     }
 }

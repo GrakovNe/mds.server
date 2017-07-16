@@ -30,7 +30,7 @@ public class StoryEndpoint {
     @Autowired
     private HttpServletRequest request;
 
-    private final Logger logger = LoggerFactory.getLogger(MdsApplication.class);
+    private final Logger logger = LoggerFactory.getLogger(StoryEndpoint.class);
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ApiResponse<Page<Story>> findStories(@RequestParam(required = false, defaultValue = "0") Integer page) {
@@ -59,8 +59,6 @@ public class StoryEndpoint {
 
         Story savedStory = storyService.createStory(story, audio);
         return new ApiResponse<>(savedStory);
-
-        //return new ApiResponse<>(story);
     }
 
 }
