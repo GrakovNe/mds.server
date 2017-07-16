@@ -5,6 +5,7 @@ import org.grakovne.mds.server.entity.Story;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -14,4 +15,5 @@ import java.util.List;
 @Repository
 public interface StoryRepository extends JpaRepository<Story, Integer> {
     List<Story> findByTitleAndAuthorsAndYear(String title, List<Author> authors, Integer year);
+    List<Story> findByUrl(String url);
 }

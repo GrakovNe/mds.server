@@ -107,7 +107,7 @@ public class Story implements MdsEntity {
             ))
     private PlotType plotType;
 
-    private URL url;
+    private String url;
 
     private Integer fileSize;
 
@@ -214,11 +214,11 @@ public class Story implements MdsEntity {
         this.plotType = plotType;
     }
 
-    public URL getUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(URL url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 

@@ -14,5 +14,7 @@ spring:
     multipart:
       max-file-size: -1
       max-request-size: -1
+  config:
+      fileUploadDirectory: C:\Users\GrakovNe\Desktop\mds
 server:
     port: 5050
