@@ -19,3 +19,6 @@ spring:
       pageSize: 25
 server:
     port: 5050
+management:
+    security:
+        enabled: false
