@@ -69,6 +69,19 @@ public class StoryService {
 
     }
 
+    public void deleteStory(Integer storyId) {
+        Story story = storyRepository.findOne(storyId);
+        CheckerUtils.checkNotNull(story);
+
+        try {
+            fileProcessingUtils.deleteFile(FILE_PREFIX + storyId + FILE_POSTFIX);
+        } catch (FileNotFoundException e) {
+            throw new MdsException("Audio file can't de deleted");
+        }
+
+        storyRepository.delete(storyId);
+    }
+
     private Story setAudioData(Story story, File file) {
         story.setUrl(STORY_AUDIO_URL_PREFIX + story.getId());
         story.setFileSize(audioUtils.getAudioFileSize(file));

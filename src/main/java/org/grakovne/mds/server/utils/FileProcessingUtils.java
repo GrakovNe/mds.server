@@ -50,4 +50,15 @@ public class FileProcessingUtils {
 
         return persistentFile;
     }
+
+    public void deleteFile(String fileName) throws FileNotFoundException {
+        String persistentFilePath = getUploadFolder() + File.separator + fileName;
+        File persistentFile = new File(persistentFilePath);
+
+        if (!persistentFile.exists()){
+            throw new FileNotFoundException("File Not found!");
+        }
+
+        persistentFile.delete();
+    }
 }

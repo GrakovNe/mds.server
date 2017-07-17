@@ -60,4 +60,10 @@ public class StoryEndpoint {
         return new ApiResponse<>(savedStory);
     }
 
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public ApiResponse deleteStory(@PathVariable Integer id) {
+        storyService.deleteStory(id);
+        return new ApiResponse("Story has been deleted");
+    }
+
 }
