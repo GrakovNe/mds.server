@@ -19,17 +19,12 @@ public class FileProcessingUtils {
     @Autowired
     private ConfigurationUtils configurationProvider;
 
-    public File getUploadFolder(){
+    public File getUploadFolder() {
         return new File(configurationProvider.getFileUploadDirectory());
     }
 
-    private void createUploadDir(){
-        File uploadDir = new File(configurationProvider.getFileUploadDirectory());
-        uploadDir.mkdirs();
-    }
-
     public File uploadFile(MultipartFile file, String fileName) throws IOException {
-        if (!Files.exists(getUploadFolder().toPath())){
+        if (!Files.exists(getUploadFolder().toPath())) {
             createUploadDir();
         }
 
@@ -41,24 +36,20 @@ public class FileProcessingUtils {
     }
 
     public File getFile(String fileName) throws FileNotFoundException {
-        String persistentFilePath = getUploadFolder() + File.separator + fileName;
-        File persistentFile = new File(persistentFilePath);
+        String filePath = getUploadFolder() + File.separator + fileName;
+        File file = new File(filePath);
 
-        if (!persistentFile.exists()){
-            throw new FileNotFoundException("File Not found!");
-        }
+        CheckerUtils.checkFileExists(file);
 
-        return persistentFile;
+        return file;
     }
 
     public void deleteFile(String fileName) throws FileNotFoundException {
-        String persistentFilePath = getUploadFolder() + File.separator + fileName;
-        File persistentFile = new File(persistentFilePath);
+        getFile(fileName).delete();
+    }
 
-        if (!persistentFile.exists()){
-            throw new FileNotFoundException("File Not found!");
-        }
-
-        persistentFile.delete();
+    private void createUploadDir() {
+        File uploadDir = new File(configurationProvider.getFileUploadDirectory());
+        uploadDir.mkdirs();
     }
 }

@@ -1,6 +1,5 @@
 package org.grakovne.mds.server.utils;
 
-import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -30,13 +29,10 @@ public class AudioUtils {
     }
 
     private AudioHeader getHeader(File file) {
-        AudioFile audioFile = null;
         try {
-            audioFile = AudioFileIO.read(file);
+            return AudioFileIO.read(file).getAudioHeader();
         } catch (CannotReadException | IOException | TagException | InvalidAudioFrameException | ReadOnlyFileException e) {
             throw new IllegalArgumentException("Incorrect audio File");
         }
-
-        return audioFile.getAudioHeader();
     }
 }

@@ -4,6 +4,8 @@ import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.exceptons.EntityNotFoundException;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class CheckerUtils {
@@ -14,9 +16,15 @@ public class CheckerUtils {
         }
     }
 
-    public static void checkEmptyList(List<Story> storyList){
+    public static void checkEmptyList(List<Story> storyList) {
         if (!storyList.isEmpty()) {
             throw new EntityAlreadyExistException(Story.class);
+        }
+    }
+
+    public static void checkFileExists(File file) throws FileNotFoundException {
+        if (!file.exists()) {
+            throw new FileNotFoundException("File Not found!");
         }
     }
 }

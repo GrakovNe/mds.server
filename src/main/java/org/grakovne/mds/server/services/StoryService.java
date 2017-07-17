@@ -1,7 +1,7 @@
 package org.grakovne.mds.server.services;
 
 import org.grakovne.mds.server.entity.Story;
-import org.grakovne.mds.server.exceptons.MdsException;
+import org.grakovne.mds.server.exceptons.EntityException;
 import org.grakovne.mds.server.repositories.StoryRepository;
 import org.grakovne.mds.server.utils.AudioUtils;
 import org.grakovne.mds.server.utils.CheckerUtils;
@@ -19,18 +19,15 @@ import java.io.IOException;
 
 @Service
 public class StoryService {
-    @Autowired
-    private StoryRepository storyRepository;
-
-    @Autowired
-    private FileProcessingUtils fileProcessingUtils;
-
-    @Autowired
-    private AudioUtils audioUtils;
-
     private final String STORY_AUDIO_URL_PREFIX = "/audio/";
     private final String FILE_PREFIX = "story_";
     private final String FILE_POSTFIX = ".mp3";
+    @Autowired
+    private StoryRepository storyRepository;
+    @Autowired
+    private FileProcessingUtils fileProcessingUtils;
+    @Autowired
+    private AudioUtils audioUtils;
 
     public Story findStory(Integer id) {
         Story story = storyRepository.findOne(id);
@@ -52,7 +49,7 @@ public class StoryService {
             File savedAudioFile = fileProcessingUtils.uploadFile(storyAudio, FILE_PREFIX + savedStory.getId() + FILE_POSTFIX);
             setAudioData(savedStory, savedAudioFile);
         } catch (IOException e) {
-            throw new MdsException("Can't upload a story");
+            throw new EntityException(Story.class, "Can't upload a story");
         }
 
         return storyRepository.save(story);
@@ -64,7 +61,7 @@ public class StoryService {
         try {
             return fileProcessingUtils.getFile(fileName);
         } catch (FileNotFoundException ex) {
-            throw new MdsException("Audio file is not found");
+            throw new EntityException(Story.class, "Audio file is not found");
         }
 
     }
@@ -76,7 +73,7 @@ public class StoryService {
         try {
             fileProcessingUtils.deleteFile(FILE_PREFIX + storyId + FILE_POSTFIX);
         } catch (FileNotFoundException e) {
-            throw new MdsException("Audio file can't de deleted");
+            throw new EntityException(Story.class, "Audio file can't de deleted");
         }
 
         storyRepository.delete(storyId);

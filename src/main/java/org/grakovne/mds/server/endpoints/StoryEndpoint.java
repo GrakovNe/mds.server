@@ -23,13 +23,11 @@ import java.io.InputStream;
 @RequestMapping("/api/v1/story")
 public class StoryEndpoint {
 
+    private final Logger logger = LoggerFactory.getLogger(StoryEndpoint.class);
     @Autowired
     private StoryService storyService;
-
     @Autowired
     private ConfigurationUtils configurationUtils;
-
-    private final Logger logger = LoggerFactory.getLogger(StoryEndpoint.class);
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ApiResponse<Page<Story>> findStories(@RequestParam(required = false, defaultValue = "0") Integer page) {
