@@ -16,5 +16,6 @@ spring:
       max-request-size: -1
   config:
       fileUploadDirectory: C:\Users\GrakovNe\Desktop\mds
+      pageSize: 25
 server:
     port: 5050

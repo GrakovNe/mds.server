@@ -1,7 +1,6 @@
 package org.grakovne.mds.server.endpoints.exception.handlers;
 
 import org.grakovne.mds.server.endpoints.support.ApiResponse;
-import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.exceptons.EntityValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

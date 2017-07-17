@@ -1,7 +1,6 @@
 package org.grakovne.mds.server.entity;
 
 import javax.persistence.*;
-import java.net.URL;
 import java.util.List;
 import java.util.Set;
 

@@ -5,7 +5,6 @@ import org.grakovne.mds.server.entity.Story;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.net.URL;
 import java.util.List;
 
 /**

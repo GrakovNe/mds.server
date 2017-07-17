@@ -10,11 +10,21 @@ public class ConfigurationUtils {
 
     private String fileUploadDirectory;
 
+    private Integer pageSize;
+
     public String getFileUploadDirectory() {
         return fileUploadDirectory;
     }
 
     public void setFileUploadDirectory(String fileUploadDirectory) {
         this.fileUploadDirectory = fileUploadDirectory;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

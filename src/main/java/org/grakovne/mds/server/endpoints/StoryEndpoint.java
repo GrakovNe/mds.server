@@ -2,10 +2,10 @@ package org.grakovne.mds.server.endpoints;
 
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
-import org.grakovne.mds.server.MdsApplication;
 import org.grakovne.mds.server.endpoints.support.ApiResponse;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.services.StoryService;
+import org.grakovne.mds.server.utils.ConfigurationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,20 +27,20 @@ public class StoryEndpoint {
     private StoryService storyService;
 
     @Autowired
-    private HttpServletRequest request;
+    private ConfigurationUtils configurationUtils;
 
     private final Logger logger = LoggerFactory.getLogger(StoryEndpoint.class);
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ApiResponse<Page<Story>> findStories(@RequestParam(required = false, defaultValue = "0") Integer page) {
-        Page<Story> stories = storyService.findStories(new PageRequest(page, 25));
+        Page<Story> stories = storyService.findStories(new PageRequest(page, configurationUtils.getPageSize()));
         return new ApiResponse<>(stories);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public ApiResponse<Story> findStory(@PathVariable Integer id) {
         Story story = storyService.findStory(id);
-        return new ApiResponse<Story>(story);
+        return new ApiResponse<>(story);
     }
 
     @RequestMapping(value = "/audio/{id}", method = RequestMethod.GET)

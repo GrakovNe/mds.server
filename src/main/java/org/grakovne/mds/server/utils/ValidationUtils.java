@@ -5,7 +5,6 @@ import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.exceptons.EntityValidationException;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 
 public class ValidationUtils {
