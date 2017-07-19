@@ -1,5 +1,11 @@
 package org.grakovne.mds.server.endpoints.support;
 
+/**
+ * Support class which wrapped every response from api.
+ *
+ * @param <T> type of body
+ */
+
 public class ApiResponse<T> {
     private String message;
     private T body;
@@ -36,8 +42,8 @@ public class ApiResponse<T> {
     @Override
     public String toString() {
         return "ApiResponse{" +
-                "message='" + message + '\'' +
-                ", body=" + body +
-                '}';
+            "message='" + message + '\'' +
+            ", body=" + body +
+            '}';
     }
 }

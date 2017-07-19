@@ -117,7 +117,8 @@
         <module name="NoWhitespaceBefore"/>
         <module name="OperatorWrap">
             <property name="option" value="NL"/>
-            <property name="tokens" value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD, NOT_EQUAL, QUESTION, SL, SR, STAR "/>
+            <property name="tokens"
+                      value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD, NOT_EQUAL, QUESTION, SL, SR, STAR "/>
         </module>
         <module name="ParenPad"/>
         <module name="TypecastParenPad"/>

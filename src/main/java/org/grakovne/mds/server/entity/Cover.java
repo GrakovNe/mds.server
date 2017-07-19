@@ -1,6 +1,14 @@
 package org.grakovne.mds.server.entity;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  * JPA Entity.
@@ -48,14 +56,20 @@ public class Cover implements MdsEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Cover cover = (Cover) o;
 
-        if (story != null ? !story.equals(cover.story) : cover.story != null) return false;
+        if (story != null ? !story.equals(cover.story) : cover.story != null) {
+            return false;
+        }
         return base64EncodedCover != null
-                ? base64EncodedCover.equals(cover.base64EncodedCover) : cover.base64EncodedCover == null;
+            ? base64EncodedCover.equals(cover.base64EncodedCover) : cover.base64EncodedCover == null;
     }
 
     @Override
@@ -68,9 +82,9 @@ public class Cover implements MdsEntity {
     @Override
     public String toString() {
         return "Cover{" +
-                "id=" + id +
-                ", story=" + story +
-                ", base64EncodedCover='" + base64EncodedCover + '\'' +
-                '}';
+            "id=" + id +
+            ", story=" + story +
+            ", base64EncodedCover='" + base64EncodedCover + '\'' +
+            '}';
     }
 }

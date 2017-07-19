@@ -1,6 +1,11 @@
 package org.grakovne.mds.server.entity;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * JPA Entity.
@@ -37,8 +42,12 @@ public class PlotType implements MdsEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         PlotType plotType = (PlotType) o;
 
@@ -53,8 +62,8 @@ public class PlotType implements MdsEntity {
     @Override
     public String toString() {
         return "PlotType{" +
-                "id=" + id +
-                ", value='" + value + '\'' +
-                '}';
+            "id=" + id +
+            ", value='" + value + '\'' +
+            '}';
     }
 }

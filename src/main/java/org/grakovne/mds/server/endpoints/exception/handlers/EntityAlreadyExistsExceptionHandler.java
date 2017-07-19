@@ -8,9 +8,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Spring exception handler.
+ */
+
 @RestController
 @ControllerAdvice
-public class EntityAlreadyExistsFoundExceptionHandler {
+public class EntityAlreadyExistsExceptionHandler {
+
+    /**
+     * Handles EntityAlreadyExistException.
+     *
+     * @param ex exception object
+     * @return status response
+     */
 
     @ExceptionHandler(EntityAlreadyExistException.class)
     @ResponseStatus(value = HttpStatus.FOUND)

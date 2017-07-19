@@ -1,6 +1,11 @@
 package org.grakovne.mds.server.entity;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * JPA Entity.
@@ -36,12 +41,18 @@ public class ReaderAgeType implements MdsEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ReaderAgeType that = (ReaderAgeType) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) {
+            return false;
+        }
         return type != null ? type.equals(that.type) : that.type == null;
     }
 
@@ -55,8 +66,8 @@ public class ReaderAgeType implements MdsEntity {
     @Override
     public String toString() {
         return "ReaderAgeType{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                '}';
+            "id=" + id +
+            ", type='" + type + '\'' +
+            '}';
     }
 }

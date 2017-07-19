@@ -3,6 +3,9 @@ package org.grakovne.mds.server.utils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * Works with spring configuration file.
+ */
 
 @Component
 @ConfigurationProperties(prefix = "spring.config")

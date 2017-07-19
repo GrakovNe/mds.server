@@ -1,6 +1,17 @@
 package org.grakovne.mds.server.entity;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.util.List;
 import java.util.Set;
 
@@ -21,28 +32,28 @@ public class Story implements MdsEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "story_authors",
-            joinColumns = @JoinColumn(
-                    name = "story_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "author_id",
-                    referencedColumnName = "id"
-            ))
+        name = "story_authors",
+        joinColumns = @JoinColumn(
+            name = "story_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "author_id",
+            referencedColumnName = "id"
+        ))
     private List<Author> authors;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "story_genres",
-            joinColumns = @JoinColumn(
-                    name = "story_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "author_id",
-                    referencedColumnName = "id"
-            ))
+        name = "story_genres",
+        joinColumns = @JoinColumn(
+            name = "story_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "author_id",
+            referencedColumnName = "id"
+        ))
     private Set<Genre> genres;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -55,55 +66,55 @@ public class Story implements MdsEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "story_tags",
-            joinColumns = @JoinColumn(
-                    name = "story_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "author_id",
-                    referencedColumnName = "id"
-            ))
+        name = "story_tags",
+        joinColumns = @JoinColumn(
+            name = "story_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "author_id",
+            referencedColumnName = "id"
+        ))
     private Set<Tag> tags;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "story_action_place_types",
-            joinColumns = @JoinColumn(
-                    name = "story_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "author_id",
-                    referencedColumnName = "id"
-            ))
+        name = "story_action_place_types",
+        joinColumns = @JoinColumn(
+            name = "story_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "author_id",
+            referencedColumnName = "id"
+        ))
 
     private Set<ActionPlaceType> actionPlaceTypes;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "story_action_time_type",
-            joinColumns = @JoinColumn(
-                    name = "story_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "author_id",
-                    referencedColumnName = "id"
-            ))
+        name = "story_action_time_type",
+        joinColumns = @JoinColumn(
+            name = "story_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "author_id",
+            referencedColumnName = "id"
+        ))
     private Set<ActionTimeType> actionTimeTypes;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "story_plot_type",
-            joinColumns = @JoinColumn(
-                    name = "story_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "author_id",
-                    referencedColumnName = "id"
-            ))
+        name = "story_plot_type",
+        joinColumns = @JoinColumn(
+            name = "story_id",
+            referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+            name = "author_id",
+            referencedColumnName = "id"
+        ))
     private PlotType plotType;
 
     private String url;
@@ -247,28 +258,58 @@ public class Story implements MdsEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Story story = (Story) o;
 
-        if (title != null ? !title.equals(story.title) : story.title != null) return false;
-        if (year != null ? !year.equals(story.year) : story.year != null) return false;
-        if (authors != null ? !authors.equals(story.authors) : story.authors != null) return false;
-        if (genres != null ? !genres.equals(story.genres) : story.genres != null) return false;
-        if (rating != null ? !rating.equals(story.rating) : story.rating != null) return false;
-        if (cover != null ? !cover.equals(story.cover) : story.cover != null) return false;
-        if (annotation != null ? !annotation.equals(story.annotation) : story.annotation != null) return false;
-        if (tags != null ? !tags.equals(story.tags) : story.tags != null) return false;
+        if (title != null ? !title.equals(story.title) : story.title != null) {
+            return false;
+        }
+        if (year != null ? !year.equals(story.year) : story.year != null) {
+            return false;
+        }
+        if (authors != null ? !authors.equals(story.authors) : story.authors != null) {
+            return false;
+        }
+        if (genres != null ? !genres.equals(story.genres) : story.genres != null) {
+            return false;
+        }
+        if (rating != null ? !rating.equals(story.rating) : story.rating != null) {
+            return false;
+        }
+        if (cover != null ? !cover.equals(story.cover) : story.cover != null) {
+            return false;
+        }
+        if (annotation != null ? !annotation.equals(story.annotation) : story.annotation != null) {
+            return false;
+        }
+        if (tags != null ? !tags.equals(story.tags) : story.tags != null) {
+            return false;
+        }
         if (actionPlaceTypes != null
-                ? !actionPlaceTypes.equals(story.actionPlaceTypes) : story.actionPlaceTypes != null)
+            ? !actionPlaceTypes.equals(story.actionPlaceTypes) : story.actionPlaceTypes != null) {
             return false;
-        if (actionTimeTypes != null ? !actionTimeTypes.equals(story.actionTimeTypes) : story.actionTimeTypes != null)
+        }
+        if (actionTimeTypes != null ? !actionTimeTypes.equals(story.actionTimeTypes) : story.actionTimeTypes != null) {
             return false;
-        if (plotType != null ? !plotType.equals(story.plotType) : story.plotType != null) return false;
-        if (url != null ? !url.equals(story.url) : story.url != null) return false;
-        if (fileSize != null ? !fileSize.equals(story.fileSize) : story.fileSize != null) return false;
-        if (fileQuality != null ? !fileQuality.equals(story.fileQuality) : story.fileQuality != null) return false;
+        }
+        if (plotType != null ? !plotType.equals(story.plotType) : story.plotType != null) {
+            return false;
+        }
+        if (url != null ? !url.equals(story.url) : story.url != null) {
+            return false;
+        }
+        if (fileSize != null ? !fileSize.equals(story.fileSize) : story.fileSize != null) {
+            return false;
+        }
+        if (fileQuality != null ? !fileQuality.equals(story.fileQuality) : story.fileQuality != null) {
+            return false;
+        }
         return length != null ? length.equals(story.length) : story.length == null;
     }
 
@@ -295,22 +336,22 @@ public class Story implements MdsEntity {
     @Override
     public String toString() {
         return "Story{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", year=" + year +
-                ", authors=" + authors +
-                ", genres=" + genres +
-                ", rating=" + rating +
-                ", cover=" + cover +
-                ", annotation='" + annotation + '\'' +
-                ", tags=" + tags +
-                ", actionPlaceTypes=" + actionPlaceTypes +
-                ", actionTimeTypes=" + actionTimeTypes +
-                ", plotType=" + plotType +
-                ", url=" + url +
-                ", fileSize=" + fileSize +
-                ", fileQuality=" + fileQuality +
-                ", length=" + length +
-                '}';
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", year=" + year +
+            ", authors=" + authors +
+            ", genres=" + genres +
+            ", rating=" + rating +
+            ", cover=" + cover +
+            ", annotation='" + annotation + '\'' +
+            ", tags=" + tags +
+            ", actionPlaceTypes=" + actionPlaceTypes +
+            ", actionTimeTypes=" + actionTimeTypes +
+            ", plotType=" + plotType +
+            ", url=" + url +
+            ", fileSize=" + fileSize +
+            ", fileQuality=" + fileQuality +
+            ", length=" + length +
+            '}';
     }
 }

@@ -2,7 +2,15 @@ package org.grakovne.mds.server.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  * JPA Entity.
@@ -61,13 +69,21 @@ public class Rating implements MdsEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Rating rating = (Rating) o;
 
-        if (story != null ? !story.equals(rating.story) : rating.story != null) return false;
-        if (value != null ? !value.equals(rating.value) : rating.value != null) return false;
+        if (story != null ? !story.equals(rating.story) : rating.story != null) {
+            return false;
+        }
+        if (value != null ? !value.equals(rating.value) : rating.value != null) {
+            return false;
+        }
         return voters != null ? voters.equals(rating.voters) : rating.voters == null;
     }
 
@@ -82,10 +98,10 @@ public class Rating implements MdsEntity {
     @Override
     public String toString() {
         return "Rating{" +
-                "id=" + id +
-                ", story=" + story +
-                ", value=" + value +
-                ", voters=" + voters +
-                '}';
+            "id=" + id +
+            ", story=" + story +
+            ", value=" + value +
+            ", voters=" + voters +
+            '}';
     }
 }

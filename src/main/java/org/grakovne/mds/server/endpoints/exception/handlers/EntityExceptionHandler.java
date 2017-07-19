@@ -1,7 +1,7 @@
 package org.grakovne.mds.server.endpoints.exception.handlers;
 
 import org.grakovne.mds.server.endpoints.support.ApiResponse;
-import org.grakovne.mds.server.exceptons.EntityNotFoundException;
+import org.grakovne.mds.server.exceptons.EntityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @ControllerAdvice
-public class EntityNotFoundExceptionHandler {
+public class EntityExceptionHandler {
 
     /**
-     * Handles EntityNotFoundException when no entity in db.
+     * Handles EntityException.
      *
      * @param ex exception object
      * @return status response
      */
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ApiResponse entityNotFoundHandler(EntityNotFoundException ex) {
+    @ExceptionHandler(EntityException.class)
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    public ApiResponse entityExceptionHandler(EntityException ex) {
         return new ApiResponse(ex.getMessage());
     }
 }

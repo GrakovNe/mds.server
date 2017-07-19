@@ -1,6 +1,11 @@
 package org.grakovne.mds.server.entity;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * JPA Entity.
@@ -36,8 +41,12 @@ public class Tag implements MdsEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Tag tag = (Tag) o;
 
@@ -52,8 +61,8 @@ public class Tag implements MdsEntity {
     @Override
     public String toString() {
         return "Tag{" +
-                "id=" + id +
-                ", value='" + value + '\'' +
-                '}';
+            "id=" + id +
+            ", value='" + value + '\'' +
+            '}';
     }
 }

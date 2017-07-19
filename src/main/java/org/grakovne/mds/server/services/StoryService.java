@@ -5,6 +5,7 @@ import org.grakovne.mds.server.exceptons.EntityException;
 import org.grakovne.mds.server.repositories.StoryRepository;
 import org.grakovne.mds.server.utils.AudioUtils;
 import org.grakovne.mds.server.utils.CheckerUtils;
+import org.grakovne.mds.server.utils.ConfigurationUtils;
 import org.grakovne.mds.server.utils.FileProcessingUtils;
 import org.grakovne.mds.server.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,36 +18,68 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Story service.
+ */
+
 @Service
 public class StoryService {
-    private final String STORY_AUDIO_URL_PREFIX = "/audio/";
-    private final String FILE_PREFIX = "story_";
-    private final String FILE_POSTFIX = ".mp3";
+    private final String storyAudioUrlPrefix = "/audio/";
+    private final String filePrefix = "story_";
+    private final String filePostfix = ".mp3";
+
     @Autowired
     private StoryRepository storyRepository;
+
     @Autowired
     private FileProcessingUtils fileProcessingUtils;
+
     @Autowired
     private AudioUtils audioUtils;
 
+    @Autowired
+    private ConfigurationUtils configurationUtils;
+
+    /**
+     * Finds story by it's id.
+     *
+     * @param id id
+     * @return Story entity
+     */
     public Story findStory(Integer id) {
         Story story = storyRepository.findOne(id);
         CheckerUtils.checkNotNull(story);
         return story;
     }
 
-    public Page<Story> findStories(PageRequest pageRequest) {
-        return storyRepository.findAll(pageRequest);
+    /**
+     * Finds stories.
+     *
+     * @param pageNumber page number
+     * @return Page with stories
+     */
+
+    public Page<Story> findStories(Integer pageNumber) {
+        return storyRepository.findAll(new PageRequest(pageNumber, configurationUtils.getPageSize()));
     }
+
+    /**
+     * Saves new story in DB.
+     *
+     * @param story      story entity
+     * @param storyAudio audio file
+     * @return saved story
+     */
 
     public Story createStory(Story story, MultipartFile storyAudio) {
         ValidationUtils.validate(story, storyAudio);
-        CheckerUtils.checkEmptyList(storyRepository.findByUrl(story.getUrl()));
+        CheckerUtils.checkNull(storyRepository.findByUrl(story.getUrl()));
 
         Story savedStory = storyRepository.save(story);
 
         try {
-            File savedAudioFile = fileProcessingUtils.uploadFile(storyAudio, FILE_PREFIX + savedStory.getId() + FILE_POSTFIX);
+            File savedAudioFile = fileProcessingUtils.uploadFile(
+                storyAudio, filePrefix + savedStory.getId() + filePostfix);
             setAudioData(savedStory, savedAudioFile);
         } catch (IOException e) {
             throw new EntityException(Story.class, "Can't upload a story");
@@ -55,8 +88,15 @@ public class StoryService {
         return storyRepository.save(story);
     }
 
+    /**
+     * Finds story audio file by story id.
+     *
+     * @param storyId story id
+     * @return file with mp3
+     */
+
     public File findStoryAudio(Integer storyId) {
-        String fileName = FILE_PREFIX + storyId + FILE_POSTFIX;
+        String fileName = filePrefix + storyId + filePostfix;
 
         try {
             return fileProcessingUtils.getFile(fileName);
@@ -66,12 +106,18 @@ public class StoryService {
 
     }
 
+    /**
+     * Deletes story by it's id.
+     *
+     * @param storyId story id
+     */
+
     public void deleteStory(Integer storyId) {
         Story story = storyRepository.findOne(storyId);
         CheckerUtils.checkNotNull(story);
 
         try {
-            fileProcessingUtils.deleteFile(FILE_PREFIX + storyId + FILE_POSTFIX);
+            fileProcessingUtils.deleteFile(filePrefix + storyId + filePostfix);
         } catch (FileNotFoundException e) {
             throw new EntityException(Story.class, "Audio file can't de deleted");
         }
@@ -80,7 +126,7 @@ public class StoryService {
     }
 
     private Story setAudioData(Story story, File file) {
-        story.setUrl(STORY_AUDIO_URL_PREFIX + story.getId());
+        story.setUrl(storyAudioUrlPrefix + story.getId());
         story.setFileSize(audioUtils.getAudioFileSize(file));
         story.setFileQuality(audioUtils.getAudioFileBitrate(file));
         story.setLength(audioUtils.getAudioFileLength(file));

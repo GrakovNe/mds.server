@@ -1,6 +1,11 @@
 package org.grakovne.mds.server.entity;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * JPA Entity.
@@ -46,12 +51,18 @@ public class Author implements MdsEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Author author = (Author) o;
 
-        if (firstName != null ? !firstName.equals(author.firstName) : author.firstName != null) return false;
+        if (firstName != null ? !firstName.equals(author.firstName) : author.firstName != null) {
+            return false;
+        }
         return lastName != null ? lastName.equals(author.lastName) : author.lastName == null;
     }
 
@@ -65,10 +76,10 @@ public class Author implements MdsEntity {
     @Override
     public String toString() {
         return "Author{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            '}';
     }
 
 }

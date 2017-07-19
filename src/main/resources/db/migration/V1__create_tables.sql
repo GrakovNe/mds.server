@@ -46,18 +46,18 @@ CREATE TABLE rating (
 
 CREATE TABLE reader_age_type (
     id integer NOT NULL,
-    type character varying(255)
+    TYPE character varying(255)
 );
 
 CREATE TABLE story (
     id integer NOT NULL,
     annotation character varying(255),
-    file_quality bigint,
-    file_size bigint,
+    file_quality BIGINT,
+    file_size BIGINT,
     length integer,
     title character varying(255),
     url character varying(255),
-    year integer,
+    YEAR integer,
     cover_id integer,
     rating_id integer
 );

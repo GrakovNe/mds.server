@@ -11,17 +11,35 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 
+/**
+ * Works with story audio file in working directory.
+ */
+
 @SuppressWarnings("ResultOfMethodCallIgnored")
 @Component
 public class FileProcessingUtils {
-    private final static Logger logger = LoggerFactory.getLogger(FileProcessingUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileProcessingUtils.class);
 
     @Autowired
     private ConfigurationUtils configurationProvider;
 
+    /**
+     * Returns working directory.
+     *
+     * @return file with working directory path
+     */
     public File getUploadFolder() {
         return new File(configurationProvider.getFileUploadDirectory());
     }
+
+    /**
+     * Uploads file to working directory.
+     *
+     * @param file     content
+     * @param fileName destination file name
+     * @return saved file
+     * @throws IOException when file can't be saved
+     */
 
     public File uploadFile(MultipartFile file, String fileName) throws IOException {
         if (!Files.exists(getUploadFolder().toPath())) {
@@ -35,6 +53,13 @@ public class FileProcessingUtils {
         return fileToSave;
     }
 
+    /**
+     * Returns file by it's name.
+     *
+     * @param fileName required file name
+     * @return saved file
+     * @throws FileNotFoundException when file isn't found on a disk
+     */
     public File getFile(String fileName) throws FileNotFoundException {
         String filePath = getUploadFolder() + File.separator + fileName;
         File file = new File(filePath);
@@ -44,9 +69,19 @@ public class FileProcessingUtils {
         return file;
     }
 
+    /**
+     * Removes file by it's name.
+     *
+     * @param fileName required file name
+     * @throws FileNotFoundException when file isn't found on a disk
+     */
     public void deleteFile(String fileName) throws FileNotFoundException {
         getFile(fileName).delete();
     }
+
+    /**
+     * Creates working directory.
+     */
 
     private void createUploadDir() {
         File uploadDir = new File(configurationProvider.getFileUploadDirectory());

@@ -10,4 +10,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GenreRepository extends JpaRepository<Genre, Integer> {
+    /**
+     * Finds genre by it's value.
+     *
+     * @param value genre name
+     * @return genre entity
+     */
+
+    Genre findAllByValue(String value);
 }
