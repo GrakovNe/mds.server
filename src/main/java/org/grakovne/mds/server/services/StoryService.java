@@ -73,7 +73,6 @@ public class StoryService {
 
     public Story createStory(Story story, MultipartFile storyAudio) {
         ValidationUtils.validate(story, storyAudio);
-        CheckerUtils.checkNull(storyRepository.findByUrl(story.getUrl()));
 
         Story savedStory = storyRepository.save(story);
 
@@ -82,7 +81,7 @@ public class StoryService {
                 storyAudio, filePrefix + savedStory.getId() + filePostfix);
             setAudioData(savedStory, savedAudioFile);
         } catch (IOException e) {
-            throw new EntityException(Story.class, "Can't upload a story");
+            throw new EntityException(Story.class, e.getMessage());
         }
 
         return storyRepository.save(story);
