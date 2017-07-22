@@ -1,8 +1,8 @@
-package org.grakovne.mds.server.endpoints;
+package org.grakovne.mds.server.endpoints.rest.v1;
 
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
-import org.grakovne.mds.server.endpoints.support.ApiResponse;
+import org.grakovne.mds.server.endpoints.rest.v1.support.ApiResponse;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.services.StoryService;
 import org.slf4j.Logger;
@@ -31,6 +31,7 @@ import java.io.InputStream;
 public class StoryEndpoint {
 
     private final Logger logger = LoggerFactory.getLogger(StoryEndpoint.class);
+
     @Autowired
     private StoryService storyService;
 
@@ -68,7 +69,7 @@ public class StoryEndpoint {
      * @throws IOException when file can't be sent
      */
 
-    @RequestMapping(value = "/audio/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/audio", method = RequestMethod.GET)
     public void findStoryAudio(@PathVariable Integer id, HttpServletResponse response) throws IOException {
         InputStream fileStream = new FileInputStream(storyService.findStoryAudio(id));
         IOUtils.copy(fileStream, response.getOutputStream());

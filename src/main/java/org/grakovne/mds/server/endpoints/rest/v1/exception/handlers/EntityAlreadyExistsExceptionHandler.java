@@ -1,7 +1,7 @@
-package org.grakovne.mds.server.endpoints.exception.handlers;
+package org.grakovne.mds.server.endpoints.rest.v1.exception.handlers;
 
-import org.grakovne.mds.server.endpoints.support.ApiResponse;
-import org.grakovne.mds.server.exceptons.EntityValidationException;
+import org.grakovne.mds.server.endpoints.rest.v1.support.ApiResponse;
+import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @ControllerAdvice
-public class EntityValidationExceptionHandler {
+public class EntityAlreadyExistsExceptionHandler {
 
     /**
-     * Handles EntityException when validation failed.
+     * Handles EntityAlreadyExistException.
      *
      * @param ex exception object
      * @return status response
      */
 
-    @ExceptionHandler(EntityValidationException.class)
-    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
-    public ApiResponse entityAlreadyExistsFoundHandler(EntityValidationException ex) {
+    @ExceptionHandler(EntityAlreadyExistException.class)
+    @ResponseStatus(value = HttpStatus.FOUND)
+    public ApiResponse entityAlreadyExistsFoundHandler(EntityAlreadyExistException ex) {
         return new ApiResponse(ex.getMessage());
     }
 }

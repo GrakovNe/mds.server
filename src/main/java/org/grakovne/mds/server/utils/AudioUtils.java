@@ -1,10 +1,13 @@
 package org.grakovne.mds.server.utils;
 
+import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.audio.mp3.MP3File;
+import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.springframework.stereotype.Component;
 
@@ -53,16 +56,28 @@ public class AudioUtils {
         return audioFile.length();
     }
 
-    private AudioHeader getHeader(File file) {
+    public String getAudioFileTitle(File file){
+        return getAudioFile(file).getTag().getFirst(FieldKey.TITLE);
+    }
+
+    public String getAudioFileArtist(File file) {
+        return getAudioFile(file).getTag().getFirst(FieldKey.ARTIST);
+    }
+
+    private AudioFile getAudioFile(File file){
         try {
-            return AudioFileIO.read(file).getAudioHeader();
+            return AudioFileIO.read(file);
         } catch (CannotReadException
             | IOException
             | TagException
-            | InvalidAudioFrameException
-            | ReadOnlyFileException e) {
+            | ReadOnlyFileException
+            | InvalidAudioFrameException e) {
 
             throw new IllegalArgumentException("Incorrect audio File");
         }
+    }
+
+    private AudioHeader getHeader(File file) {
+        return getAudioFile(file).getAudioHeader();
     }
 }

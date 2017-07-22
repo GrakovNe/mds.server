@@ -1,6 +1,6 @@
-package org.grakovne.mds.server.endpoints;
+package org.grakovne.mds.server.endpoints.rest.v1;
 
-import org.grakovne.mds.server.endpoints.support.ApiResponse;
+import org.grakovne.mds.server.endpoints.rest.v1.support.ApiResponse;
 import org.grakovne.mds.server.entity.Genre;
 import org.grakovne.mds.server.services.GenreService;
 import org.slf4j.Logger;

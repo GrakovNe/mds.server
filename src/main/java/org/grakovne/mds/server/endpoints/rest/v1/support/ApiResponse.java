@@ -1,4 +1,4 @@
-package org.grakovne.mds.server.endpoints.support;
+package org.grakovne.mds.server.endpoints.rest.v1.support;
 
 /**
  * Support class which wrapped every response from api.
