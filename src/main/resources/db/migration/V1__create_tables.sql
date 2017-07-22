@@ -16,7 +16,7 @@ CREATE TABLE author (
 
 CREATE TABLE cover (
     id integer NOT NULL,
-    base64encoded_cover character varying(255),
+    base64encoded_cover character varying(655350),
     story_id integer
 );
 
@@ -39,7 +39,7 @@ CREATE TABLE plot_type (
 
 CREATE TABLE rating (
     id integer NOT NULL,
-    value integer,
+    value double precision,
     voters integer,
     story_id integer
 );
@@ -51,7 +51,7 @@ CREATE TABLE reader_age_type (
 
 CREATE TABLE story (
     id integer NOT NULL,
-    annotation character varying(255),
+    annotation character varying(65535),
     file_quality BIGINT,
     file_size BIGINT,
     length integer,

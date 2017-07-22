@@ -28,7 +28,7 @@ public class Rating implements MdsEntity {
     @JsonIgnore
     private Story story;
 
-    private Integer value;
+    private Double value;
 
     private Integer voters;
 
@@ -51,11 +51,11 @@ public class Rating implements MdsEntity {
         this.story = story;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
@@ -99,7 +99,6 @@ public class Rating implements MdsEntity {
     public String toString() {
         return "Rating{" +
             "id=" + id +
-            ", story=" + story +
             ", value=" + value +
             ", voters=" + voters +
             '}';

@@ -6,7 +6,6 @@ import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.springframework.stereotype.Component;
@@ -56,7 +55,7 @@ public class AudioUtils {
         return audioFile.length();
     }
 
-    public String getAudioFileTitle(File file){
+    public String getAudioFileTitle(File file) {
         return getAudioFile(file).getTag().getFirst(FieldKey.TITLE);
     }
 
@@ -64,7 +63,7 @@ public class AudioUtils {
         return getAudioFile(file).getTag().getFirst(FieldKey.ARTIST);
     }
 
-    private AudioFile getAudioFile(File file){
+    private AudioFile getAudioFile(File file) {
         try {
             return AudioFileIO.read(file);
         } catch (CannotReadException
@@ -73,7 +72,7 @@ public class AudioUtils {
             | ReadOnlyFileException
             | InvalidAudioFrameException e) {
 
-            throw new IllegalArgumentException("Incorrect audio File");
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 

@@ -1,5 +1,7 @@
 package org.grakovne.mds.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
@@ -23,6 +25,7 @@ public class Cover implements MdsEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "story_id")
+    @JsonIgnore
     private Story story;
 
     private String base64EncodedCover;
@@ -83,7 +86,6 @@ public class Cover implements MdsEntity {
     public String toString() {
         return "Cover{" +
             "id=" + id +
-            ", story=" + story +
             ", base64EncodedCover='" + base64EncodedCover + '\'' +
             '}';
     }

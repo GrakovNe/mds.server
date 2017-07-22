@@ -1,5 +1,6 @@
 package org.grakovne.mds.server.endpoints.rest.v1;
 
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 import org.grakovne.mds.server.endpoints.rest.v1.support.ApiResponse;
@@ -88,14 +89,20 @@ public class StoryEndpoint {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ApiResponse<Story> createStory(
-        @RequestPart(value = "story") String storyString,
+        @RequestPart(value = "story", required = false) String storyString,
         @RequestPart(value = "audio") MultipartFile audio) throws IOException {
 
-        Story story = new Gson().fromJson(storyString, Story.class);
+        Story result;
+        if (null == storyString || Strings.isNullOrEmpty(storyString)) {
+            result = storyService.importStory(audio);
+        } else {
+            Story story = new Gson().fromJson(storyString, Story.class);
+            result = storyService.createStory(story, audio);
+        }
 
-        Story savedStory = storyService.createStory(story, audio);
-        return new ApiResponse<>(savedStory);
+        return new ApiResponse<>(result);
     }
+
 
     /**
      * Deletes story by it's id.

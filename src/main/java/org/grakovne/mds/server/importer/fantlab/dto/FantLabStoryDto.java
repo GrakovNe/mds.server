@@ -27,6 +27,9 @@ public class FantLabStoryDto {
     @SerializedName("work_type")
     private String storyType;
 
+    @SerializedName("work_year")
+    private Integer year;
+
     public FantLabStoryDto(String title, List<FantLabStoryAuthor> authors) {
         this.title = title;
         this.authors = authors;
@@ -60,6 +63,10 @@ public class FantLabStoryDto {
         return storyType;
     }
 
+    public Integer getYear() {
+        return year;
+    }
+
     @Override
     public String toString() {
         return "FantLabStoryDto{" +
@@ -70,6 +77,7 @@ public class FantLabStoryDto {
             ", ratingVoters=" + ratingVoters +
             ", annotation='" + annotation + '\'' +
             ", storyType='" + storyType + '\'' +
+            ", year='" + year + '\'' +
             '}';
     }
 

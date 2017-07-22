@@ -2,18 +2,20 @@ package org.grakovne.mds.server.importer.fantlab;
 
 import com.google.common.base.Strings;
 import org.grakovne.mds.server.importer.ImporterException;
+import org.grakovne.mds.server.importer.fantlab.api.ApiFactory;
+import org.grakovne.mds.server.importer.fantlab.api.ApiService;
 import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
 import org.grakovne.mds.server.importer.fantlab.dto.search.AudioMatches;
 import org.grakovne.mds.server.importer.fantlab.dto.search.AudioMetaData;
-import org.grakovne.mds.server.importer.fantlab.api.ApiFactory;
-import org.grakovne.mds.server.importer.fantlab.api.ApiService;
 import org.grakovne.mds.server.utils.AudioUtils;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class FantLabMetaImporter {
 
     public FantLabStoryDto importMetaFromAudio(File audioFile) {

@@ -1,7 +1,11 @@
 package org.grakovne.mds.server.services;
 
+import com.google.common.base.Strings;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.exceptons.EntityException;
+import org.grakovne.mds.server.importer.fantlab.FantLabMetaImporter;
+import org.grakovne.mds.server.importer.fantlab.converters.FantLabStoryConverter;
+import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
 import org.grakovne.mds.server.repositories.StoryRepository;
 import org.grakovne.mds.server.utils.AudioUtils;
 import org.grakovne.mds.server.utils.CheckerUtils;
@@ -39,6 +43,12 @@ public class StoryService {
 
     @Autowired
     private ConfigurationUtils configurationUtils;
+
+    @Autowired
+    private FantLabMetaImporter fantLabMetaImporter;
+
+    @Autowired
+    private FantLabStoryConverter fantLabStoryConverter;
 
     /**
      * Finds story by it's id.
@@ -124,8 +134,65 @@ public class StoryService {
         storyRepository.delete(storyId);
     }
 
+    public Story updateStory(Integer storyId, Story newStory) {
+        Story persistStory = findStory(storyId);
+
+        if (!Strings.isNullOrEmpty(newStory.getTitle())) {
+            persistStory.setTitle(newStory.getTitle());
+        }
+
+        if (null != newStory.getYear()) {
+            persistStory.setYear(newStory.getYear());
+        }
+
+        if (null != newStory.getAuthors() && !newStory.getAuthors().isEmpty()) {
+            persistStory.setAuthors(newStory.getAuthors());
+        }
+
+        if (null != newStory.getRating() && null != newStory.getRating().getValue()) {
+            if (null != persistStory.getRating()) {
+                persistStory.getRating().setValue(newStory.getRating().getValue());
+                persistStory.getRating().setVoters(newStory.getRating().getVoters());
+            } else {
+                persistStory.setRating(newStory.getRating());
+            }
+        }
+
+        if (null != newStory.getCover() && !Strings.isNullOrEmpty(newStory.getCover().getBase64EncodedCover())) {
+            if (null == persistStory.getCover()) {
+                persistStory.setCover(newStory.getCover());
+            } else {
+                persistStory.getCover().setBase64EncodedCover(newStory.getCover().getBase64EncodedCover());
+            }
+        }
+
+        if (null != newStory.getAnnotation() && !Strings.isNullOrEmpty(newStory.getAnnotation())) {
+            persistStory.setAnnotation(newStory.getAnnotation());
+        }
+
+        if (null != newStory.getTags()) {
+            if (null != persistStory.getTags()) {
+                persistStory.getTags().addAll(newStory.getTags());
+            } else {
+                persistStory.setTags(newStory.getTags());
+            }
+        }
+
+        return storyRepository.save(persistStory);
+    }
+
+    public Story importStory(MultipartFile storyAudio) throws IOException {
+        File audioFile = File.createTempFile("audio_story", ".mp3");
+        storyAudio.transferTo(audioFile);
+
+        FantLabStoryDto storyDto = fantLabMetaImporter.importMetaFromAudio(audioFile);
+        Story convertedStory = fantLabStoryConverter.convertFromFantLabStory(storyDto);
+
+        return createStory(convertedStory, storyAudio);
+    }
+
     private Story setAudioData(Story story, File file) {
-        story.setUrl(storyAudioUrlPrefix + story.getId());
+        story.setUrl("/" + story.getId() + storyAudioUrlPrefix);
         story.setFileSize(audioUtils.getAudioFileSize(file));
         story.setFileQuality(audioUtils.getAudioFileBitrate(file));
         story.setLength(audioUtils.getAudioFileLength(file));
