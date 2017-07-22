@@ -1,4 +1,4 @@
-package org.grakovne.mds.server.importer.dto;
+package org.grakovne.mds.server.importer.fantlab.dto;
 
 import com.google.gson.annotations.SerializedName;
 

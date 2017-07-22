@@ -1,11 +1,12 @@
-package org.grakovne.mds.server.importer;
+package org.grakovne.mds.server.importer.fantlab;
 
 import com.google.common.base.Strings;
-import org.grakovne.mds.server.importer.dto.FantLabStoryDto;
-import org.grakovne.mds.server.importer.dto.search.AudioMatches;
-import org.grakovne.mds.server.importer.dto.search.AudioMetaData;
-import org.grakovne.mds.server.importer.retrofit.ApiFactory;
-import org.grakovne.mds.server.importer.retrofit.FantLabService;
+import org.grakovne.mds.server.importer.ImporterException;
+import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
+import org.grakovne.mds.server.importer.fantlab.dto.search.AudioMatches;
+import org.grakovne.mds.server.importer.fantlab.dto.search.AudioMetaData;
+import org.grakovne.mds.server.importer.fantlab.api.ApiFactory;
+import org.grakovne.mds.server.importer.fantlab.api.ApiService;
 import org.grakovne.mds.server.utils.AudioUtils;
 
 import java.io.File;
@@ -42,18 +43,18 @@ public class FantLabMetaImporter {
     }
 
     private AudioMatches findStories(String searchPhrase) throws IOException {
-        AudioMetaData response = ApiFactory.getRetrofit().create(FantLabService.class).findStories(searchPhrase).execute().body();
+        AudioMetaData response = ApiFactory.getRetrofit().create(ApiService.class).findStories(searchPhrase).execute().body();
         List<AudioMatches> foundStories = response.getMatches();
 
         if (foundStories.isEmpty()) {
-            throw new StoriesNotFoundException();
+            throw new ImporterException("Can't find story");
         }
 
         return foundStories.get(0);
     }
 
     private FantLabStoryDto getStoryMetaData(AudioMatches audioMatches) throws IOException {
-        return ApiFactory.getRetrofit().create(FantLabService.class).findStoryMetaData(getStoryUrl(audioMatches)).execute().body();
+        return ApiFactory.getRetrofit().create(ApiService.class).findStoryMetaData(getStoryUrl(audioMatches)).execute().body();
     }
 
     private String prepareSearchQuery(String title, String artist) {

@@ -1,8 +1,7 @@
 package org.grakovne.mds.server;
 
-import org.grakovne.mds.server.importer.FantLabMetaImporter;
-import org.grakovne.mds.server.importer.dto.FantLabStoryDto;
-import org.grakovne.mds.server.utils.AudioUtils;
+import org.grakovne.mds.server.importer.fantlab.FantLabMetaImporter;
+import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
 
 import java.io.File;
 import java.io.IOException;
