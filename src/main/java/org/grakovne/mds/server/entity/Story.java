@@ -77,46 +77,6 @@ public class Story implements MdsEntity {
         ))
     private Set<Tag> tags;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "story_action_place_types",
-        joinColumns = @JoinColumn(
-            name = "story_id",
-            referencedColumnName = "id"
-        ),
-        inverseJoinColumns = @JoinColumn(
-            name = "author_id",
-            referencedColumnName = "id"
-        ))
-
-    private Set<ActionPlaceType> actionPlaceTypes;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "story_action_time_type",
-        joinColumns = @JoinColumn(
-            name = "story_id",
-            referencedColumnName = "id"
-        ),
-        inverseJoinColumns = @JoinColumn(
-            name = "author_id",
-            referencedColumnName = "id"
-        ))
-    private Set<ActionTimeType> actionTimeTypes;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "story_plot_type",
-        joinColumns = @JoinColumn(
-            name = "story_id",
-            referencedColumnName = "id"
-        ),
-        inverseJoinColumns = @JoinColumn(
-            name = "author_id",
-            referencedColumnName = "id"
-        ))
-    private PlotType plotType;
-
     private String url;
 
     private Long fileSize;
@@ -200,30 +160,6 @@ public class Story implements MdsEntity {
         this.tags = tags;
     }
 
-    public Set<ActionPlaceType> getActionPlaceTypes() {
-        return actionPlaceTypes;
-    }
-
-    public void setActionPlaceTypes(Set<ActionPlaceType> actionPlaceTypes) {
-        this.actionPlaceTypes = actionPlaceTypes;
-    }
-
-    public Set<ActionTimeType> getActionTimeTypes() {
-        return actionTimeTypes;
-    }
-
-    public void setActionTimeTypes(Set<ActionTimeType> actionTimeTypes) {
-        this.actionTimeTypes = actionTimeTypes;
-    }
-
-    public PlotType getPlotType() {
-        return plotType;
-    }
-
-    public void setPlotType(PlotType plotType) {
-        this.plotType = plotType;
-    }
-
     public String getUrl() {
         return url;
     }
@@ -291,16 +227,7 @@ public class Story implements MdsEntity {
         if (tags != null ? !tags.equals(story.tags) : story.tags != null) {
             return false;
         }
-        if (actionPlaceTypes != null
-            ? !actionPlaceTypes.equals(story.actionPlaceTypes) : story.actionPlaceTypes != null) {
-            return false;
-        }
-        if (actionTimeTypes != null ? !actionTimeTypes.equals(story.actionTimeTypes) : story.actionTimeTypes != null) {
-            return false;
-        }
-        if (plotType != null ? !plotType.equals(story.plotType) : story.plotType != null) {
-            return false;
-        }
+
         if (url != null ? !url.equals(story.url) : story.url != null) {
             return false;
         }
@@ -323,9 +250,6 @@ public class Story implements MdsEntity {
         result = 31 * result + (cover != null ? cover.hashCode() : 0);
         result = 31 * result + (annotation != null ? annotation.hashCode() : 0);
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
-        result = 31 * result + (actionPlaceTypes != null ? actionPlaceTypes.hashCode() : 0);
-        result = 31 * result + (actionTimeTypes != null ? actionTimeTypes.hashCode() : 0);
-        result = 31 * result + (plotType != null ? plotType.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (fileSize != null ? fileSize.hashCode() : 0);
         result = 31 * result + (fileQuality != null ? fileQuality.hashCode() : 0);
@@ -345,9 +269,6 @@ public class Story implements MdsEntity {
             ", cover=" + cover +
             ", annotation='" + annotation + '\'' +
             ", tags=" + tags +
-            ", actionPlaceTypes=" + actionPlaceTypes +
-            ", actionTimeTypes=" + actionTimeTypes +
-            ", plotType=" + plotType +
             ", url=" + url +
             ", fileSize=" + fileSize +
             ", fileQuality=" + fileQuality +

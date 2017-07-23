@@ -89,7 +89,7 @@ public class FantLabStoryConverter {
 
     private Author setStoryAuthor(FantLabStoryDto.FantLabStoryAuthor dtoAuthor) {
         Author author = new Author();
-        author.setFirstName(dtoAuthor.getName());
+        author.setName(dtoAuthor.getName());
 
         return author;
     }

@@ -80,12 +80,9 @@ public class ValidationUtils {
             throw new EntityValidationException(Author.class, "author is null");
         }
 
-        if (Strings.isNullOrEmpty(author.getFirstName())) {
-            throw new EntityValidationException(Author.class, "author must have first name");
+        if (Strings.isNullOrEmpty(author.getName())) {
+            throw new EntityValidationException(Author.class, "author must have name");
         }
 
-        if (Strings.isNullOrEmpty(author.getLastName())) {
-            throw new EntityValidationException(Author.class, "author must have last name");
-        }
     }
 }

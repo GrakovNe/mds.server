@@ -33,8 +33,7 @@ public class AuthorService {
 
         ValidationUtils.validate(author);
 
-        Author foundAuthor = authorRepository.findAllByFirstNameAndLastName(
-            author.getFirstName(), author.getLastName());
+        Author foundAuthor = authorRepository.findAllByName(author.getName());
         CheckerUtils.checkNull(foundAuthor);
 
         return authorRepository.save(author);
