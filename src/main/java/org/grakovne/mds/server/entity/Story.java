@@ -10,9 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -41,7 +39,7 @@ public class Story implements MdsEntity {
             name = "author_id",
             referencedColumnName = "id"
         ))
-    private List<Author> authors;
+    private Set<Author> authors;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -112,11 +110,11 @@ public class Story implements MdsEntity {
         this.year = year;
     }
 
-    public List<Author> getAuthors() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
 

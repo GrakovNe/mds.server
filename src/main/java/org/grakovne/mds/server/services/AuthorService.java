@@ -10,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Author service.
  */
@@ -73,6 +76,27 @@ public class AuthorService {
     public void deleteAuthor(Integer id) {
         Author author = findAuthor(id);
         authorRepository.delete(author);
+    }
+
+    public Set<Author> persistAuthorList(Set<Author> authors){
+
+        if (null == authors){
+            return null;
+        }
+
+        Set<Author> persistAuthors = new HashSet<>();
+
+        for (Author author: authors){
+            Author savedAuthor = authorRepository.findAllByName(author.getName());
+
+            if (null == savedAuthor){
+                savedAuthor = authorRepository.save(author);
+            }
+
+            persistAuthors.add(savedAuthor);
+        }
+
+        return persistAuthors;
     }
 
 }

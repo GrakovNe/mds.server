@@ -78,7 +78,7 @@ public class FantLabStoryConverter {
     }
 
     private void setStoryAuthors(Story story, FantLabStoryDto storyDto) {
-        List<Author> authors = new ArrayList<>(storyDto.getAuthors().size());
+        Set<Author> authors = new HashSet<>(storyDto.getAuthors().size());
 
         for (FantLabStoryDto.FantLabStoryAuthor author : storyDto.getAuthors()) {
             authors.add(setStoryAuthor(author));

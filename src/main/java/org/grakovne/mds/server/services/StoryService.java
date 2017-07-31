@@ -1,12 +1,17 @@
 package org.grakovne.mds.server.services;
 
 import com.google.common.base.Strings;
+import org.grakovne.mds.server.entity.Author;
+import org.grakovne.mds.server.entity.Genre;
 import org.grakovne.mds.server.entity.Story;
+import org.grakovne.mds.server.entity.Tag;
 import org.grakovne.mds.server.exceptons.EntityException;
 import org.grakovne.mds.server.importer.fantlab.FantLabMetaImporter;
 import org.grakovne.mds.server.importer.fantlab.converters.FantLabStoryConverter;
 import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
+import org.grakovne.mds.server.repositories.AuthorRepository;
 import org.grakovne.mds.server.repositories.StoryRepository;
+import org.grakovne.mds.server.repositories.TagRepository;
 import org.grakovne.mds.server.utils.AudioUtils;
 import org.grakovne.mds.server.utils.CheckerUtils;
 import org.grakovne.mds.server.utils.ConfigurationUtils;
@@ -21,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * Story service.
@@ -34,6 +40,15 @@ public class StoryService {
 
     @Autowired
     private StoryRepository storyRepository;
+
+    @Autowired
+    private AuthorService authorService;
+
+    @Autowired
+    private GenreService genreService;
+
+    @Autowired
+    private TagService tagService;
 
     @Autowired
     private FileProcessingUtils fileProcessingUtils;
@@ -84,7 +99,7 @@ public class StoryService {
     public Story createStory(Story story, MultipartFile storyAudio) {
         ValidationUtils.validate(story, storyAudio);
 
-        Story savedStory = storyRepository.save(story);
+        Story savedStory = persistsStory(story);
 
         try {
             File savedAudioFile = fileProcessingUtils.uploadFile(
@@ -94,7 +109,7 @@ public class StoryService {
             throw new EntityException(Story.class, e.getMessage());
         }
 
-        return storyRepository.save(story);
+        return persistsStory(savedStory);
     }
 
     /**
@@ -146,7 +161,8 @@ public class StoryService {
         }
 
         if (null != newStory.getAuthors() && !newStory.getAuthors().isEmpty()) {
-            persistStory.setAuthors(newStory.getAuthors());
+            Set<Author> authors = authorService.persistAuthorList(newStory.getAuthors());
+            persistStory.setAuthors(authors);
         }
 
         if (null != newStory.getRating() && null != newStory.getRating().getValue()) {
@@ -178,7 +194,7 @@ public class StoryService {
             }
         }
 
-        return storyRepository.save(persistStory);
+        return persistsStory(persistStory);
     }
 
     public Story importStory(MultipartFile storyAudio) throws IOException {
@@ -197,5 +213,18 @@ public class StoryService {
         story.setFileQuality(audioUtils.getAudioFileBitrate(file));
         story.setLength(audioUtils.getAudioFileLength(file));
         return story;
+    }
+
+    private Story persistsStory(Story story){
+        Set<Author> persistAuthors = authorService.persistAuthorList(story.getAuthors());
+        story.setAuthors(persistAuthors);
+
+        Set<Tag> persistsTags = tagService.persistTagList(story.getTags());
+        story.setTags(persistsTags);
+
+        Set<Genre> persistsGenres = genreService.persistGenreList(story.getGenres());
+        story.setGenres(persistsGenres);
+
+        return storyRepository.save(story);
     }
 }

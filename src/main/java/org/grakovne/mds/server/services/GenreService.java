@@ -11,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Genre service.
  */
@@ -91,5 +94,26 @@ public class GenreService {
     public void deleteGenre(Integer id) {
         Genre genre = findGenreById(id);
         genreRepository.delete(genre);
+    }
+
+    public Set<Genre> persistGenreList(Set<Genre> genres) {
+
+        if (null == genres){
+            return null;
+        }
+
+        Set<Genre> persistGenres = new HashSet<>();
+
+        for (Genre genre : genres) {
+            Genre savedGenre = genreRepository.findAllByValue(genre.getValue());
+
+            if (null == savedGenre) {
+                savedGenre = genreRepository.save(genre);
+            }
+
+            persistGenres.add(savedGenre);
+        }
+
+        return persistGenres;
     }
 }
