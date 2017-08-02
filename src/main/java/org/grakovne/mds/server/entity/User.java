@@ -12,6 +12,10 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * JPA Entity.
+ */
+
 @Entity
 @Table(name = "users")
 public class User implements UserDetails, MdsEntity {
@@ -22,6 +26,7 @@ public class User implements UserDetails, MdsEntity {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private Boolean isAccountNonExpired;
@@ -42,9 +47,17 @@ public class User implements UserDetails, MdsEntity {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -52,10 +65,17 @@ public class User implements UserDetails, MdsEntity {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;
+    }
+
+    public void setAccountNonExpired(Boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
     }
 
     @Override
@@ -63,38 +83,22 @@ public class User implements UserDetails, MdsEntity {
         return isAccountNonLocked;
     }
 
+    public void setAccountNonLocked(Boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return isCredentialsNonExpired;
     }
 
+    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
+        isCredentialsNonExpired = credentialsNonExpired;
+    }
+
     @Override
     public boolean isEnabled() {
         return isEnabled;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setAccountNonExpired(Boolean accountNonExpired) {
-        isAccountNonExpired = accountNonExpired;
-    }
-
-    public void setAccountNonLocked(Boolean accountNonLocked) {
-        isAccountNonLocked = accountNonLocked;
-    }
-
-    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
-        isCredentialsNonExpired = credentialsNonExpired;
     }
 
     public void setEnabled(Boolean enabled) {

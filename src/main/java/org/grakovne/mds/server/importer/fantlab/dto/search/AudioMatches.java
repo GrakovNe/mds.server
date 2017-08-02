@@ -2,6 +2,10 @@ package org.grakovne.mds.server.importer.fantlab.dto.search;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Fantlab DTO.
+ */
+
 public class AudioMatches {
 
     @SerializedName("doc")

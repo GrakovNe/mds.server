@@ -15,8 +15,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service for import story metadata from fantlab public api.
+ */
+
 @Service
 public class FantLabMetaImporter {
+
+    /**
+     * Returns FantLab DTO for audio file.
+     *
+     * @param audioFile File with ID3 tags
+     * @return Fantlab DTO
+     */
 
     public FantLabStoryDto importMetaFromAudio(File audioFile) {
         AudioUtils audioUtils = new AudioUtils();

@@ -149,6 +149,14 @@ public class StoryService {
         storyRepository.delete(storyId);
     }
 
+    /**
+     * Updates story meta in db.
+     *
+     * @param storyId  story id
+     * @param newStory new story meta DTO
+     * @return updated story object
+     */
+
     public Story updateStory(Integer storyId, Story newStory) {
         Story persistStory = findStory(storyId);
 
@@ -196,6 +204,14 @@ public class StoryService {
 
         return persistsStory(persistStory);
     }
+
+    /**
+     * Imports story from 3rd party service.
+     *
+     * @param storyAudio File with ID3 tags
+     * @return saved story
+     * @throws IOException if something wrong with file upload
+     */
 
     public Story importStory(MultipartFile storyAudio) throws IOException {
         File audioFile = File.createTempFile("audio_story", ".mp3");

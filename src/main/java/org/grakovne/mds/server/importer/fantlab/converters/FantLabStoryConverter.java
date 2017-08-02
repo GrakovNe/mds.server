@@ -18,10 +18,21 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Converter between Mds story entity and Fantlab story entity.
+ */
+
 @Service
 public class FantLabStoryConverter {
 
     private final Logger logger = LoggerFactory.getLogger(FantLabStoryConverter.class);
+
+    /**
+     * Converts FantLabStoryDto to Story entity.
+     *
+     * @param dto FantLabStoryDto
+     * @return Story object
+     */
 
     public Story convertFromFantLabStory(FantLabStoryDto dto) {
         Story result = new Story();

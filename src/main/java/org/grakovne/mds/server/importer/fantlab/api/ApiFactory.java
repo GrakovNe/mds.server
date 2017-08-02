@@ -5,6 +5,10 @@ import com.google.gson.GsonBuilder;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
+/**
+ * Retrofit api factory.
+ */
+
 public abstract class ApiFactory {
     private static final String BASE_URL = "http://fantlab.ru/";
 

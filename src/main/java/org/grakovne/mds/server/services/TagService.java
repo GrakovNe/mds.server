@@ -8,11 +8,22 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Tag service.
+ */
+
 @Service
 public class TagService {
 
     @Autowired
     private TagRepository tagRepository;
+
+    /**
+     * Saves tags if it's not saved yet.
+     *
+     * @param tags tags set
+     * @return tags set
+     */
 
     public Set<Tag> persistTagList(Set<Tag> tags) {
 

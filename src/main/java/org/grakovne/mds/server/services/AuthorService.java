@@ -78,6 +78,12 @@ public class AuthorService {
         authorRepository.delete(author);
     }
 
+    /**
+     * Saves authors if it's not saved yet.
+     *
+     * @param authors authors set
+     * @return authors set
+     */
     public Set<Author> persistAuthorList(Set<Author> authors) {
 
         if (null == authors) {

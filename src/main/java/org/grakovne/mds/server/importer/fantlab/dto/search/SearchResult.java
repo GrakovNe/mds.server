@@ -2,6 +2,10 @@ package org.grakovne.mds.server.importer.fantlab.dto.search;
 
 import java.util.List;
 
+/**
+ * Fantlab DTO.
+ */
+
 public class SearchResult {
     private List<AudioMatches> matches;
 

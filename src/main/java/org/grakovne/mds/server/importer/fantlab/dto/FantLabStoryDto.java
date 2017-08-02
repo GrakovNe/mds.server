@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * Fantlab story DTO.
+ */
+
 public class FantLabStoryDto {
 
     @SerializedName("work_name")
@@ -80,6 +84,10 @@ public class FantLabStoryDto {
             ", year='" + year + '\'' +
             '}';
     }
+
+    /**
+     * Fantlab story author DTO.
+     */
 
     public static class FantLabStoryAuthor {
         private String name;

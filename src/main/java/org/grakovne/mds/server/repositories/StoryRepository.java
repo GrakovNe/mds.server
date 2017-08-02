@@ -12,8 +12,9 @@ import org.springframework.stereotype.Repository;
 public interface StoryRepository extends JpaRepository<Story, Integer> {
 
     /**
-     * Finds story by year and title
-     * @param year story year
+     * Finds story by year and title.
+     *
+     * @param year  story year
      * @param title story title
      * @return Story object
      */

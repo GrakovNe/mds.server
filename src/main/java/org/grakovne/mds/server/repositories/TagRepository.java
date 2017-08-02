@@ -10,5 +10,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Integer> {
+
+    /**
+     * Returns Tag entity by value.
+     *
+     * @param value tag name
+     * @return Tag object
+     */
+
     Tag findAllByValue(String value);
 }

@@ -1,6 +1,12 @@
 package org.grakovne.mds.server.importer;
 
-public class ImporterException extends RuntimeException {
+import org.grakovne.mds.server.exceptons.MdsException;
+
+/**
+ * Fantlab importer exception.
+ */
+
+public class ImporterException extends MdsException {
     private String message;
 
     public ImporterException(String message) {

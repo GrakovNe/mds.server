@@ -55,10 +55,23 @@ public class AudioUtils {
         return audioFile.length();
     }
 
+    /**
+     * Returns audio file title by ID3.
+     *
+     * @param file audio file
+     * @return file title
+     */
+
     public String getAudioFileTitle(File file) {
         return getAudioFile(file).getTag().getFirst(FieldKey.TITLE);
     }
 
+    /**
+     * Returns audio file artist by ID3.
+     *
+     * @param file audio file
+     * @return File atrist
+     */
     public String getAudioFileArtist(File file) {
         return getAudioFile(file).getTag().getFirst(FieldKey.ARTIST);
     }

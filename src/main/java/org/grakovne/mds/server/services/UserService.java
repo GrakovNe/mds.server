@@ -12,6 +12,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * User service.
+ */
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -32,9 +36,23 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    /**
+     * Finds user.
+     *
+     * @param pageNumber page number
+     * @return page with users
+     */
+
     public Page<User> findUsers(Integer pageNumber) {
         return userRepository.findAll(new PageRequest(pageNumber, configurationUtils.getPageSize()));
     }
+
+    /**
+     * Creates new user in DB.
+     *
+     * @param user user DTO with username and password
+     * @return user object
+     */
 
     public User createUser(User user) {
         checkFound(user);

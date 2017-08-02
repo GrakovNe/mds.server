@@ -96,6 +96,13 @@ public class GenreService {
         genreRepository.delete(genre);
     }
 
+    /**
+     * Saves genres if it's not saved yet.
+     *
+     * @param genres genres set
+     * @return genres set
+     */
+
     public Set<Genre> persistGenreList(Set<Genre> genres) {
 
         if (null == genres) {
