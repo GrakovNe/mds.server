@@ -224,7 +224,7 @@ public class StoryService {
     }
 
     private Story setAudioData(Story story, File file) {
-        story.setUrl(storyAudioUrlPrefix + "/" + story.getId());
+        story.setUrl(storyAudioUrlPrefix + story.getId());
         story.setFileSize(audioUtils.getAudioFileSize(file));
         story.setFileQuality(audioUtils.getAudioFileBitrate(file));
         story.setLength(audioUtils.getAudioFileLength(file));
