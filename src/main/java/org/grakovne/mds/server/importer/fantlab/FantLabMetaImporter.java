@@ -21,7 +21,11 @@ public class FantLabMetaImporter {
     public FantLabStoryDto importMetaFromAudio(File audioFile) {
         AudioUtils audioUtils = new AudioUtils();
 
-        String searchQuery = prepareSearchQuery(audioUtils.getAudioFileTitle(audioFile), audioUtils.getAudioFileTitle(audioFile));
+        String searchQuery = prepareSearchQuery(
+            audioUtils.getAudioFileTitle(audioFile),
+            audioUtils.getAudioFileTitle(audioFile)
+        );
+
         try {
             AudioMatches matches = findStories(searchQuery);
             return getStoryMetaData(matches);
@@ -30,7 +34,7 @@ public class FantLabMetaImporter {
         }
     }
 
-    public FantLabStoryDto importLocalMetaFromAudio(File audioFile) {
+    private FantLabStoryDto importLocalMetaFromAudio(File audioFile) {
         AudioUtils audioUtils = new AudioUtils();
 
         List<FantLabStoryDto.FantLabStoryAuthor> authorsList = new ArrayList<>();
@@ -45,7 +49,15 @@ public class FantLabMetaImporter {
     }
 
     private AudioMatches findStories(String searchPhrase) throws IOException {
-        SearchResult response = ApiFactory.getRetrofit().create(ApiService.class).findStories(searchPhrase).execute().body();
+
+        SearchResult response =
+            ApiFactory
+                .getRetrofit()
+                .create(ApiService.class)
+                .findStories(searchPhrase)
+                .execute()
+                .body();
+
         List<AudioMatches> foundStories = response.getMatches();
 
         if (foundStories.isEmpty()) {
@@ -56,7 +68,12 @@ public class FantLabMetaImporter {
     }
 
     private FantLabStoryDto getStoryMetaData(AudioMatches audioMatches) throws IOException {
-        return ApiFactory.getRetrofit().create(ApiService.class).findStoryMetaData(getStoryUrl(audioMatches)).execute().body();
+        return ApiFactory
+            .getRetrofit()
+            .create(ApiService.class)
+            .findStoryMetaData(getStoryUrl(audioMatches))
+            .execute()
+            .body();
     }
 
     private String prepareSearchQuery(String title, String artist) {
