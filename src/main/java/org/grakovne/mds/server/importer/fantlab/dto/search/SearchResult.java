@@ -2,10 +2,10 @@ package org.grakovne.mds.server.importer.fantlab.dto.search;
 
 import java.util.List;
 
-public class AudioMetaData {
+public class SearchResult {
     private List<AudioMatches> matches;
 
-    public AudioMetaData() {
+    public SearchResult() {
     }
 
     public List<AudioMatches> getMatches() {
@@ -18,7 +18,7 @@ public class AudioMetaData {
 
     @Override
     public String toString() {
-        return "AudioMetaData{" +
+        return "SearchResult{" +
             "matches=" + matches +
             '}';
     }

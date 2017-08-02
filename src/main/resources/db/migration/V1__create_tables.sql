@@ -63,6 +63,20 @@ CREATE TABLE tag (
     value character varying(255)
 );
 
+CREATE TABLE users
+(
+  id bigint NOT NULL,
+  is_account_non_expired boolean,
+  is_account_non_locked boolean,
+  is_credentials_non_expired boolean,
+  is_enabled boolean,
+  password character varying(255),
+  username character varying(255)
+);
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
 ALTER TABLE ONLY author
     ADD CONSTRAINT author_pkey PRIMARY KEY (id);
 

@@ -5,13 +5,12 @@ import org.grakovne.mds.server.entity.Author;
 import org.grakovne.mds.server.entity.Genre;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.Tag;
+import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.exceptons.EntityException;
 import org.grakovne.mds.server.importer.fantlab.FantLabMetaImporter;
 import org.grakovne.mds.server.importer.fantlab.converters.FantLabStoryConverter;
 import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
-import org.grakovne.mds.server.repositories.AuthorRepository;
 import org.grakovne.mds.server.repositories.StoryRepository;
-import org.grakovne.mds.server.repositories.TagRepository;
 import org.grakovne.mds.server.utils.AudioUtils;
 import org.grakovne.mds.server.utils.CheckerUtils;
 import org.grakovne.mds.server.utils.ConfigurationUtils;
@@ -22,11 +21,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Encoder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Story service.
@@ -98,12 +102,13 @@ public class StoryService {
 
     public Story createStory(Story story, MultipartFile storyAudio) {
         ValidationUtils.validate(story, storyAudio);
+        checkNotFound(story);
 
         Story savedStory = persistsStory(story);
 
         try {
             File savedAudioFile = fileProcessingUtils.uploadFile(
-                storyAudio, filePrefix + savedStory.getId() + filePostfix);
+                storyAudio, filePrefix + story.getId() + filePostfix);
             setAudioData(savedStory, savedAudioFile);
         } catch (IOException e) {
             throw new EntityException(Story.class, e.getMessage());
@@ -208,14 +213,14 @@ public class StoryService {
     }
 
     private Story setAudioData(Story story, File file) {
-        story.setUrl("/" + story.getId() + storyAudioUrlPrefix);
+        story.setUrl(storyAudioUrlPrefix + "/" + story.getId());
         story.setFileSize(audioUtils.getAudioFileSize(file));
         story.setFileQuality(audioUtils.getAudioFileBitrate(file));
         story.setLength(audioUtils.getAudioFileLength(file));
         return story;
     }
 
-    private Story persistsStory(Story story){
+    private Story persistsStory(Story story) {
         Set<Author> persistAuthors = authorService.persistAuthorList(story.getAuthors());
         story.setAuthors(persistAuthors);
 
@@ -226,5 +231,13 @@ public class StoryService {
         story.setGenres(persistsGenres);
 
         return storyRepository.save(story);
+    }
+
+    private void checkNotFound(Story story) {
+        Story foundStory = storyRepository.findByYearAndTitle(story.getYear(), story.getTitle());
+
+        if (null != foundStory) {
+            throw new EntityAlreadyExistException(Story.class);
+        }
     }
 }

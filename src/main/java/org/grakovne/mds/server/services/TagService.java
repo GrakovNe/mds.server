@@ -16,7 +16,7 @@ public class TagService {
 
     public Set<Tag> persistTagList(Set<Tag> tags) {
 
-        if (null == tags){
+        if (null == tags) {
             return null;
         }
 

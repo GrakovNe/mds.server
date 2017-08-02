@@ -6,7 +6,7 @@ import org.grakovne.mds.server.importer.fantlab.api.ApiFactory;
 import org.grakovne.mds.server.importer.fantlab.api.ApiService;
 import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
 import org.grakovne.mds.server.importer.fantlab.dto.search.AudioMatches;
-import org.grakovne.mds.server.importer.fantlab.dto.search.AudioMetaData;
+import org.grakovne.mds.server.importer.fantlab.dto.search.SearchResult;
 import org.grakovne.mds.server.utils.AudioUtils;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +45,7 @@ public class FantLabMetaImporter {
     }
 
     private AudioMatches findStories(String searchPhrase) throws IOException {
-        AudioMetaData response = ApiFactory.getRetrofit().create(ApiService.class).findStories(searchPhrase).execute().body();
+        SearchResult response = ApiFactory.getRetrofit().create(ApiService.class).findStories(searchPhrase).execute().body();
         List<AudioMatches> foundStories = response.getMatches();
 
         if (foundStories.isEmpty()) {

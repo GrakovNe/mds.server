@@ -98,7 +98,7 @@ public class GenreService {
 
     public Set<Genre> persistGenreList(Set<Genre> genres) {
 
-        if (null == genres){
+        if (null == genres) {
             return null;
         }
 

@@ -78,18 +78,18 @@ public class AuthorService {
         authorRepository.delete(author);
     }
 
-    public Set<Author> persistAuthorList(Set<Author> authors){
+    public Set<Author> persistAuthorList(Set<Author> authors) {
 
-        if (null == authors){
+        if (null == authors) {
             return null;
         }
 
         Set<Author> persistAuthors = new HashSet<>();
 
-        for (Author author: authors){
+        for (Author author : authors) {
             Author savedAuthor = authorRepository.findAllByName(author.getName());
 
-            if (null == savedAuthor){
+            if (null == savedAuthor) {
                 savedAuthor = authorRepository.save(author);
             }
 
