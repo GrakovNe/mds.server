@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 <suppressions>
     <suppress checks="FileLength" files="org[\\/]springframework[\\/]"/>
 
@@ -9,11 +10,13 @@
     <suppress checks="JavadocType" files="[/\\]test[/\\]java[/\\]"/>
     <suppress checks="AvoidStarImport" files="[/\\]test[/\\]java[/\\]"/>
     <suppress checks="[a-zA-Z0-9]*" files="net[\\/]thumbtack[\\/]adtech[\\/]ssp[\\/]"/>
-    <suppress checks="HiddenField" files="ProductFeed.java" />
-    <suppress checks="AvoidStarImport" files="DataGroup.java" />
-    <suppress checks="AvoidStarImport" files="Audience.java" />
-    <suppress checks="AvoidStarImport" files="LineItemConverter.java" />
-    <suppress checks="ParameterNumber" files="CreativeEndpoint.java" />
-    <suppress checks="[a-zA-Z0-9]*" files="net[\\/]thumbtack[\\/]adtech[\\/]campaign[\\/]manager[\\/]yahoo[\\/]gemini[\\/]integration[\\/]client[\\/]v2[\\/]domain"/>
-    <suppress checks="[a-zA-Z0-9]*" files="net[\\/]thumbtack[\\/]adtech[\\/]campaign[\\/]manager[\\/]content[\\/]ad[\\/]nativertb[\\/]client[\\/]model"/>
+    <suppress checks="HiddenField" files="ProductFeed.java"/>
+    <suppress checks="AvoidStarImport" files="DataGroup.java"/>
+    <suppress checks="AvoidStarImport" files="Audience.java"/>
+    <suppress checks="AvoidStarImport" files="LineItemConverter.java"/>
+    <suppress checks="ParameterNumber" files="CreativeEndpoint.java"/>
+    <suppress checks="[a-zA-Z0-9]*"
+              files="net[\\/]thumbtack[\\/]adtech[\\/]campaign[\\/]manager[\\/]yahoo[\\/]gemini[\\/]integration[\\/]client[\\/]v2[\\/]domain"/>
+    <suppress checks="[a-zA-Z0-9]*"
+              files="net[\\/]thumbtack[\\/]adtech[\\/]campaign[\\/]manager[\\/]content[\\/]ad[\\/]nativertb[\\/]client[\\/]model"/>
 </suppressions>

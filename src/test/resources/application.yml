@@ -8,18 +8,12 @@ spring:
     validationQuery: SELECT 1
   jpa:
     database_platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
     hibernate:
       ddl-auto: validate
   http:
     multipart:
       max-file-size: -1
       max-request-size: -1
-  config:
-      fileUploadDirectory: C:\Users\GrakovNe\Desktop\mds
-      pageSize: 25
 server:
-    port: 5050
-
-management:
-    security:
-        enabled: false
+    port: 6060

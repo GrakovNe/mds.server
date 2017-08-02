@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Application's entry point.
  */
 @SpringBootApplication
-public class MdsPlayer {
+public class MdsApplication {
 
     /**
      * Main application class.
@@ -15,7 +15,7 @@ public class MdsPlayer {
      * @param args CLI args
      */
     public static void main(String[] args) {
-        SpringApplication.run(MdsPlayer.class, args);
+        SpringApplication.run(MdsApplication.class, args);
     }
 }
 
