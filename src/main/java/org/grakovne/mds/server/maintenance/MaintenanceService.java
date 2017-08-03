@@ -29,7 +29,7 @@ public class MaintenanceService {
      * @throws Exception if something wrong
      */
 
-    @Scheduled(fixedRate = 86_400)
+    @Scheduled(fixedRate = 86_400_000)
     public void maintenanceConfigure() throws Exception {
         actions.forEach(MaintenanceAction::execute);
         LOGGER.info("Maintenance actions done.");
