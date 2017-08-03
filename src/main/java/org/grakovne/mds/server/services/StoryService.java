@@ -93,6 +93,11 @@ public class StoryService {
         return storyRepository.findAll(new PageRequest(pageNumber, configurationUtils.getPageSize()));
     }
 
+    /**
+     * Returns all stories from db.
+     *
+     * @return list with stories.
+     */
     public List<Story> findStories() {
         return storyRepository.findAll();
     }

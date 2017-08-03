@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Executes startup actions when context up.
+ */
+
 @Service
 public class StartupConfig {
 
@@ -18,10 +22,16 @@ public class StartupConfig {
     @Autowired
     private List<StartupAction> actions;
 
+    /**
+     * Executes all classes by interface.
+     *
+     * @throws Exception if something wrong
+     */
+
     @EventListener(ContextRefreshedEvent.class)
     public void startupConfigure() throws Exception {
 
-        for(StartupAction action: actions){
+        for (StartupAction action : actions) {
             action.execute();
         }
 

@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Removes orphan entity from DB if theirs audio files is not presented.
+ */
+
 @Service
 public class DataBaseValidator implements StartupAction {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseValidator.class);

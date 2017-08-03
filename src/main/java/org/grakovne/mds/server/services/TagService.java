@@ -47,6 +47,12 @@ public class TagService {
         return persistTags;
     }
 
+    /**
+     * Returns all tags from db.
+     *
+     * @return list with tags.
+     */
+
     public List<Tag> findTags() {
         return tagRepository.findAll();
     }
