@@ -70,6 +70,9 @@ public class StoryService {
     @Autowired
     private FantLabStoryConverter fantLabStoryConverter;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * Finds story by it's id.
      *

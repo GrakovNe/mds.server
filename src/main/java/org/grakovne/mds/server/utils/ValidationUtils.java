@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import org.grakovne.mds.server.entity.Author;
 import org.grakovne.mds.server.entity.Genre;
 import org.grakovne.mds.server.entity.Story;
+import org.grakovne.mds.server.entity.StoryBookmark;
 import org.grakovne.mds.server.exceptons.EntityValidationException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -84,5 +85,27 @@ public class ValidationUtils {
             throw new EntityValidationException(Author.class, "author must have name");
         }
 
+    }
+
+    public static void validate(StoryBookmark storyBookmark){
+        if (null == storyBookmark){
+            throw new EntityValidationException(StoryBookmark.class, "story bookmark is null");
+        }
+
+        if (null == storyBookmark.getCreateDateTime()){
+            throw new EntityValidationException(StoryBookmark.class, "story bookmark must have create datetime");
+        }
+
+        if (null == storyBookmark.getTimestamp()){
+            throw new EntityValidationException(StoryBookmark.class, "story bookmark must have timestamp");
+        }
+
+        if (null == storyBookmark.getStory()){
+            throw new EntityValidationException(StoryBookmark.class, "story bookmark must have story entity");
+        }
+
+        if (null == storyBookmark.getUser()){
+            throw new EntityValidationException(StoryBookmark.class, "story bookmark must have user");
+        }
     }
 }

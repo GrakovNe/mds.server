@@ -3,6 +3,7 @@ package org.grakovne.mds.server.utils;
 import org.grakovne.mds.server.entity.Author;
 import org.grakovne.mds.server.entity.Genre;
 import org.grakovne.mds.server.entity.Story;
+import org.grakovne.mds.server.entity.User;
 import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.exceptons.EntityNotFoundException;
 
@@ -97,6 +98,12 @@ public class CheckerUtils {
     public static void checkFileExists(File file) throws FileNotFoundException {
         if (!file.exists()) {
             throw new FileNotFoundException("File Not found!");
+        }
+    }
+
+    public static void checkNotNull(User user) {
+        if (null == user) {
+            throw new EntityNotFoundException(User.class);
         }
     }
 }

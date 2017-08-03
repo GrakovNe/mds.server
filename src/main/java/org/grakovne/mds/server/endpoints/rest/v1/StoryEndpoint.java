@@ -5,12 +5,17 @@ import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 import org.grakovne.mds.server.endpoints.rest.v1.support.ApiResponse;
 import org.grakovne.mds.server.entity.Story;
+import org.grakovne.mds.server.entity.StoryBookmark;
+import org.grakovne.mds.server.entity.User;
+import org.grakovne.mds.server.services.StoryBookmarkService;
 import org.grakovne.mds.server.services.StoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * Spring story endpoint.
@@ -35,6 +41,9 @@ public class StoryEndpoint {
 
     @Autowired
     private StoryService storyService;
+
+    @Autowired
+    private StoryBookmarkService storyBookmarkService;
 
     /**
      * Finds stories without filters.
@@ -101,6 +110,25 @@ public class StoryEndpoint {
         }
 
         return new ApiResponse<>(result);
+    }
+
+    @RequestMapping(value = "{id}/storyBookmark", method = RequestMethod.GET)
+    public ApiResponse<List<StoryBookmark>> getStoryBookmark(
+        @PathVariable Integer id,
+        @AuthenticationPrincipal User user
+    ) {
+        List<StoryBookmark> storyBookmarkList = storyBookmarkService.getStoryBookmarks(id, user.getId());
+        return new ApiResponse<List<StoryBookmark>>(storyBookmarkList);
+    }
+
+    @RequestMapping(value = "{id}/storyBookmark", method = RequestMethod.POST)
+    public ApiResponse<StoryBookmark> bookmarkStory(
+        @RequestBody StoryBookmark storyBookmark,
+        @PathVariable Integer id,
+        @AuthenticationPrincipal User user) {
+
+        StoryBookmark savedStoryBookmark = storyBookmarkService.createBookmark(id, storyBookmark, user);
+        return new ApiResponse<>(savedStoryBookmark);
     }
 
 

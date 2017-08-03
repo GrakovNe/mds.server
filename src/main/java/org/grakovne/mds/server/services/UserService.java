@@ -3,6 +3,7 @@ package org.grakovne.mds.server.services;
 import org.grakovne.mds.server.entity.User;
 import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.repositories.UserRepository;
+import org.grakovne.mds.server.utils.CheckerUtils;
 import org.grakovne.mds.server.utils.ConfigurationUtils;
 import org.grakovne.mds.server.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +77,12 @@ public class UserService implements UserDetailsService {
         if (null != foundUser) {
             throw new EntityAlreadyExistException(User.class);
         }
+    }
+
+    public User findUser(Integer userId) {
+        User user = userRepository.findOne(userId);
+        CheckerUtils.checkNotNull(user);
+
+        return user;
     }
 }
