@@ -102,31 +102,31 @@ ALTER TABLE ONLY tag
     ADD CONSTRAINT tag_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY story_tags
-    ADD CONSTRAINT fk12u2njd3sp1o7nt72c5jnfsla FOREIGN KEY (author_id) REFERENCES tag(id);
+    ADD CONSTRAINT fk12u2njd3sp1o7nt72c5jnfsla FOREIGN KEY (author_id) REFERENCES tag(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE ONLY story_tags
-    ADD CONSTRAINT fk15ld2px3hrrvu2hxmt5fqjs4p FOREIGN KEY (story_id) REFERENCES story(id);
+    ADD CONSTRAINT fk15ld2px3hrrvu2hxmt5fqjs4p FOREIGN KEY (story_id) REFERENCES story(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE ONLY cover
-    ADD CONSTRAINT fk4cn2bd381xm9cxueq5oijeaiw FOREIGN KEY (story_id) REFERENCES story(id);
+    ADD CONSTRAINT fk4cn2bd381xm9cxueq5oijeaiw FOREIGN KEY (story_id) REFERENCES story(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE ONLY story_authors
-    ADD CONSTRAINT fk6k9ndu1xetybeobtmief9tc8h FOREIGN KEY (story_id) REFERENCES story(id);
+    ADD CONSTRAINT fk6k9ndu1xetybeobtmief9tc8h FOREIGN KEY (story_id) REFERENCES story(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE ONLY rating
-    ADD CONSTRAINT fk80o4s4q6fehrpvw8cca2yxj27 FOREIGN KEY (story_id) REFERENCES story(id);
+    ADD CONSTRAINT fk80o4s4q6fehrpvw8cca2yxj27 FOREIGN KEY (story_id) REFERENCES story(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE ONLY story_genres
-    ADD CONSTRAINT fk88ws4qqewqsepkwgokbeqi862 FOREIGN KEY (author_id) REFERENCES genre(id);
+    ADD CONSTRAINT fk88ws4qqewqsepkwgokbeqi862 FOREIGN KEY (author_id) REFERENCES genre(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE ONLY story
-    ADD CONSTRAINT fkbh2so206ma10qgxm4sugvybk FOREIGN KEY (cover_id) REFERENCES cover(id);
+    ADD CONSTRAINT fkbh2so206ma10qgxm4sugvybk FOREIGN KEY (cover_id) REFERENCES cover(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE ONLY story
-    ADD CONSTRAINT fkeptm8vp3mp46v71h5vl2gysqn FOREIGN KEY (rating_id) REFERENCES rating(id);
+    ADD CONSTRAINT fkeptm8vp3mp46v71h5vl2gysqn FOREIGN KEY (rating_id) REFERENCES rating(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE ONLY story_authors
-    ADD CONSTRAINT fkffamqbn9u5u4tsa3usx33iy7d FOREIGN KEY (author_id) REFERENCES author(id);
+    ADD CONSTRAINT fkffamqbn9u5u4tsa3usx33iy7d FOREIGN KEY (author_id) REFERENCES author(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE ONLY story_genres
-    ADD CONSTRAINT fkqn67twps6unol38h40mpaugy FOREIGN KEY (story_id) REFERENCES story(id);
+    ADD CONSTRAINT fkqn67twps6unol38h40mpaugy FOREIGN KEY (story_id) REFERENCES story(id) ON DELETE CASCADE ON UPDATE CASCADE;

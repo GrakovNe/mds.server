@@ -16,6 +16,8 @@ import org.grakovne.mds.server.utils.CheckerUtils;
 import org.grakovne.mds.server.utils.ConfigurationUtils;
 import org.grakovne.mds.server.utils.FileProcessingUtils;
 import org.grakovne.mds.server.utils.ValidationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +36,9 @@ import java.util.Set;
 
 @Service
 public class StoryService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(StoryService.class);
+
     private final String storyAudioUrlPrefix = "/audio/";
     private final String filePrefix = "story_";
     private final String filePostfix = ".mp3";
@@ -125,14 +130,16 @@ public class StoryService {
      */
 
     public File findStoryAudio(Integer storyId) {
-        String fileName = filePrefix + storyId + filePostfix;
-
         try {
-            return fileProcessingUtils.getFile(fileName);
+            return fileProcessingUtils.getFile(getFileName(storyId));
         } catch (FileNotFoundException ex) {
             throw new EntityException(Story.class, "Audio file is not found");
         }
 
+    }
+
+    private String getFileName(Integer storyId) {
+        return filePrefix + storyId + filePostfix;
     }
 
     /**
@@ -148,7 +155,7 @@ public class StoryService {
         try {
             fileProcessingUtils.deleteFile(filePrefix + storyId + filePostfix);
         } catch (FileNotFoundException e) {
-            throw new EntityException(Story.class, "Audio file can't de deleted");
+            LOGGER.warn("story with id = " + storyId + " was deleted but storyFile was not processed");
         }
 
         storyRepository.delete(storyId);
