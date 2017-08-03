@@ -1,9 +1,9 @@
-package org.grakovne.mds.server.config.actions;
+package org.grakovne.mds.server.maintenance.actions;
 
 /**
  * Common interface for startup actions.
  */
-public interface StartupAction {
+public interface MaintenanceAction {
 
     /**
      * executes action on startup.

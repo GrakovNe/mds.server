@@ -1,4 +1,4 @@
-package org.grakovne.mds.server.config.actions;
+package org.grakovne.mds.server.maintenance.actions;
 
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.exceptons.EntityException;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 @Service
-public class DataBaseValidator implements StartupAction {
+public class DataBaseValidator implements MaintenanceAction {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseValidator.class);
 
     @Autowired
@@ -23,7 +23,9 @@ public class DataBaseValidator implements StartupAction {
 
     @Override
     public void execute() {
+        LOGGER.info("Database validation is started...");
         removeStoriesWithoutAudio();
+        LOGGER.info("Database validation is finished...");
     }
 
     private void removeStoriesWithoutAudio() {
