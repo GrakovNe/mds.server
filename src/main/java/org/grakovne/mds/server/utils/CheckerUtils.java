@@ -8,7 +8,6 @@ import org.grakovne.mds.server.entity.User;
 import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.exceptons.EntityException;
 import org.grakovne.mds.server.exceptons.EntityNotFoundException;
-import org.grakovne.mds.server.exceptons.MdsException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -111,7 +110,7 @@ public class CheckerUtils {
     }
 
     public static void checkStoryBookmarkBelongsUser(StoryBookmark storyBookmark, User user) {
-        if (!storyBookmark.getUser().getId().equals(user.getId())){
+        if (!storyBookmark.getUser().getId().equals(user.getId())) {
             throw new EntityException(StoryBookmark.class, "storybookmark is not belongs to user");
         }
     }

@@ -87,24 +87,24 @@ public class ValidationUtils {
 
     }
 
-    public static void validate(StoryBookmark storyBookmark){
-        if (null == storyBookmark){
+    public static void validate(StoryBookmark storyBookmark) {
+        if (null == storyBookmark) {
             throw new EntityValidationException(StoryBookmark.class, "story bookmark is null");
         }
 
-        if (null == storyBookmark.getCreateDateTime()){
+        if (null == storyBookmark.getCreateDateTime()) {
             throw new EntityValidationException(StoryBookmark.class, "story bookmark must have create datetime");
         }
 
-        if (null == storyBookmark.getTimestamp()){
+        if (null == storyBookmark.getTimestamp()) {
             throw new EntityValidationException(StoryBookmark.class, "story bookmark must have timestamp");
         }
 
-        if (null == storyBookmark.getStory()){
+        if (null == storyBookmark.getStory()) {
             throw new EntityValidationException(StoryBookmark.class, "story bookmark must have story entity");
         }
 
-        if (null == storyBookmark.getUser()){
+        if (null == storyBookmark.getUser()) {
             throw new EntityValidationException(StoryBookmark.class, "story bookmark must have user");
         }
     }

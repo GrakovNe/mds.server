@@ -45,7 +45,7 @@ public class StoryBookmarkService {
         return persistStoryBookmark(storyBookmark);
     }
 
-    public StoryBookmark findStoryBookmark(Integer storyBookmarkId, Integer userId){
+    public StoryBookmark findStoryBookmark(Integer storyBookmarkId, Integer userId) {
         StoryBookmark storyBookmark = storyBookmarkRepository.findOne(storyBookmarkId);
         User user = userService.findUser(userId);
 
@@ -70,7 +70,7 @@ public class StoryBookmarkService {
         return storyBookmarkRepository.save(storyBookmark);
     }
 
-    public void deleteStoryBookmark(Integer storyBookmarkId, Integer userId){
+    public void deleteStoryBookmark(Integer storyBookmarkId, Integer userId) {
         StoryBookmark storyBookmark = findStoryBookmark(storyBookmarkId, userId);
         storyBookmarkRepository.delete(storyBookmarkId);
     }
