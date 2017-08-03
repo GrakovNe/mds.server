@@ -5,18 +5,17 @@ import org.grakovne.mds.server.exceptons.EntityException;
 import org.grakovne.mds.server.services.StoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
+@Service
 public class DataBaseValidator implements StartupAction {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseValidator.class);
 
+    @Autowired
     private StoryService storyService;
-
-    public DataBaseValidator(Map<String, Object> services) {
-        storyService = (StoryService) services.get("StoryService");
-    }
 
     @Override
     public void execute() {
