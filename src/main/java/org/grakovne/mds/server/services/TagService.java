@@ -34,7 +34,7 @@ public class TagService {
 
         Set<Tag> persistTags = new HashSet<>();
 
-        for (Tag tag : tags) {
+        tags.forEach(tag -> {
             Tag savedTag = tagRepository.findAllByValue(tag.getValue());
 
             if (null == savedTag) {
@@ -42,7 +42,7 @@ public class TagService {
             }
 
             persistTags.add(savedTag);
-        }
+        });
 
         return persistTags;
     }

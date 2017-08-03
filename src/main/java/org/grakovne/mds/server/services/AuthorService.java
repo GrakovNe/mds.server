@@ -92,7 +92,7 @@ public class AuthorService {
 
         Set<Author> persistAuthors = new HashSet<>();
 
-        for (Author author : authors) {
+        authors.forEach(author -> {
             Author savedAuthor = authorRepository.findAllByName(author.getName());
 
             if (null == savedAuthor) {
@@ -100,7 +100,7 @@ public class AuthorService {
             }
 
             persistAuthors.add(savedAuthor);
-        }
+        });
 
         return persistAuthors;
     }

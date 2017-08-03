@@ -30,12 +30,7 @@ public class StartupConfig {
 
     @EventListener(ContextRefreshedEvent.class)
     public void startupConfigure() throws Exception {
-
-        for (StartupAction action : actions) {
-            action.execute();
-        }
-
+        actions.forEach(StartupAction::execute);
         LOGGER.info("Startup actions done.");
-
     }
 }

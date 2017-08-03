@@ -25,7 +25,7 @@ import java.util.Set;
 @Service
 public class FantLabStoryConverter {
 
-    private final Logger logger = LoggerFactory.getLogger(FantLabStoryConverter.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(FantLabStoryConverter.class);
 
     /**
      * Converts FantLabStoryDto to Story entity.
@@ -48,7 +48,7 @@ public class FantLabStoryConverter {
         try {
             setStoryCover(result, dto);
         } catch (IOException ex) {
-            logger.warn("Can't import cover");
+            LOGGER.warn("Can't import cover");
         }
 
         return result;
@@ -58,7 +58,7 @@ public class FantLabStoryConverter {
         Tag tag = new Tag();
         tag.setValue(dto.getStoryType());
 
-        Set<Tag> tagsSet = new HashSet<Tag>();
+        Set<Tag> tagsSet = new HashSet<>();
         tagsSet.add(tag);
 
         result.setTags(tagsSet);
@@ -89,10 +89,7 @@ public class FantLabStoryConverter {
     private void setStoryAuthors(Story story, FantLabStoryDto storyDto) {
         Set<Author> authors = new HashSet<>(storyDto.getAuthors().size());
 
-        for (FantLabStoryDto.FantLabStoryAuthor author : storyDto.getAuthors()) {
-            authors.add(setStoryAuthor(author));
-        }
-
+        storyDto.getAuthors().forEach(author -> authors.add(setStoryAuthor(author)));
         story.setAuthors(authors);
     }
 

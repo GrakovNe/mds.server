@@ -111,7 +111,7 @@ public class GenreService {
 
         Set<Genre> persistGenres = new HashSet<>();
 
-        for (Genre genre : genres) {
+        genres.forEach(genre -> {
             Genre savedGenre = genreRepository.findAllByValue(genre.getValue());
 
             if (null == savedGenre) {
@@ -119,7 +119,7 @@ public class GenreService {
             }
 
             persistGenres.add(savedGenre);
-        }
+        });
 
         return persistGenres;
     }

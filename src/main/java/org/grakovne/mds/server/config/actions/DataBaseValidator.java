@@ -28,13 +28,15 @@ public class DataBaseValidator implements StartupAction {
 
     private void removeStoriesWithoutAudio() {
         List<Story> stories = storyService.findStories();
-        for (Story story : stories) {
+
+        stories.forEach(story -> {
             try {
                 storyService.findStoryAudio(story.getId());
             } catch (EntityException ex) {
                 storyService.deleteStory(story.getId());
                 LOGGER.warn("Story with id = " + story.getId() + " was deleted because the audio file was not found");
             }
-        }
+        });
+
     }
 }
