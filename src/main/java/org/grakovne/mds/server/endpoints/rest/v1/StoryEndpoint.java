@@ -117,7 +117,7 @@ public class StoryEndpoint {
         @PathVariable Integer id,
         @AuthenticationPrincipal User user
     ) {
-        List<StoryBookmark> storyBookmarkList = storyBookmarkService.getStoryBookmarks(id, user.getId());
+        List<StoryBookmark> storyBookmarkList = storyBookmarkService.findStoryBookmarks(id, user.getId());
         return new ApiResponse<List<StoryBookmark>>(storyBookmarkList);
     }
 
@@ -129,6 +129,15 @@ public class StoryEndpoint {
 
         StoryBookmark savedStoryBookmark = storyBookmarkService.createBookmark(id, storyBookmark, user);
         return new ApiResponse<>(savedStoryBookmark);
+    }
+
+    @RequestMapping(value = "storyBookmark/{id}", method = RequestMethod.DELETE)
+    public ApiResponse<StoryBookmark> deleteStoryBookmark(
+        @PathVariable Integer id,
+        @AuthenticationPrincipal User user) {
+
+        storyBookmarkService.deleteStoryBookmark(id, user.getId());
+        return new ApiResponse("Story has been deleted");
     }
 
 
