@@ -7,16 +7,16 @@
         </encoder>
     </appender>
 
-    <logger name = "org.hibernate" level="WARN">
-        <appender-ref ref="STDOUT" />
+    <logger name="org.hibernate" level="WARN">
+        <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name = "org.grakovne.mds.server.MdsApplication" level="INFO">
-        <appender-ref ref="STDOUT" />
+    <logger name="org.grakovne.mds.server.MdsApplication" level="INFO">
+        <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name = "org.grakovne.mds.server" level="INFO">
-        <appender-ref ref="STDOUT" />
+    <logger name="org.grakovne.mds.server" level="INFO">
+        <appender-ref ref="STDOUT"/>
     </logger>
 
 </configuration>
