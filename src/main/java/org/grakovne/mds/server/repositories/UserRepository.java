@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * JPA Repository.
  */
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * Returns user by username.

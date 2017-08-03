@@ -21,8 +21,8 @@ import java.util.Collection;
 public class User implements UserDetails, MdsEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private String username;
 
@@ -43,11 +43,11 @@ public class User implements UserDetails, MdsEntity {
         return new ArrayList<>();
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

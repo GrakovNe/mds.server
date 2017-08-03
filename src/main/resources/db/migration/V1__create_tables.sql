@@ -1,35 +1,28 @@
 CREATE TABLE author (
-    id integer NOT NULL,
+    id serial NOT NULL,
     name character varying(255)
 );
 
 CREATE TABLE cover (
-    id integer NOT NULL,
+    id serial NOT NULL,
     base64encoded_cover character varying(655350),
     story_id integer
 );
 
 CREATE TABLE genre (
-    id integer NOT NULL,
+    id serial NOT NULL,
     value character varying(255)
 );
 
-CREATE SEQUENCE hibernate_sequence
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
 CREATE TABLE rating (
-    id integer NOT NULL,
+    id serial NOT NULL,
     value double precision,
     voters integer,
     story_id integer
 );
 
 CREATE TABLE story (
-    id integer NOT NULL,
+    id serial NOT NULL,
     annotation character varying(65535),
     file_quality BIGINT,
     file_size BIGINT,
@@ -59,13 +52,13 @@ CREATE TABLE story_tags (
 );
 
 CREATE TABLE tag (
-    id integer NOT NULL,
+    id serial NOT NULL,
     value character varying(255)
 );
 
 CREATE TABLE users
 (
-  id bigint NOT NULL,
+  id serial NOT NULL,
   is_account_non_expired boolean,
   is_account_non_locked boolean,
   is_credentials_non_expired boolean,

@@ -19,7 +19,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Cover implements MdsEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Access(AccessType.PROPERTY)
     private Integer id;
 
