@@ -118,7 +118,7 @@ public class StoryEndpoint {
         @AuthenticationPrincipal User user
     ) {
         List<StoryBookmark> storyBookmarkList = storyBookmarkService.findStoryBookmarks(id, user.getId());
-        return new ApiResponse<List<StoryBookmark>>(storyBookmarkList);
+        return new ApiResponse<>(storyBookmarkList);
     }
 
     @RequestMapping(value = "{id}/storyBookmark", method = RequestMethod.POST)

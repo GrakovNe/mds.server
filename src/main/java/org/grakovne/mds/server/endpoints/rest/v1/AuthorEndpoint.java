@@ -49,7 +49,7 @@ public class AuthorEndpoint {
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public ApiResponse<Author> findAuthor(@PathVariable Integer id) {
         Author author = authorService.findAuthor(id);
-        return new ApiResponse<Author>(author);
+        return new ApiResponse<>(author);
     }
 
     /**

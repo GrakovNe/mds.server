@@ -25,6 +25,6 @@ public class ConfigEndpoint {
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ApiResponse<ConfigurationUtils> getConfigurations() {
-        return new ApiResponse<ConfigurationUtils>(configurationUtils);
+        return new ApiResponse<>(configurationUtils);
     }
 }
