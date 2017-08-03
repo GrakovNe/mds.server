@@ -132,7 +132,7 @@ public class StoryEndpoint {
     }
 
     @RequestMapping(value = "storyBookmark/{id}", method = RequestMethod.DELETE)
-    public ApiResponse<StoryBookmark> deleteStoryBookmark(
+    public ApiResponse deleteStoryBookmark(
         @PathVariable Integer id,
         @AuthenticationPrincipal User user) {
 
