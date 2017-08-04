@@ -3,6 +3,7 @@ package org.grakovne.mds.server.maintenance.actions;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.exceptons.EntityException;
 import org.grakovne.mds.server.services.StoryService;
+import org.grakovne.mds.server.utils.FileProcessingUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +12,24 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Removes orphan entity from DB if theirs audio files is not presented.
+ * Removes orphan entity from DB if audio files is not presented.
  */
 
 @Service
-public class DataBaseValidator implements MaintenanceAction {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseValidator.class);
+public class DataBaseActuator implements MaintenanceAction {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseActuator.class);
 
     @Autowired
     private StoryService storyService;
+
+    @Autowired
+    private FileProcessingUtils fileProcessingUtils;
 
     @Override
     public void execute() {
         LOGGER.info("Database validation is started...");
         removeStoriesWithoutAudio();
-        LOGGER.info("Database validation is finished...");
+        LOGGER.info("Database validation is finished.");
     }
 
     private void removeStoriesWithoutAudio() {

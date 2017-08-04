@@ -11,6 +11,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Works with story audio file in working directory.
@@ -92,6 +95,10 @@ public class FileProcessingUtils {
         return file;
     }
 
+    public List<File> getFiles() {
+        return new ArrayList<>(Arrays.asList(getUploadFolder().listFiles()));
+    }
+
     /**
      * Removes file by it's name.
      *
@@ -106,8 +113,19 @@ public class FileProcessingUtils {
      * Creates working directory.
      */
 
-    private void createUploadDir() {
+    public void createUploadDir() {
         File uploadDir = new File(configurationProvider.getFileUploadDirectory());
         uploadDir.mkdirs();
+    }
+
+    /**
+     * Deletes file if it exists.
+     * @param file file entity
+     */
+
+    public void deleteFile(File file) {
+        if (file.exists()) {
+            file.delete();
+        }
     }
 }
