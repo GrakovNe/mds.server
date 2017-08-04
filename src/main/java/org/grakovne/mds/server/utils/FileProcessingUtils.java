@@ -96,6 +96,10 @@ public class FileProcessingUtils {
     }
 
     public List<File> getFiles() {
+        if (null == getUploadFolder().listFiles()){
+            return new ArrayList<>();
+        }
+
         return new ArrayList<>(Arrays.asList(getUploadFolder().listFiles()));
     }
 
