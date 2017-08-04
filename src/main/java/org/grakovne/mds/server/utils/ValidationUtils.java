@@ -16,7 +16,7 @@ public class ValidationUtils {
     /**
      * Validates story.
      *
-     * @param story      story entity
+     * @param story story entity
      */
 
     public static void validate(Story story) {
@@ -25,7 +25,7 @@ public class ValidationUtils {
             throw new EntityValidationException(Story.class, "story should have a name");
         }
 
-        if (null == story.getAuthors() || story.getAuthors().isEmpty()){
+        if (null == story.getAuthors() || story.getAuthors().isEmpty()) {
             throw new EntityValidationException(Story.class, "story must have at least one author");
         }
 
