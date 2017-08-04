@@ -64,6 +64,24 @@ public class StoryEndpoint {
         return new ApiResponse<>(stories);
     }
 
+    @RequestMapping(value = "listen", method = RequestMethod.GET)
+    public ApiResponse<Page<Story>> findListenedStories(
+        @AuthenticationPrincipal User user,
+        @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+
+        Page<Story> stories = storyService.findListenedStories(user, pageNumber);
+        return new ApiResponse<>(stories);
+    }
+
+    @RequestMapping(value = "unlisten", method = RequestMethod.GET)
+    public ApiResponse<Page<Story>> findUnListenedStories(
+        @AuthenticationPrincipal User user,
+        @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+
+        Page<Story> stories = storyService.findUnListenedStories(user, pageNumber);
+        return new ApiResponse<>(stories);
+    }
+
     /**
      * Finds story bi it's id.
      *
@@ -185,21 +203,6 @@ public class StoryEndpoint {
 
         listenedStoryService.unListenStory(storyId, user);
         return new ApiResponse("Story has been marked as unlistened");
-    }
-
-    /**
-     * Returns list of listened stories for user.
-     *
-     * @param user user auth
-     * @return list with listened stories
-     */
-
-    @RequestMapping(value = "listen", method = RequestMethod.GET)
-    public ApiResponse<List<ListenedStory>> findUsersListenedStories(
-        @AuthenticationPrincipal User user) {
-
-        List<ListenedStory> listenedStories = listenedStoryService.findUsersListenedStory(user);
-        return new ApiResponse<List<ListenedStory>>(listenedStories);
     }
 
     /**

@@ -5,6 +5,7 @@ import org.grakovne.mds.server.entity.Author;
 import org.grakovne.mds.server.entity.Genre;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.Tag;
+import org.grakovne.mds.server.entity.User;
 import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.exceptons.EntityException;
 import org.grakovne.mds.server.importer.fantlab.FantLabMetaImporter;
@@ -97,6 +98,14 @@ public class StoryService {
 
     public Page<Story> findStories(Integer pageNumber) {
         return storyRepository.findAll(new PageRequest(pageNumber, configurationUtils.getPageSize()));
+    }
+
+    public Page<Story> findListenedStories(User user, Integer pageNumber) {
+        return storyRepository.findUsersListenedStories(user, new PageRequest(pageNumber, configurationUtils.getPageSize()));
+    }
+
+    public Page<Story> findUnListenedStories(User user, Integer pageNumber) {
+        return storyRepository.findUsersUnListenedStories(user, new PageRequest(pageNumber, configurationUtils.getPageSize()));
     }
 
     /**
@@ -237,7 +246,7 @@ public class StoryService {
     }
 
     private void setAudioData(Story story, File file) {
-        story.setUrl(storyAudioUrlPrefix + story.getId());
+        story.setUrl(story.getId() + storyAudioUrlPrefix);
         story.setFileSize(audioUtils.getAudioFileSize(file));
         story.setFileQuality(audioUtils.getAudioFileBitrate(file));
         story.setLength(audioUtils.getAudioFileLength(file));
