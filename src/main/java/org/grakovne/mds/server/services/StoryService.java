@@ -119,13 +119,8 @@ public class StoryService {
 
         Story savedStory = persistsStory(story);
 
-        try {
-            File savedAudioFile = fileProcessingUtils.uploadFile(
-                storyAudio, filePrefix + story.getId() + filePostfix);
-            setAudioData(savedStory, savedAudioFile);
-        } catch (IOException e) {
-            throw new EntityException(Story.class, e.getMessage());
-        }
+        File savedStoryAudioFile = uploadStoryFile(story.getId(), storyAudio);
+        setAudioData(savedStory, savedStoryAudioFile);
 
         return persistsStory(savedStory);
     }
@@ -240,7 +235,15 @@ public class StoryService {
         FantLabStoryDto storyDto = fantLabMetaImporter.importMetaFromAudio(audioFile);
         Story convertedStory = fantLabStoryConverter.convertFromFantLabStory(storyDto);
 
-        return createStory(convertedStory, storyAudio);
+        ValidationUtils.validate(convertedStory, storyAudio);
+        checkNotFound(convertedStory);
+
+        Story savedStory = persistsStory(convertedStory);
+
+        File savedStoryAudioFile = uploadStoryFile(convertedStory.getId(), storyAudio);
+        setAudioData(savedStory, savedStoryAudioFile);
+
+        return persistsStory(savedStory);
     }
 
     private Story setAudioData(Story story, File file) {
@@ -271,4 +274,14 @@ public class StoryService {
             throw new EntityAlreadyExistException(Story.class);
         }
     }
+
+    private File uploadStoryFile(Integer storyId, MultipartFile storyAudio) {
+        try {
+            return fileProcessingUtils.uploadFile(
+                storyAudio, filePrefix + storyId + filePostfix);
+        } catch (IOException e) {
+            throw new EntityException(Story.class, e.getMessage());
+        }
+    }
+
 }
