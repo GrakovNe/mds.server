@@ -229,8 +229,14 @@ public class StoryService {
      */
 
     public Story importStory(MultipartFile storyAudio) throws IOException {
+
+        LOGGER.info("MultipartTempFile: " + storyAudio.getBytes().length);
+
         File audioFile = File.createTempFile("audio_story", ".mp3");
         storyAudio.transferTo(audioFile);
+
+        LOGGER.info("MultipartTempFile: " + storyAudio.getBytes().length);
+        LOGGER.info("TempFile: " + audioFile.length());
 
         FantLabStoryDto storyDto = fantLabMetaImporter.importMetaFromAudio(audioFile);
         Story convertedStory = fantLabStoryConverter.convertFromFantLabStory(storyDto);
@@ -242,6 +248,8 @@ public class StoryService {
 
         File savedStoryAudioFile = uploadStoryFile(convertedStory.getId(), storyAudio);
         setAudioData(savedStory, savedStoryAudioFile);
+
+        LOGGER.info("MultipartTempFile: " + storyAudio.getBytes().length);
 
         return persistsStory(savedStory);
     }
