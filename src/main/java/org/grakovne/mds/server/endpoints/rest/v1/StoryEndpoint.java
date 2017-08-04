@@ -112,14 +112,29 @@ public class StoryEndpoint {
         return new ApiResponse<>(result);
     }
 
+    /**
+     * Returns stories bookmarks for user.
+     * @param id story id
+     * @param user user auth
+     * @return list with bookmarks for story
+     */
+
     @RequestMapping(value = "{id}/storyBookmark", method = RequestMethod.GET)
     public ApiResponse<List<StoryBookmark>> getStoryBookmark(
         @PathVariable Integer id,
-        @AuthenticationPrincipal User user
-    ) {
+        @AuthenticationPrincipal User user) {
+
         List<StoryBookmark> storyBookmarkList = storyBookmarkService.findStoryBookmarks(id, user.getId());
         return new ApiResponse<>(storyBookmarkList);
     }
+
+    /**
+     * Creates story bookmarks in db.
+     * @param storyBookmark storybookmark dto with timestamp
+     * @param id story id
+     * @param user user auth
+     * @return created storybookmark
+     */
 
     @RequestMapping(value = "{id}/storyBookmark", method = RequestMethod.POST)
     public ApiResponse<StoryBookmark> bookmarkStory(
@@ -131,6 +146,12 @@ public class StoryEndpoint {
         return new ApiResponse<>(savedStoryBookmark);
     }
 
+    /**
+     * Removes storybookmark for user.
+     * @param id story id
+     * @param user user auth
+     * @return status message
+     */
     @RequestMapping(value = "storyBookmark/{id}", method = RequestMethod.DELETE)
     public ApiResponse deleteStoryBookmark(
         @PathVariable Integer id,

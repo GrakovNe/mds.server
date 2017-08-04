@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: "jdbc:postgresql://localhost:5432/mds"
+    url: "jdbc:postgresql://mds.grakovne.org:5432/mds"
     username: mds
     password: vkVRzABjS5dHt5vEPavRYSxGDB2dk36E
     driver-class-name: org.postgresql.Driver
@@ -15,7 +15,7 @@ spring:
       max-file-size: -1
       max-request-size: -1
   config:
-      fileUploadDirectory: C:\Users\GrakovNe\Desktop\mds
+      fileUploadDirectory: /var/mds/uploads
       pageSize: 25
 server:
     port: 5050

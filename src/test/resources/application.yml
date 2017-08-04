@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: "jdbc:postgresql://localhost:5432/mds"
+    url: "jdbc:postgresql://mds.grakovne.org:5432/mds"
     username: mds
     password: vkVRzABjS5dHt5vEPavRYSxGDB2dk36E
     driver-class-name: org.postgresql.Driver

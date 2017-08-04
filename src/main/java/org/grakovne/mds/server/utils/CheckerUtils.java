@@ -103,11 +103,24 @@ public class CheckerUtils {
         }
     }
 
+    /**
+     * Checks that entity isn't null.
+     *
+     * @param user entity
+     */
+
     public static void checkNotNull(User user) {
         if (null == user) {
             throw new EntityNotFoundException(User.class);
         }
     }
+
+    /**
+     * Checks that storybookmark belongs to user.
+     *
+     * @param storyBookmark entity
+     * @param user          entity
+     */
 
     public static void checkStoryBookmarkBelongsUser(StoryBookmark storyBookmark, User user) {
         if (!storyBookmark.getUser().getId().equals(user.getId())) {

@@ -25,7 +25,7 @@ import java.util.Set;
 @Service
 public class FantLabStoryConverter {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(FantLabStoryConverter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FantLabStoryConverter.class);
 
     /**
      * Converts FantLabStoryDto to Story entity.

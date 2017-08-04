@@ -87,6 +87,12 @@ public class ValidationUtils {
 
     }
 
+    /**
+     * Validates storyBookmark.
+     *
+     * @param storyBookmark storyBookmark entity
+     */
+
     public static void validate(StoryBookmark storyBookmark) {
         if (null == storyBookmark) {
             throw new EntityValidationException(StoryBookmark.class, "story bookmark is null");

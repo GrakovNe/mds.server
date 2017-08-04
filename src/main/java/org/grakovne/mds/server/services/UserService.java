@@ -79,6 +79,12 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    /**
+     * Finds user by it's id.
+     * @param userId user id
+     * @return user entity
+     */
+
     public User findUser(Integer userId) {
         User user = userRepository.findOne(userId);
         CheckerUtils.checkNotNull(user);
