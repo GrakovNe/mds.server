@@ -239,7 +239,6 @@ public class StoryService {
         storyAudio.transferTo(audioFile);
         LOGGER.info("!!!!YET WORKS - 3");
 
-        LOGGER.info("MultipartTempFile: " + storyAudio.getBytes().length);
         LOGGER.info("TempFile: " + audioFile.length());
 
         FantLabStoryDto storyDto = fantLabMetaImporter.importMetaFromAudio(audioFile);
