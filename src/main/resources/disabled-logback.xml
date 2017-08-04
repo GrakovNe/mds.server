@@ -19,4 +19,8 @@
         <appender-ref ref="STDOUT"/>
     </logger>
 
+    <logger name="org.jaudiotagger.tag" level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
 </configuration>
