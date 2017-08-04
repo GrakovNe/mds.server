@@ -84,7 +84,7 @@ public class StoryEndpoint {
      * @throws IOException when file can't be sent
      */
 
-    @RequestMapping(value = "/{id}/audio", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}/audio", method = RequestMethod.GET)
     public void findStoryAudio(@PathVariable Integer id, HttpServletResponse response) throws IOException {
         InputStream fileStream = new FileInputStream(storyService.findStoryAudio(id));
         IOUtils.copy(fileStream, response.getOutputStream());
@@ -161,7 +161,7 @@ public class StoryEndpoint {
      * @return Listened story entity
      */
 
-    @RequestMapping(value = "{id}/listen", method = RequestMethod.POST)
+    @RequestMapping(value = "{storyId}/listen", method = RequestMethod.POST)
     public ApiResponse<ListenedStory> listenStory(
         @PathVariable Integer storyId,
         @AuthenticationPrincipal User user) {
@@ -178,7 +178,7 @@ public class StoryEndpoint {
      * @return Listened story entity
      */
 
-    @RequestMapping(value = "{id}/listen", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{storyId}/listen", method = RequestMethod.DELETE)
     public ApiResponse unListenStory(
         @PathVariable Integer storyId,
         @AuthenticationPrincipal User user) {

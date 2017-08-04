@@ -6,10 +6,15 @@ import org.grakovne.mds.server.entity.User;
 import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.repositories.ListenedStoryRepository;
 import org.grakovne.mds.server.utils.CheckerUtils;
+import org.grakovne.mds.server.utils.ConfigurationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.Configuration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +32,9 @@ public class ListenedStoryService {
 
     @Autowired
     private StoryService storyService;
+
+    @Autowired
+    private ConfigurationUtils configurationUtils;
 
     /**
      * Mark story as listened for user.
