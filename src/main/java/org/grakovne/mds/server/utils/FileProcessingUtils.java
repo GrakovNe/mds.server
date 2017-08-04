@@ -95,8 +95,12 @@ public class FileProcessingUtils {
         return file;
     }
 
+    /**
+     * Returns files in upload directory.
+     * @return list of files
+     */
     public List<File> getFiles() {
-        if (null == getUploadFolder().listFiles()){
+        if (null == getUploadFolder().listFiles()) {
             return new ArrayList<>();
         }
 
@@ -124,6 +128,7 @@ public class FileProcessingUtils {
 
     /**
      * Deletes file if it exists.
+     *
      * @param file file entity
      */
 
