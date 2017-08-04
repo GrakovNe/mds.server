@@ -153,6 +153,14 @@ public class StoryEndpoint {
         return new ApiResponse<>(savedStoryBookmark);
     }
 
+    /**
+     * Marks story as listened for user.
+     *
+     * @param storyId story id
+     * @param user    user auth
+     * @return Listened story entity
+     */
+
     @RequestMapping(value = "{id}/listen", method = RequestMethod.POST)
     public ApiResponse<ListenedStory> listenStory(
         @PathVariable Integer storyId,
@@ -162,6 +170,14 @@ public class StoryEndpoint {
         return new ApiResponse<ListenedStory>(listenedStory);
     }
 
+    /**
+     * Marks story as un-listened for user.
+     *
+     * @param storyId story id
+     * @param user    user auth
+     * @return Listened story entity
+     */
+
     @RequestMapping(value = "{id}/listen", method = RequestMethod.DELETE)
     public ApiResponse unListenStory(
         @PathVariable Integer storyId,
@@ -170,6 +186,13 @@ public class StoryEndpoint {
         listenedStoryService.unListenStory(storyId, user);
         return new ApiResponse("Story has been marked as unlistened");
     }
+
+    /**
+     * Returns list of listened stories for user.
+     *
+     * @param user user auth
+     * @return list with listened stories
+     */
 
     @RequestMapping(value = "listen", method = RequestMethod.GET)
     public ApiResponse<List<ListenedStory>> findUsersListenedStories(

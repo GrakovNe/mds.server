@@ -129,6 +129,13 @@ public class CheckerUtils {
         }
     }
 
+    /**
+     * Checks that listened story belongs to user.
+     *
+     * @param listenedStory entity
+     * @param user          entity
+     */
+
     public static void checkListenedStoryBelongsUser(ListenedStory listenedStory, User user) {
         if (!listenedStory.getUser().getId().equals(user.getId())) {
             throw new EntityException(ListenedStory.class, "Story was listen by other user");

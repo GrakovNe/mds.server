@@ -28,6 +28,14 @@ public class ListenedStoryService {
     @Autowired
     private StoryService storyService;
 
+    /**
+     * Mark story as listened for user.
+     *
+     * @param storyId story id
+     * @param user    user entity
+     * @return listened story entity
+     */
+
     public ListenedStory listenStory(Integer storyId, User user) {
         Story story = storyService.findStory(storyId);
 
@@ -39,6 +47,13 @@ public class ListenedStoryService {
         return persistsListenedStory(listenedStory);
     }
 
+    /**
+     * Mark story as un-listened for user.
+     *
+     * @param storyId story id
+     * @param user    user entity
+     */
+
     public void unListenStory(Integer storyId, User user) {
         Story story = storyService.findStory(storyId);
 
@@ -48,6 +63,12 @@ public class ListenedStoryService {
         listenedStoryRepository.delete(listenedStory.getId());
     }
 
+    /**
+     * Finds users listened stories.
+     *
+     * @param user user entity
+     * @return list with listened stories
+     */
     public List<ListenedStory> findUsersListenedStory(User user) {
         return listenedStoryRepository.findAllByUser(user);
     }
