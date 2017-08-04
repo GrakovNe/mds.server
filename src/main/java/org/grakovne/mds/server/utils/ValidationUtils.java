@@ -6,9 +6,6 @@ import org.grakovne.mds.server.entity.Genre;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.StoryBookmark;
 import org.grakovne.mds.server.exceptons.EntityValidationException;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 /**
  * Common class which can validate every entity.
@@ -20,10 +17,9 @@ public class ValidationUtils {
      * Validates story.
      *
      * @param story      story entity
-     * @param storyAudio audio file
      */
 
-    public static void validate(Story story, MultipartFile storyAudio) {
+    public static void validate(Story story) {
 
         final String storyFileExtension = ".mp3";
 
@@ -41,17 +37,6 @@ public class ValidationUtils {
             throw new EntityValidationException(Story.class, "story must have a year");
         }
 
-        try {
-            if (null == storyAudio || storyAudio.getBytes().length == 0) {
-                throw new EntityValidationException(Story.class, "story must have a audio file");
-            }
-        } catch (IOException e) {
-            throw new EntityValidationException(Story.class, e.getMessage());
-        }
-
-        if (!storyAudio.getOriginalFilename().endsWith(storyFileExtension)) {
-            throw new EntityValidationException(Story.class, "story audio file must be in MP3");
-        }
     }
 
     /**

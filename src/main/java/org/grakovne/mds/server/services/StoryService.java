@@ -114,7 +114,7 @@ public class StoryService {
      */
 
     public Story createStory(Story story, MultipartFile storyAudio) {
-        ValidationUtils.validate(story, storyAudio);
+        ValidationUtils.validate(story);
         checkNotFound(story);
 
         Story savedStory = persistsStory(story);
@@ -244,7 +244,7 @@ public class StoryService {
         FantLabStoryDto storyDto = fantLabMetaImporter.importMetaFromAudio(audioFile);
         Story convertedStory = fantLabStoryConverter.convertFromFantLabStory(storyDto);
 
-        ValidationUtils.validate(convertedStory, storyAudio);
+        ValidationUtils.validate(convertedStory);
         checkNotFound(convertedStory);
 
         Story savedStory = persistsStory(convertedStory);
