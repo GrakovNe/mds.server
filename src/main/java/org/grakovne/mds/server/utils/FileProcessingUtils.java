@@ -1,5 +1,6 @@
 package org.grakovne.mds.server.utils;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,27 @@ public class FileProcessingUtils {
         File fileToSave = new File(pathToSave);
 
         file.transferTo(fileToSave);
+        return fileToSave;
+    }
+
+    /**
+     * Uploads file to working directory.
+     *
+     * @param file     content
+     * @param fileName destination file name
+     * @return saved file
+     * @throws IOException when file can't be saved
+     */
+
+    public File uploadFile(File file, String fileName) throws IOException {
+        if (!Files.exists(getUploadFolder().toPath())) {
+            createUploadDir();
+        }
+
+        String pathToSave = getUploadFolder() + File.separator + fileName;
+        File fileToSave = new File(pathToSave);
+
+        FileUtils.copyFile(file, fileToSave);
         return fileToSave;
     }
 

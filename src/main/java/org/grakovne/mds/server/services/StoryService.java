@@ -232,8 +232,12 @@ public class StoryService {
 
         LOGGER.info("MultipartTempFile: " + storyAudio.getBytes().length);
 
+        LOGGER.info("!!!!YET WORKS - 1");
+
         File audioFile = File.createTempFile("audio_story", ".mp3");
+        LOGGER.info("!!!!YET WORKS - 2");
         storyAudio.transferTo(audioFile);
+        LOGGER.info("!!!!YET WORKS - 3");
 
         LOGGER.info("MultipartTempFile: " + storyAudio.getBytes().length);
         LOGGER.info("TempFile: " + audioFile.length());
@@ -246,7 +250,7 @@ public class StoryService {
 
         Story savedStory = persistsStory(convertedStory);
 
-        File savedStoryAudioFile = uploadStoryFile(convertedStory.getId(), storyAudio);
+        File savedStoryAudioFile = uploadStoryFile(convertedStory.getId(), audioFile);
         setAudioData(savedStory, savedStoryAudioFile);
 
         LOGGER.info("MultipartTempFile: " + storyAudio.getBytes().length);
@@ -284,6 +288,15 @@ public class StoryService {
     }
 
     private File uploadStoryFile(Integer storyId, MultipartFile storyAudio) {
+        try {
+            return fileProcessingUtils.uploadFile(
+                storyAudio, filePrefix + storyId + filePostfix);
+        } catch (IOException e) {
+            throw new EntityException(Story.class, e.getMessage());
+        }
+    }
+
+    private File uploadStoryFile(Integer storyId, File storyAudio) {
         try {
             return fileProcessingUtils.uploadFile(
                 storyAudio, filePrefix + storyId + filePostfix);
