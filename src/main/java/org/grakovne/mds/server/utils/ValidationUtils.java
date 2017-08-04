@@ -46,7 +46,7 @@ public class ValidationUtils {
                 throw new EntityValidationException(Story.class, "story must have a audio file");
             }
         } catch (IOException e) {
-            throw new EntityValidationException(Story.class, "Can't validate a story audio file");
+            throw new EntityValidationException(Story.class, e.getMessage());
         }
 
         if (!storyAudio.getOriginalFilename().endsWith(storyFileExtension)) {
