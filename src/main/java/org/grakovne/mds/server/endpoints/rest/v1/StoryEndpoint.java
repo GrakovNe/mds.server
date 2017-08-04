@@ -4,9 +4,11 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 import org.grakovne.mds.server.endpoints.rest.v1.support.ApiResponse;
+import org.grakovne.mds.server.entity.ListenedStory;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.StoryBookmark;
 import org.grakovne.mds.server.entity.User;
+import org.grakovne.mds.server.services.ListenedStoryService;
 import org.grakovne.mds.server.services.StoryBookmarkService;
 import org.grakovne.mds.server.services.StoryService;
 import org.slf4j.Logger;
@@ -44,6 +46,9 @@ public class StoryEndpoint {
 
     @Autowired
     private StoryBookmarkService storyBookmarkService;
+
+    @Autowired
+    private ListenedStoryService listenedStoryService;
 
     /**
      * Finds stories without filters.
@@ -114,7 +119,8 @@ public class StoryEndpoint {
 
     /**
      * Returns stories bookmarks for user.
-     * @param id story id
+     *
+     * @param id   story id
      * @param user user auth
      * @return list with bookmarks for story
      */
@@ -130,9 +136,10 @@ public class StoryEndpoint {
 
     /**
      * Creates story bookmarks in db.
+     *
      * @param storyBookmark storybookmark dto with timestamp
-     * @param id story id
-     * @param user user auth
+     * @param id            story id
+     * @param user          user auth
      * @return created storybookmark
      */
 
@@ -146,9 +153,36 @@ public class StoryEndpoint {
         return new ApiResponse<>(savedStoryBookmark);
     }
 
+    @RequestMapping(value = "{id}/listen", method = RequestMethod.POST)
+    public ApiResponse<ListenedStory> listenStory(
+        @PathVariable Integer storyId,
+        @AuthenticationPrincipal User user) {
+
+        ListenedStory listenedStory = listenedStoryService.listenStory(storyId, user);
+        return new ApiResponse<ListenedStory>(listenedStory);
+    }
+
+    @RequestMapping(value = "{id}/listen", method = RequestMethod.DELETE)
+    public ApiResponse unListenStory(
+        @PathVariable Integer storyId,
+        @AuthenticationPrincipal User user) {
+
+        listenedStoryService.unListenStory(storyId, user);
+        return new ApiResponse("Story has been marked as unlistened");
+    }
+
+    @RequestMapping(value = "listen", method = RequestMethod.GET)
+    public ApiResponse<List<ListenedStory>> findUsersListenedStories(
+        @AuthenticationPrincipal User user) {
+
+        List<ListenedStory> listenedStories = listenedStoryService.findUsersListenedStory(user);
+        return new ApiResponse<List<ListenedStory>>(listenedStories);
+    }
+
     /**
      * Removes storybookmark for user.
-     * @param id story id
+     *
+     * @param id   story id
      * @param user user auth
      * @return status message
      */

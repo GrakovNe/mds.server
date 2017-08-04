@@ -18,7 +18,8 @@ public interface StoryBookmarkRepository extends JpaRepository<StoryBookmark, In
 
     /**
      * Returns list with storybookmarks of story for user.
-     * @param user user entity
+     *
+     * @param user  user entity
      * @param story story entity
      * @return list with storybookmarks
      */
@@ -27,7 +28,8 @@ public interface StoryBookmarkRepository extends JpaRepository<StoryBookmark, In
 
     /**
      * Returns list with storybookmarks for user by createdatetime.
-     * @param user user entity
+     *
+     * @param user           user entity
      * @param createDateTime createdatetime of storybookmark
      * @return Storybookmark entity
      */

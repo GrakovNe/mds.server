@@ -11,6 +11,7 @@ import org.grakovne.mds.server.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -34,8 +35,9 @@ public class StoryBookmarkService {
 
     /**
      * Finds storybookmarks by storyId for user.
+     *
      * @param storyId story id
-     * @param userId user id
+     * @param userId  user id
      * @return List with storybookmarks
      */
 
@@ -48,15 +50,17 @@ public class StoryBookmarkService {
 
     /**
      * Creates new storybookmark for user.
-     * @param storyId story id
+     *
+     * @param storyId       story id
      * @param storyBookmark storybookmark dto with timestamp
-     * @param user user auth
+     * @param user          user auth
      * @return storybookmark entity
      */
 
     public StoryBookmark createBookmark(Integer storyId, StoryBookmark storyBookmark, User user) {
         storyBookmark.setUser(user);
         storyBookmark.setStory(storyService.findStory(storyId));
+        storyBookmark.setCreateDateTime(LocalDateTime.now());
 
         ValidationUtils.validate(storyBookmark);
         checkNotFound(storyBookmark);
@@ -66,8 +70,9 @@ public class StoryBookmarkService {
 
     /**
      * Finds storybookmark by it's id.
+     *
      * @param storyBookmarkId storybookmark id
-     * @param userId user id for security check
+     * @param userId          user id for security check
      * @return storybookmark entity or exception
      */
 
@@ -82,8 +87,9 @@ public class StoryBookmarkService {
 
     /**
      * Removes storybookmark from db by it's id.
+     *
      * @param storyBookmarkId storybookmark id.
-     * @param userId user id for security check
+     * @param userId          user id for security check
      */
 
     public void deleteStoryBookmark(Integer storyBookmarkId, Integer userId) {

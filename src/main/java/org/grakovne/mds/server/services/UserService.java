@@ -81,6 +81,7 @@ public class UserService implements UserDetailsService {
 
     /**
      * Finds user by it's id.
+     *
      * @param userId user id
      * @return user entity
      */

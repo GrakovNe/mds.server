@@ -2,6 +2,7 @@ package org.grakovne.mds.server.utils;
 
 import org.grakovne.mds.server.entity.Author;
 import org.grakovne.mds.server.entity.Genre;
+import org.grakovne.mds.server.entity.ListenedStory;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.StoryBookmark;
 import org.grakovne.mds.server.entity.User;
@@ -125,6 +126,12 @@ public class CheckerUtils {
     public static void checkStoryBookmarkBelongsUser(StoryBookmark storyBookmark, User user) {
         if (!storyBookmark.getUser().getId().equals(user.getId())) {
             throw new EntityException(StoryBookmark.class, "storybookmark is not belongs to user");
+        }
+    }
+
+    public static void checkListenedStoryBelongsUser(ListenedStory listenedStory, User user) {
+        if (!listenedStory.getUser().getId().equals(user.getId())) {
+            throw new EntityException(ListenedStory.class, "Story was listen by other user");
         }
     }
 }

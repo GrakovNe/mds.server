@@ -73,6 +73,9 @@ public class StoryService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ListenedStoryService listenedStoryService;
+
     /**
      * Finds story by it's id.
      *

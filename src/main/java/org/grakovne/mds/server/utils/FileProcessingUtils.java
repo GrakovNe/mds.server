@@ -97,6 +97,7 @@ public class FileProcessingUtils {
 
     /**
      * Returns files in upload directory.
+     *
      * @return list of files
      */
     public List<File> getFiles() {
