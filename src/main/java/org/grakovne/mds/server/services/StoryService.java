@@ -105,24 +105,37 @@ public class StoryService {
         return storyRepository.findAll();
     }
 
+
     /**
      * Saves new story in DB.
      *
      * @param story      story entity
      * @param storyAudio audio file
      * @return saved story
+     * @throws IOException if something wrong with file upload
      */
 
-    public Story createStory(Story story, MultipartFile storyAudio) {
-        ValidationUtils.validate(story);
-        checkNotFound(story);
+    public Story createStory(Story story, MultipartFile storyAudio) throws IOException {
+        File audioFile = createTempStoryAudioFile(storyAudio);
 
-        Story savedStory = persistsStory(story);
+        return persistsStory(story, audioFile);
+    }
 
-        File savedStoryAudioFile = uploadStoryFile(story.getId(), storyAudio);
-        setAudioData(savedStory, savedStoryAudioFile);
+    /**
+     * Imports story from 3rd party service.
+     *
+     * @param storyAudio File with ID3 tags
+     * @return saved story
+     * @throws IOException if something wrong with file upload
+     */
 
-        return persistsStory(savedStory);
+    public Story importStory(MultipartFile storyAudio) throws IOException {
+        File audioFile = createTempStoryAudioFile(storyAudio);
+
+        FantLabStoryDto storyDto = fantLabMetaImporter.importMetaFromAudio(audioFile);
+        Story convertedStory = fantLabStoryConverter.convertFromFantLabStory(storyDto);
+
+        return persistsStory(convertedStory, audioFile);
     }
 
     /**
@@ -220,41 +233,11 @@ public class StoryService {
         return persistsStory(persistStory);
     }
 
-    /**
-     * Imports story from 3rd party service.
-     *
-     * @param r File with ID3 tags
-     * @return saved story
-     * @throws IOException if something wrong with file upload
-     */
-
-    public Story importStory(MultipartFile r) throws IOException {
-
-        File audioFile = File.createTempFile("audio_story", ".mp3");
-        r.transferTo(audioFile);
-
-        LOGGER.info("TempFile: " + audioFile.length());
-
-        FantLabStoryDto storyDto = fantLabMetaImporter.importMetaFromAudio(audioFile);
-        Story convertedStory = fantLabStoryConverter.convertFromFantLabStory(storyDto);
-
-        ValidationUtils.validate(convertedStory);
-        checkNotFound(convertedStory);
-
-        Story savedStory = persistsStory(convertedStory);
-
-        File savedStoryAudioFile = uploadStoryFile(convertedStory.getId(), audioFile);
-        setAudioData(savedStory, savedStoryAudioFile);
-
-        return persistsStory(savedStory);
-    }
-
-    private Story setAudioData(Story story, File file) {
+    private void setAudioData(Story story, File file) {
         story.setUrl(storyAudioUrlPrefix + story.getId());
         story.setFileSize(audioUtils.getAudioFileSize(file));
         story.setFileQuality(audioUtils.getAudioFileBitrate(file));
         story.setLength(audioUtils.getAudioFileLength(file));
-        return story;
     }
 
     private Story persistsStory(Story story) {
@@ -278,7 +261,7 @@ public class StoryService {
         }
     }
 
-    private File uploadStoryFile(Integer storyId, MultipartFile storyAudio) {
+    private File uploadStoryFile(Integer storyId, File storyAudio) {
         try {
             return fileProcessingUtils.uploadFile(
                 storyAudio, filePrefix + storyId + filePostfix);
@@ -287,13 +270,24 @@ public class StoryService {
         }
     }
 
-    private File uploadStoryFile(Integer storyId, File storyAudio) {
-        try {
-            return fileProcessingUtils.uploadFile(
-                storyAudio, filePrefix + storyId + filePostfix);
-        } catch (IOException e) {
-            throw new EntityException(Story.class, e.getMessage());
-        }
+    private File createTempStoryAudioFile(MultipartFile storyAudio) throws IOException {
+        File audioFile = File.createTempFile("audio_story", ".mp3");
+        storyAudio.transferTo(audioFile);
+
+        return audioFile;
+    }
+
+    private Story persistsStory(Story story, File audioFile) {
+
+        ValidationUtils.validate(story);
+        checkNotFound(story);
+
+        Story savedStory = persistsStory(story);
+
+        File savedStoryAudioFile = uploadStoryFile(story.getId(), audioFile);
+        setAudioData(savedStory, savedStoryAudioFile);
+
+        return persistsStory(savedStory);
     }
 
 }
