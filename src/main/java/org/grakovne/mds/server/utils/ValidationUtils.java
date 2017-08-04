@@ -21,17 +21,13 @@ public class ValidationUtils {
 
     public static void validate(Story story) {
 
-        final String storyFileExtension = ".mp3";
-
         if (Strings.isNullOrEmpty(story.getTitle())) {
             throw new EntityValidationException(Story.class, "story should have a name");
         }
 
-        /*
         if (null == story.getAuthors() || story.getAuthors().isEmpty()){
             throw new EntityValidationException(Story.class, "story must have at least one author");
         }
-        */
 
         if (null == story.getYear() || story.getYear().equals(0)) {
             throw new EntityValidationException(Story.class, "story must have a year");
