@@ -223,21 +223,15 @@ public class StoryService {
     /**
      * Imports story from 3rd party service.
      *
-     * @param storyAudio File with ID3 tags
+     * @param r File with ID3 tags
      * @return saved story
      * @throws IOException if something wrong with file upload
      */
 
-    public Story importStory(MultipartFile storyAudio) throws IOException {
-
-        LOGGER.info("MultipartTempFile: " + storyAudio.getBytes().length);
-
-        LOGGER.info("!!!!YET WORKS - 1");
+    public Story importStory(MultipartFile r) throws IOException {
 
         File audioFile = File.createTempFile("audio_story", ".mp3");
-        LOGGER.info("!!!!YET WORKS - 2");
-        storyAudio.transferTo(audioFile);
-        LOGGER.info("!!!!YET WORKS - 3");
+        r.transferTo(audioFile);
 
         LOGGER.info("TempFile: " + audioFile.length());
 
@@ -251,8 +245,6 @@ public class StoryService {
 
         File savedStoryAudioFile = uploadStoryFile(convertedStory.getId(), audioFile);
         setAudioData(savedStory, savedStoryAudioFile);
-
-        LOGGER.info("MultipartTempFile: " + storyAudio.getBytes().length);
 
         return persistsStory(savedStory);
     }
