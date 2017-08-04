@@ -64,6 +64,14 @@ public class StoryEndpoint {
         return new ApiResponse<>(stories);
     }
 
+    /**
+     * Returns listened stories for user.
+     *
+     * @param user       user auth
+     * @param pageNumber page number
+     * @return page with stories
+     */
+
     @RequestMapping(value = "listen", method = RequestMethod.GET)
     public ApiResponse<Page<Story>> findListenedStories(
         @AuthenticationPrincipal User user,
@@ -72,6 +80,14 @@ public class StoryEndpoint {
         Page<Story> stories = storyService.findListenedStories(user, pageNumber);
         return new ApiResponse<>(stories);
     }
+
+    /**
+     * Returns un-listened stories for user.
+     *
+     * @param user       user auth
+     * @param pageNumber page number
+     * @return page with stories
+     */
 
     @RequestMapping(value = "unlisten", method = RequestMethod.GET)
     public ApiResponse<Page<Story>> findUnListenedStories(

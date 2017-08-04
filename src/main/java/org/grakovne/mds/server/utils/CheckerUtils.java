@@ -1,7 +1,6 @@
 package org.grakovne.mds.server.utils;
 
 import org.grakovne.mds.server.entity.Author;
-import org.grakovne.mds.server.entity.Genre;
 import org.grakovne.mds.server.entity.ListenedStory;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.StoryBookmark;
@@ -34,36 +33,12 @@ public class CheckerUtils {
     /**
      * Checks that entity isn't null.
      *
-     * @param genre entity
-     */
-
-    public static void checkNotNull(Genre genre) {
-        if (null == genre) {
-            throw new EntityNotFoundException(Genre.class);
-        }
-    }
-
-    /**
-     * Checks that entity isn't null.
-     *
      * @param author entity
      */
 
     public static void checkNotNull(Author author) {
         if (null == author) {
             throw new EntityNotFoundException(Author.class);
-        }
-    }
-
-    /**
-     * Checks that entity is null.
-     *
-     * @param genre entity
-     */
-
-    public static void checkNull(Genre genre) {
-        if (null != genre) {
-            throw new EntityAlreadyExistException(Genre.class);
         }
     }
 

@@ -9,11 +9,6 @@ CREATE TABLE cover (
   story_id            INTEGER
 );
 
-CREATE TABLE genre (
-  id    SERIAL NOT NULL,
-  value CHARACTER VARYING(255)
-);
-
 CREATE TABLE rating (
   id       SERIAL NOT NULL,
   value    DOUBLE PRECISION,
@@ -36,11 +31,6 @@ CREATE TABLE story (
 
 
 CREATE TABLE story_authors (
-  story_id  INTEGER NOT NULL,
-  author_id INTEGER NOT NULL
-);
-
-CREATE TABLE story_genres (
   story_id  INTEGER NOT NULL,
   author_id INTEGER NOT NULL
 );
@@ -76,14 +66,8 @@ ADD CONSTRAINT author_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY cover
 ADD CONSTRAINT cover_pkey PRIMARY KEY (id);
 
-ALTER TABLE ONLY genre
-ADD CONSTRAINT genre_pkey PRIMARY KEY (id);
-
 ALTER TABLE ONLY rating
 ADD CONSTRAINT rating_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY story_genres
-ADD CONSTRAINT story_genres_pkey PRIMARY KEY (story_id, author_id);
 
 ALTER TABLE ONLY story
 ADD CONSTRAINT story_pkey PRIMARY KEY (id);
@@ -109,9 +93,6 @@ ADD CONSTRAINT fk6k9ndu1xetybeobtmief9tc8h FOREIGN KEY (story_id) REFERENCES sto
 ALTER TABLE ONLY rating
 ADD CONSTRAINT fk80o4s4q6fehrpvw8cca2yxj27 FOREIGN KEY (story_id) REFERENCES story(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE ONLY story_genres
-ADD CONSTRAINT fk88ws4qqewqsepkwgokbeqi862 FOREIGN KEY (author_id) REFERENCES genre(id) ON DELETE CASCADE ON UPDATE CASCADE;
-
 ALTER TABLE ONLY story
 ADD CONSTRAINT fkbh2so206ma10qgxm4sugvybk FOREIGN KEY (cover_id) REFERENCES cover(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -120,9 +101,6 @@ ADD CONSTRAINT fkeptm8vp3mp46v71h5vl2gysqn FOREIGN KEY (rating_id) REFERENCES ra
 
 ALTER TABLE ONLY story_authors
 ADD CONSTRAINT fkffamqbn9u5u4tsa3usx33iy7d FOREIGN KEY (author_id) REFERENCES author(id) ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE ONLY story_genres
-ADD CONSTRAINT fkqn67twps6unol38h40mpaugy FOREIGN KEY (story_id) REFERENCES story(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 CREATE TABLE story_bookmark
 (

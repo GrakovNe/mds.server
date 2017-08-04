@@ -2,7 +2,6 @@ package org.grakovne.mds.server.services;
 
 import com.google.common.base.Strings;
 import org.grakovne.mds.server.entity.Author;
-import org.grakovne.mds.server.entity.Genre;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.Tag;
 import org.grakovne.mds.server.entity.User;
@@ -51,9 +50,6 @@ public class StoryService {
     private AuthorService authorService;
 
     @Autowired
-    private GenreService genreService;
-
-    @Autowired
     private TagService tagService;
 
     @Autowired
@@ -100,12 +96,36 @@ public class StoryService {
         return storyRepository.findAll(new PageRequest(pageNumber, configurationUtils.getPageSize()));
     }
 
+
+    /**
+     * Returns all listened stories.
+     *
+     * @param user       user entity
+     * @param pageNumber page number
+     * @return page with stories
+     */
+
     public Page<Story> findListenedStories(User user, Integer pageNumber) {
-        return storyRepository.findUsersListenedStories(user, new PageRequest(pageNumber, configurationUtils.getPageSize()));
+        return storyRepository.findUsersListenedStories(
+            user,
+            new PageRequest(pageNumber, configurationUtils.getPageSize())
+        );
     }
 
+    /**
+     * Returns all un-listened stories.
+     *
+     * @param user       user entity
+     * @param pageNumber page number
+     * @return page with stories
+     */
+
     public Page<Story> findUnListenedStories(User user, Integer pageNumber) {
-        return storyRepository.findUsersUnListenedStories(user, new PageRequest(pageNumber, configurationUtils.getPageSize()));
+        return storyRepository.findUsersUnListenedStories(
+            user,
+            new PageRequest(pageNumber,
+                configurationUtils.getPageSize())
+        );
     }
 
     /**
@@ -258,9 +278,6 @@ public class StoryService {
 
         Set<Tag> persistsTags = tagService.persistTagList(story.getTags());
         story.setTags(persistsTags);
-
-        Set<Genre> persistsGenres = genreService.persistGenreList(story.getGenres());
-        story.setGenres(persistsGenres);
 
         return storyRepository.save(story);
     }

@@ -2,7 +2,6 @@ package org.grakovne.mds.server.utils;
 
 import com.google.common.base.Strings;
 import org.grakovne.mds.server.entity.Author;
-import org.grakovne.mds.server.entity.Genre;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.StoryBookmark;
 import org.grakovne.mds.server.exceptons.EntityValidationException;
@@ -33,22 +32,6 @@ public class ValidationUtils {
             throw new EntityValidationException(Story.class, "story must have a year");
         }
 
-    }
-
-    /**
-     * Validates genre.
-     *
-     * @param genre genre entity
-     */
-
-    public static void validate(Genre genre) {
-        if (null == genre) {
-            throw new EntityValidationException(Genre.class, "genre is null");
-        }
-
-        if (Strings.isNullOrEmpty(genre.getValue())) {
-            throw new EntityValidationException(Genre.class, "genre must have a value");
-        }
     }
 
     /**

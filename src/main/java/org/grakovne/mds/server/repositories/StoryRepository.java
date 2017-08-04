@@ -9,8 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * JPA Repository.
  */
@@ -27,8 +25,24 @@ public interface StoryRepository extends JpaRepository<Story, Integer> {
      */
     Story findByYearAndTitle(Integer year, String title);
 
+    /**
+     * Returns all listened stories.
+     *
+     * @param user     user entity
+     * @param pageable spring pagination
+     * @return page with stories
+     */
+
     @Query("from Story s where id in (select story.id from ListenedStory ls where ls.user.id = :#{#user.id})")
     Page<Story> findUsersListenedStories(@Param("user") User user, Pageable pageable);
+
+    /**
+     * Returns all un-listened stories.
+     *
+     * @param user     user entity
+     * @param pageable spring pagination
+     * @return page with stories
+     */
 
     @Query("from Story s where id not in (select story.id from ListenedStory ls where ls.user.id = :#{#user.id})")
     Page<Story> findUsersUnListenedStories(@Param("user") User user, Pageable pageable);

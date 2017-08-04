@@ -42,19 +42,6 @@ public class Story implements MdsEntity {
         ))
     private Set<Author> authors;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "story_genres",
-        joinColumns = @JoinColumn(
-            name = "story_id",
-            referencedColumnName = "id"
-        ),
-        inverseJoinColumns = @JoinColumn(
-            name = "author_id",
-            referencedColumnName = "id"
-        ))
-    private Set<Genre> genres;
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Rating rating;
 
@@ -117,14 +104,6 @@ public class Story implements MdsEntity {
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
-    }
-
-    public Set<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(Set<Genre> genres) {
-        this.genres = genres;
     }
 
     public Rating getRating() {
@@ -211,9 +190,6 @@ public class Story implements MdsEntity {
         if (authors != null ? !authors.equals(story.authors) : story.authors != null) {
             return false;
         }
-        if (genres != null ? !genres.equals(story.genres) : story.genres != null) {
-            return false;
-        }
         if (rating != null ? !rating.equals(story.rating) : story.rating != null) {
             return false;
         }
@@ -244,7 +220,6 @@ public class Story implements MdsEntity {
         int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (year != null ? year.hashCode() : 0);
         result = 31 * result + (authors != null ? authors.hashCode() : 0);
-        result = 31 * result + (genres != null ? genres.hashCode() : 0);
         result = 31 * result + (rating != null ? rating.hashCode() : 0);
         result = 31 * result + (cover != null ? cover.hashCode() : 0);
         result = 31 * result + (annotation != null ? annotation.hashCode() : 0);
@@ -263,7 +238,6 @@ public class Story implements MdsEntity {
             ", title='" + title + '\'' +
             ", year=" + year +
             ", authors=" + authors +
-            ", genres=" + genres +
             ", rating=" + rating +
             ", cover=" + cover +
             ", annotation='" + annotation + '\'' +
