@@ -7,6 +7,7 @@ import org.grakovne.mds.server.entity.Tag;
 import org.grakovne.mds.server.entity.User;
 import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.exceptons.EntityException;
+import org.grakovne.mds.server.exceptons.EntityNotFoundException;
 import org.grakovne.mds.server.importer.fantlab.FantLabMetaImporter;
 import org.grakovne.mds.server.importer.fantlab.converters.FantLabStoryConverter;
 import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
@@ -320,6 +321,12 @@ public class StoryService {
     }
 
     public Story findRandomStory() {
-        return storyRepository.findRandomStory(new PageRequest(1, 1)).getContent().get(0);
+        Page<Story> storyPage = storyRepository.findRandomStory(new PageRequest(0, 1));
+
+        if (!storyPage.getContent().isEmpty()){
+            return storyPage.getContent().get(0);
+        }
+
+        throw new EntityNotFoundException(Story.class);
     }
 }
