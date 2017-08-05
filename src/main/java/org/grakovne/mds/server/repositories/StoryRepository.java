@@ -2,8 +2,10 @@ package org.grakovne.mds.server.repositories;
 
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.User;
+import org.springframework.cglib.core.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -46,4 +48,7 @@ public interface StoryRepository extends JpaRepository<Story, Integer> {
 
     @Query("from Story s where id not in (select story.id from ListenedStory ls where ls.user.id = :#{#user.id})")
     Page<Story> findUsersUnListenedStories(@Param("user") User user, Pageable pageable);
+
+    @Query("from Story s order by random()")
+    Page<Story> findRandomStory(Pageable pageable);
 }

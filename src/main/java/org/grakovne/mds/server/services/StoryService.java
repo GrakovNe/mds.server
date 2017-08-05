@@ -319,4 +319,7 @@ public class StoryService {
         return persistsStory(savedStory);
     }
 
+    public Story findRandomStory() {
+        return storyRepository.findRandomStory(new PageRequest(1, 1)).getContent().get(0);
+    }
 }

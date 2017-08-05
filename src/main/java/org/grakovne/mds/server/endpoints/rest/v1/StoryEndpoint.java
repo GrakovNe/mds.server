@@ -64,6 +64,12 @@ public class StoryEndpoint {
         return new ApiResponse<>(stories);
     }
 
+    @RequestMapping(value = "random", method = RequestMethod.GET)
+    public ApiResponse<Story> findRandomStory(){
+        Story story = storyService.findRandomStory();
+        return new ApiResponse<Story>(story);
+    }
+
     /**
      * Returns listened stories for user.
      *
