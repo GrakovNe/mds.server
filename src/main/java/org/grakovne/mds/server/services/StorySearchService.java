@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class SearchService {
+public class StorySearchService {
 
     @Autowired
     private EntityManager entityManager;

@@ -9,8 +9,8 @@ import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.StoryBookmark;
 import org.grakovne.mds.server.entity.User;
 import org.grakovne.mds.server.services.ListenedStoryService;
-import org.grakovne.mds.server.services.SearchService;
 import org.grakovne.mds.server.services.StoryBookmarkService;
+import org.grakovne.mds.server.services.StorySearchService;
 import org.grakovne.mds.server.services.StoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +54,7 @@ public class StoryEndpoint {
     private ListenedStoryService listenedStoryService;
 
     @Autowired
-    private SearchService searchService;
+    private StorySearchService storySearchService;
 
     /**
      * Finds stories without filters.
@@ -96,7 +96,7 @@ public class StoryEndpoint {
         searchParameters.put("userId", String.valueOf(user.getId()));
         searchParameters.put("page", pageNumber);
 
-        Page<Story> searchResults = searchService.findStory(searchParameters);
+        Page<Story> searchResults = storySearchService.findStory(searchParameters);
         return new ApiResponse<>(searchResults);
     }
 

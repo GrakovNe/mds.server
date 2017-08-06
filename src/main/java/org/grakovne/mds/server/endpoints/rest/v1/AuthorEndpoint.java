@@ -2,6 +2,7 @@ package org.grakovne.mds.server.endpoints.rest.v1;
 
 import org.grakovne.mds.server.endpoints.rest.v1.support.ApiResponse;
 import org.grakovne.mds.server.entity.Author;
+import org.grakovne.mds.server.services.AuthorSearchService;
 import org.grakovne.mds.server.services.AuthorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Spring author endpoint.
@@ -26,6 +30,9 @@ public class AuthorEndpoint {
     @Autowired
     private AuthorService authorService;
 
+    @Autowired
+    private AuthorSearchService authorSearchService;
+
     /**
      * Finds authors without filters.
      *
@@ -38,6 +45,23 @@ public class AuthorEndpoint {
 
         Page<Author> authors = authorService.findAuthors(pageNumber);
         return new ApiResponse<>(authors);
+    }
+
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public ApiResponse<Page<Author>> findAuthors(
+        @RequestParam(required = false, defaultValue = "0") String pageNumber,
+        @RequestParam(required = false, defaultValue = "") String name,
+        @RequestParam(required = false, defaultValue = "desc") String orderDirection) {
+
+
+        Map<String, String> params = new HashMap<>();
+
+        params.put("name", name);
+        params.put("page", pageNumber);
+        params.put("orderDirection", orderDirection);
+
+
+        return new ApiResponse<Page<Author>>(authorSearchService.findAuthor(params));
     }
 
     /**

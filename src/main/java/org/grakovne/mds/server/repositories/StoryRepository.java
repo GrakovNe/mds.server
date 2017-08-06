@@ -2,10 +2,8 @@ package org.grakovne.mds.server.repositories;
 
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.User;
-import org.springframework.cglib.core.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
