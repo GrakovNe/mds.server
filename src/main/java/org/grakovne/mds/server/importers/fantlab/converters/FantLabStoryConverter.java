@@ -1,4 +1,4 @@
-package org.grakovne.mds.server.importer.fantlab.converters;
+package org.grakovne.mds.server.importers.fantlab.converters;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -7,7 +7,7 @@ import org.grakovne.mds.server.entity.Cover;
 import org.grakovne.mds.server.entity.Rating;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.Tag;
-import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
+import org.grakovne.mds.server.importers.fantlab.dto.FantLabStoryDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package org.grakovne.mds.server.importer.fantlab.api;
+package org.grakovne.mds.server.importers.fantlab.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

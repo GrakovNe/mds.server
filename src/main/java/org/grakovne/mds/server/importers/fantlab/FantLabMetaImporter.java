@@ -1,12 +1,12 @@
-package org.grakovne.mds.server.importer.fantlab;
+package org.grakovne.mds.server.importers.fantlab;
 
 import com.google.common.base.Strings;
-import org.grakovne.mds.server.importer.ImporterException;
-import org.grakovne.mds.server.importer.fantlab.api.ApiFactory;
-import org.grakovne.mds.server.importer.fantlab.api.ApiService;
-import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
-import org.grakovne.mds.server.importer.fantlab.dto.search.AudioMatches;
-import org.grakovne.mds.server.importer.fantlab.dto.search.SearchResult;
+import org.grakovne.mds.server.importers.ImporterException;
+import org.grakovne.mds.server.importers.fantlab.api.ApiFactory;
+import org.grakovne.mds.server.importers.fantlab.api.ApiService;
+import org.grakovne.mds.server.importers.fantlab.dto.FantLabStoryDto;
+import org.grakovne.mds.server.importers.fantlab.dto.search.AudioMatches;
+import org.grakovne.mds.server.importers.fantlab.dto.search.SearchResult;
 import org.grakovne.mds.server.utils.AudioUtils;
 import org.springframework.stereotype.Service;
 

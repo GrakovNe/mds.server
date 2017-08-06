@@ -1,7 +1,7 @@
-package org.grakovne.mds.server.importer.fantlab.api;
+package org.grakovne.mds.server.importers.fantlab.api;
 
-import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
-import org.grakovne.mds.server.importer.fantlab.dto.search.SearchResult;
+import org.grakovne.mds.server.importers.fantlab.dto.FantLabStoryDto;
+import org.grakovne.mds.server.importers.fantlab.dto.search.SearchResult;
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Query;

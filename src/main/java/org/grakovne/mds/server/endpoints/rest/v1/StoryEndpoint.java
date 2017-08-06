@@ -9,6 +9,7 @@ import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.StoryBookmark;
 import org.grakovne.mds.server.entity.User;
 import org.grakovne.mds.server.services.ListenedStoryService;
+import org.grakovne.mds.server.services.SearchService;
 import org.grakovne.mds.server.services.StoryBookmarkService;
 import org.grakovne.mds.server.services.StoryService;
 import org.slf4j.Logger;
@@ -29,7 +30,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Spring story endpoint.
@@ -50,6 +53,9 @@ public class StoryEndpoint {
     @Autowired
     private ListenedStoryService listenedStoryService;
 
+    @Autowired
+    private SearchService searchService;
+
     /**
      * Finds stories without filters.
      *
@@ -65,9 +71,33 @@ public class StoryEndpoint {
     }
 
     @RequestMapping(value = "random", method = RequestMethod.GET)
-    public ApiResponse<Story> findRandomStory(){
+    public ApiResponse<Story> findRandomStory() {
         Story story = storyService.findRandomStory();
         return new ApiResponse<Story>(story);
+    }
+
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public ApiResponse<Page<Story>> findStories(
+        @RequestParam(required = false, defaultValue = "both") String listenedType,
+        @RequestParam(required = false, defaultValue = "") String title,
+        @RequestParam(required = false, defaultValue = "") String author,
+        @RequestParam(required = false, defaultValue = "id") String orderBy,
+        @RequestParam(required = false, defaultValue = "asc") String orderDirection,
+        @RequestParam(required = false, defaultValue = "0") String pageNumber,
+        @AuthenticationPrincipal User user) {
+
+        Map<String, String> searchParameters = new HashMap<>();
+
+        searchParameters.put("listenedType", listenedType);
+        searchParameters.put("title", title);
+        searchParameters.put("author", author);
+        searchParameters.put("orderBy", orderBy);
+        searchParameters.put("orderDirection", orderDirection);
+        searchParameters.put("userId", String.valueOf(user.getId()));
+        searchParameters.put("page", pageNumber);
+
+        Page<Story> searchResults = searchService.findStory(searchParameters);
+        return new ApiResponse<>(searchResults);
     }
 
     /**

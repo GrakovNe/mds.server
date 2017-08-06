@@ -8,9 +8,9 @@ import org.grakovne.mds.server.entity.User;
 import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.exceptons.EntityException;
 import org.grakovne.mds.server.exceptons.EntityNotFoundException;
-import org.grakovne.mds.server.importer.fantlab.FantLabMetaImporter;
-import org.grakovne.mds.server.importer.fantlab.converters.FantLabStoryConverter;
-import org.grakovne.mds.server.importer.fantlab.dto.FantLabStoryDto;
+import org.grakovne.mds.server.importers.fantlab.FantLabMetaImporter;
+import org.grakovne.mds.server.importers.fantlab.converters.FantLabStoryConverter;
+import org.grakovne.mds.server.importers.fantlab.dto.FantLabStoryDto;
 import org.grakovne.mds.server.repositories.StoryRepository;
 import org.grakovne.mds.server.utils.AudioUtils;
 import org.grakovne.mds.server.utils.CheckerUtils;
@@ -21,14 +21,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -73,6 +76,9 @@ public class StoryService {
 
     @Autowired
     private ListenedStoryService listenedStoryService;
+
+    @Autowired
+    private EntityManager entityManager;
 
     /**
      * Finds story by it's id.
@@ -267,7 +273,7 @@ public class StoryService {
     }
 
     private void setAudioData(Story story, File file) {
-        story.setUrl(story.getId() + storyAudioUrlPrefix);
+        story.setUrl("/" + story.getId() + storyAudioUrlPrefix);
         story.setFileSize(audioUtils.getAudioFileSize(file));
         story.setFileQuality(audioUtils.getAudioFileBitrate(file));
         story.setLength(audioUtils.getAudioFileLength(file));

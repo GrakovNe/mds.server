@@ -1,4 +1,4 @@
-package org.grakovne.mds.server.importer.fantlab.dto.search;
+package org.grakovne.mds.server.importers.fantlab.dto.search;
 
 import java.util.List;
 

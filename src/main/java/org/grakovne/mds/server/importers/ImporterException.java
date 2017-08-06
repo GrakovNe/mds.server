@@ -1,9 +1,9 @@
-package org.grakovne.mds.server.importer;
+package org.grakovne.mds.server.importers;
 
 import org.grakovne.mds.server.exceptons.MdsException;
 
 /**
- * Fantlab importer exception.
+ * Fantlab importers exception.
  */
 
 public class ImporterException extends MdsException {

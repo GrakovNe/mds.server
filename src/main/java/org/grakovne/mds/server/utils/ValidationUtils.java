@@ -5,6 +5,11 @@ import org.grakovne.mds.server.entity.Author;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.StoryBookmark;
 import org.grakovne.mds.server.exceptons.EntityValidationException;
+import org.grakovne.mds.server.exceptons.SearchException;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Common class which can validate every entity.
@@ -77,5 +82,40 @@ public class ValidationUtils {
         if (null == storyBookmark.getUser()) {
             throw new EntityValidationException(StoryBookmark.class, "story bookmark must have user");
         }
+    }
+
+    /**
+     * Validates search parameters.
+     *
+     * @param searchParams search parameters
+     */
+
+    public static void validate(Map<String, String> searchParams) {
+
+        if (null == searchParams) {
+            throw new SearchException("search parameters is not presented");
+        }
+
+        List<String> allowedOrderByFields = Arrays.asList("id", "title", "year", "rating");
+        List<String> allowedListenedTypes = Arrays.asList("both", "listened", "unlistened");
+
+        String listenedType = searchParams.getOrDefault("listenedType", "both");
+        String orderBy = searchParams.getOrDefault("orderBy", "title");
+        String userId = searchParams.get("userId");
+
+        if (listenedType.equals("listened") || listenedType.equals("unlistened")) {
+            if (Strings.isNullOrEmpty(userId)) {
+                throw new SearchException("user should be logged in for search in " + listenedType + " stories");
+            }
+        }
+
+        if (!allowedOrderByFields.contains(orderBy)) {
+            throw new SearchException("invalid orderBy field");
+        }
+
+        if (!allowedListenedTypes.contains(listenedType)) {
+            throw new SearchException("invalid listened type");
+        }
+
     }
 }
