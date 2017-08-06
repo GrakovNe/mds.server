@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.util.List;
 
+/**
+ * JPA Entity.
+ */
+
 @Entity
 public class UserRole {
 

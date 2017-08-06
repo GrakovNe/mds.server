@@ -86,16 +86,22 @@ public class ValidationUtils {
         }
     }
 
-    public static void validate(User user){
-        if (null == user){
+    /**
+     * Validates user.
+     *
+     * @param user user entity
+     */
+
+    public static void validate(User user) {
+        if (null == user) {
             throw new EntityException(User.class, "user is null");
         }
 
-        if (Strings.isNullOrEmpty(user.getUsername())){
+        if (Strings.isNullOrEmpty(user.getUsername())) {
             throw new EntityException(User.class, "user must have username");
         }
 
-        if (Strings.isNullOrEmpty(user.getPassword())){
+        if (Strings.isNullOrEmpty(user.getPassword())) {
             throw new EntityException(User.class, "user must have password");
         }
     }

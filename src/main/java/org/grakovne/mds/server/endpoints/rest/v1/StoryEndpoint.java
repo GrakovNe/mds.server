@@ -71,14 +71,31 @@ public class StoryEndpoint {
         return new ApiResponse<>(stories);
     }
 
+    /**
+     * Returns random story.
+     *
+     * @return random story.
+     */
     @RequestMapping(value = "random", method = RequestMethod.GET)
     public ApiResponse<Story> findRandomStory() {
         Story story = storyService.findRandomStory();
         return new ApiResponse<Story>(story);
     }
 
+    /**
+     * Returns page of stories with advanced search.
+     *
+     * @param listenedType   listened or un-listened
+     * @param title          story title
+     * @param author         story author name
+     * @param orderBy        ordering field
+     * @param orderDirection asc or desc
+     * @param pageNumber     page number
+     * @param user           user auth
+     * @return page with stories
+     */
+
     @RequestMapping(value = "search", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('USER')")
     public ApiResponse<Page<Story>> findStories(
         @RequestParam(required = false, defaultValue = "both") String listenedType,
         @RequestParam(required = false, defaultValue = "") String title,
@@ -97,6 +114,10 @@ public class StoryEndpoint {
         searchParameters.put("orderDirection", orderDirection);
         searchParameters.put("userId", String.valueOf(user.getId()));
         searchParameters.put("page", pageNumber);
+
+        if (null == user.getUsername()) {
+            searchParameters.replace("listenedType", "both");
+        }
 
         Page<Story> searchResults = storySearchService.findStory(searchParameters);
         return new ApiResponse<>(searchResults);

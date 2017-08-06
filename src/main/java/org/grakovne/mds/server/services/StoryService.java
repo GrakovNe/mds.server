@@ -324,6 +324,11 @@ public class StoryService {
         return persistsStory(savedStory);
     }
 
+    /**
+     * Finds random story.
+     * @return Story entity
+     */
+
     public Story findRandomStory() {
         Page<Story> storyPage = storyRepository.findRandomStory(new PageRequest(0, 1));
 

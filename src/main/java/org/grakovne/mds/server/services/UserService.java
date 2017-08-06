@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -25,16 +24,13 @@ import java.util.Collections;
 @Service
 public class UserService implements UserDetailsService {
 
+    private static final String DEFAULT_USER_ROLE_NAME = "USER";
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private ConfigurationUtils configurationUtils;
-
     @Autowired
     private UserRoleRepository userRoleRepository;
-
-    private final static String DEFAULT_USER_ROLE_NAME = "USER";
 
     @Override
     public User loadUserByUsername(String username) {
@@ -106,7 +102,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    private UserRole getDefaultUserRole(){
+    private UserRole getDefaultUserRole() {
         return userRoleRepository.findByName(DEFAULT_USER_ROLE_NAME);
     }
 }

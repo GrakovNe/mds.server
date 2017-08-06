@@ -1,6 +1,7 @@
 package org.grakovne.mds.server.services;
 
 import org.grakovne.mds.server.entity.Story;
+import org.grakovne.mds.server.exceptons.SearchException;
 import org.grakovne.mds.server.utils.ConfigurationUtils;
 import org.grakovne.mds.server.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,10 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Advanced search service for story entity.
+ */
+
 @Service
 public class StorySearchService {
 
@@ -22,6 +27,13 @@ public class StorySearchService {
 
     @Autowired
     private ConfigurationUtils configurationUtils;
+
+    /**
+     * Returns page of story with advanced search.
+     *
+     * @param params map with parameters
+     * @return page of stories
+     */
 
     public Page<Story> findStory(Map<String, String> params) {
         ValidationUtils.validate(params);
@@ -56,6 +68,9 @@ public class StorySearchService {
                     .append("and s.id not in ")
                     .append(getListenedIds(userId));
                 break;
+
+            default:
+                break;
         }
 
         searchQueryBuilder
@@ -72,7 +87,12 @@ public class StorySearchService {
         return executeSearchQuery(searchQueryBuilder.toString(), pageNumber, orderDirection, orderBy);
     }
 
-    public Page<Story> executeSearchQuery(String searchQuery, Integer pageNumber, String orderDirection, String orderBy) {
+    private Page<Story> executeSearchQuery(
+        String searchQuery,
+        Integer pageNumber,
+        String orderDirection,
+        String orderBy) {
+
         List<Story> results = entityManager
             .createQuery(searchQuery, Story.class)
             .setFirstResult(pageNumber * configurationUtils.getPageSize())
@@ -100,6 +120,8 @@ public class StorySearchService {
             case "asc":
                 direction = Sort.Direction.ASC;
                 break;
+            default:
+                throw new SearchException("invalid type of order");
         }
 
         return new PageImpl<>(

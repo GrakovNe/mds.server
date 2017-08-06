@@ -47,6 +47,12 @@ public interface StoryRepository extends JpaRepository<Story, Integer> {
     @Query("from Story s where id not in (select story.id from ListenedStory ls where ls.user.id = :#{#user.id})")
     Page<Story> findUsersUnListenedStories(@Param("user") User user, Pageable pageable);
 
+    /**
+     * Returns random story.
+     * @param pageable spring pagination
+     * @return page with stories
+     */
+
     @Query("from Story s order by random()")
     Page<Story> findRandomStory(Pageable pageable);
 }

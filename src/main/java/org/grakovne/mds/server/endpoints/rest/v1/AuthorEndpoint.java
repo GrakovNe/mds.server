@@ -49,19 +49,25 @@ public class AuthorEndpoint {
         return new ApiResponse<>(authors);
     }
 
+    /**
+     * Returns page of authors with advanced filters.
+     * @param pageNumber page number
+     * @param name authors name
+     * @param orderDirection asc or desc
+     * @return page with authors
+     */
+
     @RequestMapping(value = "search", method = RequestMethod.GET)
     public ApiResponse<Page<Author>> findAuthors(
         @RequestParam(required = false, defaultValue = "0") String pageNumber,
         @RequestParam(required = false, defaultValue = "") String name,
         @RequestParam(required = false, defaultValue = "desc") String orderDirection) {
 
-
         Map<String, String> params = new HashMap<>();
 
         params.put("name", name);
         params.put("page", pageNumber);
         params.put("orderDirection", orderDirection);
-
 
         return new ApiResponse<>(authorSearchService.findAuthor(params));
     }

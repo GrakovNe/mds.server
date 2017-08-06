@@ -1,6 +1,7 @@
 package org.grakovne.mds.server.services;
 
 import org.grakovne.mds.server.entity.Author;
+import org.grakovne.mds.server.exceptons.SearchException;
 import org.grakovne.mds.server.utils.ConfigurationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,10 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Advanced search service for author entity.
+ */
+
 @Service
 public class AuthorSearchService {
 
@@ -21,6 +26,13 @@ public class AuthorSearchService {
 
     @Autowired
     private ConfigurationUtils configurationUtils;
+
+    /**
+     * returns page with authors with advanced search.
+     *
+     * @param params map with parameters
+     * @return Page with authors
+     */
 
     public Page<Author> findAuthor(Map<String, String> params) {
         String name = params.getOrDefault("name", "");
@@ -63,6 +75,8 @@ public class AuthorSearchService {
             case "asc":
                 direction = Sort.Direction.ASC;
                 break;
+            default:
+                throw new SearchException("invalid type of order");
         }
 
         return new PageImpl<>(
