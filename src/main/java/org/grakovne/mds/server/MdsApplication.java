@@ -15,10 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class MdsApplication {
 
-    private static final Logger logger = LoggerFactory.getLogger(MdsApplication.class);
-    @Autowired
-    private StorySearchService storySearchService;
-
     /**
      * Main application class.
      *
