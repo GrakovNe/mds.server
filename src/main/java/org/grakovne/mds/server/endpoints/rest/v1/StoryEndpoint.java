@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -77,6 +78,7 @@ public class StoryEndpoint {
     }
 
     @RequestMapping(value = "search", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER')")
     public ApiResponse<Page<Story>> findStories(
         @RequestParam(required = false, defaultValue = "both") String listenedType,
         @RequestParam(required = false, defaultValue = "") String title,
@@ -109,6 +111,7 @@ public class StoryEndpoint {
      */
 
     @RequestMapping(value = "listen", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER')")
     public ApiResponse<Page<Story>> findListenedStories(
         @AuthenticationPrincipal User user,
         @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
@@ -126,6 +129,7 @@ public class StoryEndpoint {
      */
 
     @RequestMapping(value = "unlisten", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER')")
     public ApiResponse<Page<Story>> findUnListenedStories(
         @AuthenticationPrincipal User user,
         @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
@@ -172,6 +176,7 @@ public class StoryEndpoint {
      */
 
     @RequestMapping(value = "", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<Story> createStory(
         @RequestPart(value = "story", required = false) String storyString,
         @RequestPart(value = "audio") MultipartFile audio) throws IOException {
@@ -196,6 +201,7 @@ public class StoryEndpoint {
      */
 
     @RequestMapping(value = "{id}/storyBookmark", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER')")
     public ApiResponse<List<StoryBookmark>> getStoryBookmark(
         @PathVariable Integer id,
         @AuthenticationPrincipal User user) {
@@ -214,6 +220,7 @@ public class StoryEndpoint {
      */
 
     @RequestMapping(value = "{id}/storyBookmark", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('USER')")
     public ApiResponse<StoryBookmark> bookmarkStory(
         @RequestBody StoryBookmark storyBookmark,
         @PathVariable Integer id,
@@ -232,6 +239,7 @@ public class StoryEndpoint {
      */
 
     @RequestMapping(value = "{storyId}/listen", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('USER')")
     public ApiResponse<ListenedStory> listenStory(
         @PathVariable Integer storyId,
         @AuthenticationPrincipal User user) {
@@ -249,6 +257,7 @@ public class StoryEndpoint {
      */
 
     @RequestMapping(value = "{storyId}/listen", method = RequestMethod.DELETE)
+    @PreAuthorize("hasRole('USER')")
     public ApiResponse unListenStory(
         @PathVariable Integer storyId,
         @AuthenticationPrincipal User user) {
@@ -265,6 +274,7 @@ public class StoryEndpoint {
      * @return status message
      */
     @RequestMapping(value = "storyBookmark/{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasRole('USER')")
     public ApiResponse deleteStoryBookmark(
         @PathVariable Integer id,
         @AuthenticationPrincipal User user) {
@@ -282,6 +292,7 @@ public class StoryEndpoint {
      */
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse deleteStory(@PathVariable Integer id) {
         storyService.deleteStory(id);
         return new ApiResponse("Story has been deleted");

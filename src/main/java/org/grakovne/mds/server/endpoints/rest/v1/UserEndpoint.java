@@ -5,6 +5,7 @@ import org.grakovne.mds.server.entity.User;
 import org.grakovne.mds.server.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ public class UserEndpoint {
      */
 
     @RequestMapping(value = "", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<Page<User>> findUsers(
         @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
 
@@ -45,6 +47,7 @@ public class UserEndpoint {
      */
 
     @RequestMapping(value = "me", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER')")
     public ApiResponse<User> getMyUserDetails(@AuthenticationPrincipal User user) {
         return new ApiResponse<>(user);
     }

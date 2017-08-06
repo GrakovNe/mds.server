@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ public class AuthorEndpoint {
      * @param pageNumber page number
      * @return page with authors
      */
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ApiResponse<Page<Author>> findAuthors(
         @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
@@ -61,7 +63,7 @@ public class AuthorEndpoint {
         params.put("orderDirection", orderDirection);
 
 
-        return new ApiResponse<Page<Author>>(authorSearchService.findAuthor(params));
+        return new ApiResponse<>(authorSearchService.findAuthor(params));
     }
 
     /**
@@ -70,6 +72,7 @@ public class AuthorEndpoint {
      * @param id id
      * @return author entity
      */
+
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public ApiResponse<Author> findAuthor(@PathVariable Integer id) {
         Author author = authorService.findAuthor(id);
@@ -82,7 +85,9 @@ public class AuthorEndpoint {
      * @param author author dto
      * @return author entity
      */
+
     @RequestMapping(value = "", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<Author> createAuthor(@RequestBody Author author) {
         Author savedAuthor = authorService.createAuthor(author);
         return new ApiResponse<>(savedAuthor);
@@ -94,6 +99,8 @@ public class AuthorEndpoint {
      * @param id id
      * @return status message
      */
+
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public ApiResponse deleteAuthor(@PathVariable Integer id) {
         authorService.deleteAuthor(id);
