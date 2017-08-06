@@ -90,7 +90,7 @@ public class ValidationUtils {
      * @param searchParams search parameters
      */
 
-    public static void validate(Map<String, String> searchParams) {
+    public static void validateStorySearch(Map<String, String> searchParams) {
 
         if (null == searchParams) {
             throw new SearchException("search parameters is not presented");
