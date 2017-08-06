@@ -2,15 +2,22 @@ package org.grakovne.mds.server.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * JPA Entity.
@@ -26,7 +33,6 @@ public class User implements UserDetails, MdsEntity {
 
     private String username;
 
-    @JsonIgnore
     private String password;
 
     private Boolean isAccountNonExpired;
@@ -37,10 +43,25 @@ public class User implements UserDetails, MdsEntity {
 
     private Boolean isEnabled;
 
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "users_roles",
+        joinColumns = @JoinColumn(
+            name = "user_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(
+            name = "role_id", referencedColumnName = "id"))
+    private Collection<UserRole> userRoles;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        List<GrantedAuthority> authorities = new ArrayList<>(userRoles.size());
+        userRoles.forEach(userRole -> authorities.add(
+            new SimpleGrantedAuthority("ROLE_" + userRole.getName()))
+        );
+
+        return authorities;
     }
 
     public Integer getId() {
@@ -103,5 +124,13 @@ public class User implements UserDetails, MdsEntity {
 
     public void setEnabled(Boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public Collection<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Collection<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 }

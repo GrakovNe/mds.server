@@ -3,6 +3,7 @@ package org.grakovne.mds.server.endpoints.rest.v1;
 import org.grakovne.mds.server.endpoints.rest.v1.support.ApiResponse;
 import org.grakovne.mds.server.entity.User;
 import org.grakovne.mds.server.services.UserService;
+import org.grakovne.mds.server.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,7 +48,7 @@ public class UserEndpoint {
      */
 
     @RequestMapping(value = "me", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ApiResponse<User> getMyUserDetails(@AuthenticationPrincipal User user) {
         return new ApiResponse<>(user);
     }
@@ -60,7 +61,9 @@ public class UserEndpoint {
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ApiResponse<User> createUser(@RequestBody User userDTO) {
+        ValidationUtils.validate(userDTO);
         User user = userService.createUser(userDTO);
+
         return new ApiResponse<>(user);
     }
 }

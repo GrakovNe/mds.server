@@ -1,8 +1,10 @@
 package org.grakovne.mds.server.services;
 
 import org.grakovne.mds.server.entity.User;
+import org.grakovne.mds.server.entity.UserRole;
 import org.grakovne.mds.server.exceptons.EntityAlreadyExistException;
 import org.grakovne.mds.server.repositories.UserRepository;
+import org.grakovne.mds.server.repositories.UserRoleRepository;
 import org.grakovne.mds.server.utils.CheckerUtils;
 import org.grakovne.mds.server.utils.ConfigurationUtils;
 import org.grakovne.mds.server.utils.SecurityUtils;
@@ -12,6 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * User service.
@@ -25,6 +30,11 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private ConfigurationUtils configurationUtils;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+
+    private final static String DEFAULT_USER_ROLE_NAME = "USER";
 
     @Override
     public User loadUserByUsername(String username) {
@@ -68,6 +78,9 @@ public class UserService implements UserDetailsService {
     }
 
     private User persistUser(User user) {
+        UserRole defaultUserRole = getDefaultUserRole();
+        user.setUserRoles(Collections.singletonList(defaultUserRole));
+
         return userRepository.save(user);
     }
 
@@ -91,5 +104,9 @@ public class UserService implements UserDetailsService {
         CheckerUtils.checkNotNull(user);
 
         return user;
+    }
+
+    private UserRole getDefaultUserRole(){
+        return userRoleRepository.findByName(DEFAULT_USER_ROLE_NAME);
     }
 }

@@ -24,7 +24,7 @@ public class StorySearchService {
     private ConfigurationUtils configurationUtils;
 
     public Page<Story> findStory(Map<String, String> params) {
-        ValidationUtils.validateStorySearch(params);
+        ValidationUtils.validate(params);
 
         normalizeOrderBy(params);
 

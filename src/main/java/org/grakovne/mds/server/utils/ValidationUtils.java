@@ -4,6 +4,8 @@ import com.google.common.base.Strings;
 import org.grakovne.mds.server.entity.Author;
 import org.grakovne.mds.server.entity.Story;
 import org.grakovne.mds.server.entity.StoryBookmark;
+import org.grakovne.mds.server.entity.User;
+import org.grakovne.mds.server.exceptons.EntityException;
 import org.grakovne.mds.server.exceptons.EntityValidationException;
 import org.grakovne.mds.server.exceptons.SearchException;
 
@@ -84,13 +86,27 @@ public class ValidationUtils {
         }
     }
 
+    public static void validate(User user){
+        if (null == user){
+            throw new EntityException(User.class, "user is null");
+        }
+
+        if (Strings.isNullOrEmpty(user.getUsername())){
+            throw new EntityException(User.class, "user must have username");
+        }
+
+        if (Strings.isNullOrEmpty(user.getPassword())){
+            throw new EntityException(User.class, "user must have password");
+        }
+    }
+
     /**
      * Validates search parameters.
      *
      * @param searchParams search parameters
      */
 
-    public static void validateStorySearch(Map<String, String> searchParams) {
+    public static void validate(Map<String, String> searchParams) {
 
         if (null == searchParams) {
             throw new SearchException("search parameters is not presented");

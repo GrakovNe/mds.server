@@ -132,3 +132,22 @@ CONSTRAINT fkrp7ecagsnibg1web5fn32pdme FOREIGN KEY (user_id)
 REFERENCES users (id) MATCH SIMPLE
 ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+CREATE TABLE user_role
+(
+  id serial NOT NULL,
+  name character varying(255),
+  CONSTRAINT user_role_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE users_roles
+(
+  user_id integer NOT NULL,
+  role_id integer NOT NULL,
+  CONSTRAINT fk2o0jvgh89lemvvo17cbqvdxaa FOREIGN KEY (user_id)
+      REFERENCES users (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fkmknhyioq8hh8seoxe1fy6qo86 FOREIGN KEY (role_id)
+      REFERENCES user_role (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+);
